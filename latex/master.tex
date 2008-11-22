@@ -1,0 +1,75 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage[utf-8]{inputenc}
+\usepackage{graphicx}
+\usepackage{latexsym,a4,epsfig,times}
+\usepackage[french]{babel}
+\usepackage[T1]{fontenc}
+\usepackage{hyperref}
+\usepackage{moreverb}
+\usepackage{listings}
+\usepackage{verbatim}
+\usepackage{bibtopic}
+\hypersetup{
+  colorlinks= true,
+  linkcolor = black,
+  anchorcolor = black,
+  citecolor = black,
+  filecolor = black,
+  pagecolor = black,
+  urlcolor = black,
+  breaklinks=false,
+  pdfpagemode= UseOutlines,
+  pdfstartview={XYZ 0 1000 1.0}
+}
+\usepackage{float}
+\usepackage[top=2cm, bottom=2cm, left=2cm, right=2cm]{geometry}
+ 
+\title{Refactoring IzPack}
+\author{Anthonin Bonnefoy, David Duponchel}
+\lstset{language=C++}
+\begin{document}
+\begin{titlepage}
+~
+\vfill
+\begin{center}
+\textsc{\begin{LARGE}TP - Métadonnées, Métaprogrammation et Ingénierie des modèles\end{LARGE}}\\[1cm]
+\end{center}
+\vfill
+\begin{minipage}{0.4\textwidth}
+\begin{flushleft} \large
+\emph{Auteurs:}Anthonin \textsc{Bonnefoy}\\
+~~~~~~~~~~~~~~~David \textsc{Duponchel}\\
+\end{flushleft}
+\end{minipage}
+\begin{minipage}{0.4\textwidth}
+\begin{flushright}
+{\today}
+\end{flushright}
+\end{minipage}\\[1cm]
+\end{titlepage}
+\section*{Introduction}
+%\input{introduction}
+\section*{Conclusion}
+%\input{conclusion}
+
+\section*{Annexes}
+\input{annexes}
+
+\bibliographystyle{alpha}
+\begin{btSect}{webographie}
+\section*{Webographie}
+\section*{Citées}
+\btPrintCited
+\section*{Non citées}
+\btPrintNotCited
+\end{btSect}
+
+\begin{btSect}{references}
+\section*{Références}
+\section*{Citées}
+\btPrintCited
+\section*{Non citées}
+\btPrintNotCited
+\end{btSect}
+
+\end{document}
