@@ -19,7 +19,19 @@ DOM -> root possede 3 enfants (\n; <noeud1>; \n)
 \subsubsection{Remplacer les appels}
 \subsubsection{Utilisation d'un design pattern}
 Extraction d'interface du xmlElement.
+-> IXmlElements
+-> IXmlParser
+-> IXmlWriter
 
+XMLElements de NanoXml ~ Node Element
+
+Dom possede pls types de noeuds : Comment, Text, element
+
+Xinclude : gerer de maniere native par Javax
+XfragmentL Non present dans la specifiaction W3C:
+-> Permet include de noeuds sans racines
+Passage par une feuille XSL
+-> include puis suppression des Xfragment
 \subsection{Application et tests}
 \subsubsection{Test unitaires de comparaison}
 Comparaison entre le comportement de nanoXml et de l'adaptateur
