@@ -1,6 +1,7 @@
-\subsection{Methode agile}
+\subsection{Plannification et gestion de projet}
 \subsubsection{Lighthouse}
 Lighthouse est un gestionnaire de projet. Il permet d'assigner des taches, de les repartirs et de le gerer facilement. Il propose un workflow similaire a CodeHaus. On peut distinguer deux entites principales, les tickets et les sprints.
+% Need schema pour le workflow lightouse
 \subsubsection{Ticket}
 Les Tickets representent un objectif a realiser. Ils peuvent etre cree par n'importe quel participant au projet. Ce ticket peut ensuite etre assigner a une personne et possede plusieurs etats.
 
@@ -11,9 +12,20 @@ Les Tickets representent un objectif a realiser. Ils peuvent etre cree par n'imp
 % \item[Ouvert] Le ticket vient d'etre cree et 
  \end{description}
 Chacun de ces tickets peut etre assigne a un sprint.
-\subsubsection{Srpint}
+\subsubsection{Sprint}
 Un sprint est un ensemble de ticket a resoudre pour une date donnee. En generale, la duree d'un sprint etait de 2 semaines, parfois 1 semaine. A chaque fin de sprint, une reunion etait organisee pour discuter des resultats, des reports a effectuer ou des tickets a creer.
 \subsection{Gestionnaire de version}
+-Depot central svn
+
+- Git : distribue
+- Linus Torvald
+
+- GitHub : Gestionnaire de depot Git
+-> Fork du projet
+-> Travail collaboratif et ouvert 
+-> Consultation de l'historique
+-> Visionnage des branches
+
 Tout projet informatique se doit d'etre sous gestionnaire de version. Sans compter que le fait que le projet soit open-source et actif provoquait des changements importants dans le code. Il fallait donc pouvoir travailler en parallele aux changement operer par les contributeurs et pour appliquer nos modifications le jour venus.
 
 Le depot de reference est un depot Subversion. Les contributeurs appliquent leurs modifications sur ce depot. Cependant, pour des raisons de facilite et pour ne pas perturbe le developpement, il a ete decide de travailler sur un fork Git.
@@ -25,10 +37,20 @@ Julien Ponge entretient un depot Git synchronise par rapport au Subversion. Nous
 Ces depots git sont hebergees par une plateforme colaborative, GitHub. Cette plateforme permet de creer, dupliquer, supprimer ou consulter des depots. Toutes les realisations faites sont ouvertes et disponibles a pour tout le monde.
 \subsection{Outils de developpement}
 \subsubsection{IntelliJ Idea}
+-> IDE specialisee technologies Java
+Nombreuses fonctionnalitees presentes
+-> Recherche implementation 
+-> Preserve Case
+-> Refactoring puissant
+
 IntelliJ est un environnement de developpement integre similaire a Eclipse. Il est proprietaire et necessite une license pour son fonctionnement. Cependant, JetBrain, l'editeur de IntelliJ, a une politique d'ouverture pour les projets open-source et tout ces projets beneficient d'une license dediee. 
 
 Il presente certaines divergences avec les IDE comme Eclipse et NetBeans. Il possede une plus grande veriete de fonctionnalite et l'integration d'un grand nombre de composants. On trouve ainsi l'integration de framework recent comme GWT ou d'outils comme Git. L'integration de Maven et egalement tres completes. 
 \subsubsection{Yourkit}
+Profiler Java
+-> Temps, nombres d'appels des methodes
+-> Affichage de la charge a tout moment
+
 Yourkit est un outil de profiling. Il permet d'avoir un rapport detaille sur l'utilisation des resources par le programmes. On peut ainsi recuperer le nombre d'appel a une methode, le temps passe dans une methode, l'utilisation des resources a un temps donne.
 
 Le but du profiling a ete de reperer les optimisations possibles sur les modifications que l'on a operees.
