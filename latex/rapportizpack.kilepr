@@ -3,7 +3,7 @@ img_extIsRegExp=false
 img_extensions=.eps .jpg .jpeg .png .pdf .ps .fig .gif
 kileprversion=2
 kileversion=2.0
-lastDocument=partie3.tex
+lastDocument=partie2.tex
 masterDocument=
 name=rapportIzpack
 pkg_extIsRegExp=false
@@ -45,10 +45,10 @@ order=-1
 [item:master.tex]
 archive=true
 column=15
-encoding=UTF-8
+encoding=ISO 8859-1
 highlight=LaTeX
 line=54
-open=true
+open=false
 order=0
 
 [item:partie1.tex]
@@ -58,16 +58,16 @@ encoding=ISO 8859-1
 highlight=LaTeX
 line=10
 open=true
-order=1
+order=0
 
 [item:partie2.tex]
 archive=true
-column=39
+column=18
 encoding=ISO 8859-1
 highlight=LaTeX
-line=53
+line=12
 open=true
-order=3
+order=1
 
 [item:partie3.tex]
 archive=true
@@ -75,7 +75,7 @@ column=33
 encoding=ISO 8859-1
 highlight=LaTeX
 line=34
-open=true
+open=false
 order=2
 
 [item:rapportizpack.kilepr]

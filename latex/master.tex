@@ -1,4 +1,4 @@
-\documentclass[a4paper,12pt]{article}
+\documentclass[a4paper,11pt]{report}
 \usepackage[utf-8]{inputenc}
 \usepackage{graphicx}
 \usepackage{latexsym,a4,epsfig,times}
@@ -7,75 +7,123 @@
 \usepackage{hyperref}
 \usepackage{moreverb}
 \usepackage{listings}
-\usepackage{verbatim}
-\usepackage{bibtopic}
-\hypersetup{
-  colorlinks= true,
-  linkcolor = black,
-  anchorcolor = black,
-  citecolor = black,
-  filecolor = black,
-  pagecolor = black,
-  urlcolor = black,
-  breaklinks=false,
-  pdfpagemode= UseOutlines,
-  pdfstartview={XYZ 0 1000 1.0}
-}
+\usepackage{color}
 \usepackage{float}
-\usepackage[top=2cm, bottom=2cm, left=2cm, right=2cm]{geometry}
- 
+\usepackage[top=45mm, bottom=45mm, left=15mm, right=15mm]{geometry}
+\usepackage{fancyhdr}
+\usepackage{pdfpages}
+
+\definecolor{colKeys}{rgb}{0,0,1}
+\definecolor{colIdentifier}{rgb}{0,0,0}
+\definecolor{colComments}{rgb}{0,0.5,1}
+\definecolor{colString}{rgb}{0.6,0.1,0.1}
+\lstset{
+basicstyle=\ttfamily\small, %
+identifierstyle=\color{colIdentifier}, %
+keywordstyle=\color{colKeys}, %
+stringstyle=\color{colString}, %
+commentstyle=\color{colComments},
+language=java,
+backgroundcolor=\color{white},
+frame=single,                   % adds a frame around the code
+tabsize=2,                      % sets default tabsize to 2 spaces
+}
+
+\hypersetup{
+colorlinks= true,
+linkcolor = black,
+anchorcolor = black,
+citecolor = black,
+filecolor = black,
+pagecolor = black,
+urlcolor = black,
+breaklinks=false,
+pdfpagemode= UseOutlines,
+}
+\setlength{\textheight}{200mm}
+\setlength{\headheight}{14pt}
+\fancypagestyle{plain}{
+\fancyhf[]{}
+}
+
 \title{Refactoring IzPack}
 \author{Anthonin Bonnefoy, David Duponchel}
 \lstset{language=C++}
 \begin{document}
-\begin{titlepage}
-~
-\vfill
-\begin{center}
-\textsc{\begin{LARGE}TP - Métadonnées, Métaprogrammation et Ingénierie des modèles\end{LARGE}}\\[1cm]
-\end{center}
-\vfill
-\begin{minipage}{0.4\textwidth}
-\begin{flushleft} \large
-\emph{Auteurs:}Anthonin \textsc{Bonnefoy}\\
-~~~~~~~~~~~~~~~David \textsc{Duponchel}\\
-\end{flushleft}
-\end{minipage}
-\begin{minipage}{0.4\textwidth}
-\begin{flushright}
-{\today}
-\end{flushright}
-\end{minipage}\\[1cm]
-\end{titlepage}
-\section*{Introduction}
-\input{introduction}
-\section{Izpack}
-\input{partie1}
-\section{Methodes de travail}
-\input{partie2}
-\section{Travail realise}
-\input{partie3}
-\section*{Conclusion}
-\input{conclusion}
 
-\section*{Annexes}
+\renewcommand{\headrulewidth}{0pt}
+%---------------------------------------
+\input{titlepage}
+%---------------------------------------
+\chapter*{Remerciements}
+\input{remerciement}
+%--------------------------------------
+\begin{abstract}
+\input{abstract}
+\end{abstract}
+%---------------------------------------
+\thispagestyle{empty}
+\tableofcontents 
+\thispagestyle{empty}
+%---------------------------------------
+\thispagestyle{empty}
+\listoffigures
+\thispagestyle{empty}
+%--------------------------------------
+\chapter*{Introduction\markboth{Introduction}{}}
+\setcounter{page}{1} 
+\addcontentsline{toc}{chapter}{Introduction}
+\input{introduction}
+%---------------------------------------
+% \chapter*{Présentation de l'étude\markboth{Présentation de l'étude}{}}
+% \addcontentsline{toc}{chapter}{Présentation de l'étude}
+% \input{partie1}
+%---------------------------------------
+\renewcommand{\chaptermark}[1]{\markboth{\chaptername~\thechapter{} : #1}{}} \renewcommand{\sectionmark}[1]{\markright{\thesection{} #1}}
+\chapter{Izpack}
+\pagestyle{plain}
+\input{partie1}
+%---------------------------------------
+\chapter{Methodes de travail}
+\input{partie2}
+%---------------------------------------
+\chapter{Travail realise}
+\input{partie3}
+%---------------------------------------
+\chapter*{Conclusion \markboth{Conclusion}{}}
+\addcontentsline{toc}{chapter}{Conclusion}
+\input{conclusion}
+%---------------------------------------
+\chapter*{Glossaire \markboth{Glossaire}{}}
+\addcontentsline{toc}{chapter}{Glossaire}
+\input{glossaire}
+%---------------------------------------
+% \begin{thebibliography}{9}
+% \input{bibliographie}
+% \end{thebibliography}
+% 
+% \bibliographystyle{alpha}
+% \begin{btSect}{webographie}
+% \section*{Webographie}
+% \section*{Citées}
+% \btPrintCited
+% \section*{Non citées}
+% \btPrintNotCited
+% \end{btSect}
+% 
+% \begin{btSect}{references}
+% \section*{Références}
+% \section*{Citées}
+% \btPrintCited
+% \section*{Non citées}
+% \btPrintNotCited
+% \end{btSect}
+%---------------------------------------
+\appendix
+\input{titlepage2}
+\pagenumbering{Roman}
+\addcontentsline{toc}{chapter}{Annexe}
 \input{annexes}
 
-\bibliographystyle{alpha}
-\begin{btSect}{webographie}
-\section*{Webographie}
-\section*{Citées}
-\btPrintCited
-\section*{Non citées}
-\btPrintNotCited
-\end{btSect}
-
-\begin{btSect}{references}
-\section*{Références}
-\section*{Citées}
-\btPrintCited
-\section*{Non citées}
-\btPrintNotCited
-\end{btSect}
-
 \end{document}
+

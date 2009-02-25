@@ -1,20 +1,19 @@
-\subsection{Plannification et gestion de projet}
-\subsubsection{Lighthouse}
-Lighthouse est un gestionnaire de projet. Il permet d'assigner des taches, de les repartirs et de le gerer facilement. Il propose un workflow similaire a CodeHaus. On peut distinguer deux entites principales, les tickets et les sprints.
+\section{Plannification et gestion de projet}
+\subsection{Lighthouse}
+Lighthouse est un gestionnaire de projet. Il permet d'assigner des taches, de les repartir et de le gerer. On peut distinguer deux entites principales, les tickets et les sprints.
 % Need schema pour le workflow lightouse
-\subsubsection{Ticket}
-Les Tickets representent un objectif a realiser. Ils peuvent etre cree par n'importe quel participant au projet. Ce ticket peut ensuite etre assigner a une personne et possede plusieurs etats.
-
+\subsection{Ticket}
+Les Tickets representent une tache a realiser. Ils peuvent etre cree par n'importe quel participant au projet. Ce ticket peut ensuite etre assigner a une personne et possede plusieurs etats.
 \begin{description}
- \item[Nouveau] Le ticket vient d'etre cree doit etre assigne pour etre traite.
+\item[Nouveau] Le ticket vient d'etre cree. Il peut etre assigne doit etre assigne pour etre traite.
 \item[Ouvert] Le ticket commence a etre traite.
 \item[Clos] Le ticket a ete resolue et est ferme.
 % \item[Ouvert] Le ticket vient d'etre cree et 
- \end{description}
+\end{description}
 Chacun de ces tickets peut etre assigne a un sprint.
-\subsubsection{Sprint}
+\subsection{Sprint}
 Un sprint est un ensemble de ticket a resoudre pour une date donnee. En generale, la duree d'un sprint etait de 2 semaines, parfois 1 semaine. A chaque fin de sprint, une reunion etait organisee pour discuter des resultats, des reports a effectuer ou des tickets a creer.
-\subsection{Gestionnaire de version}
+\section{Gestionnaire de version}
 -Depot central svn
 
 - Git : distribue
@@ -29,14 +28,14 @@ Un sprint est un ensemble de ticket a resoudre pour une date donnee. En generale
 Tout projet informatique se doit d'etre sous gestionnaire de version. Sans compter que le fait que le projet soit open-source et actif provoquait des changements importants dans le code. Il fallait donc pouvoir travailler en parallele aux changement operer par les contributeurs et pour appliquer nos modifications le jour venus.
 
 Le depot de reference est un depot Subversion. Les contributeurs appliquent leurs modifications sur ce depot. Cependant, pour des raisons de facilite et pour ne pas perturbe le developpement, il a ete decide de travailler sur un fork Git.
-\subsubsection{Git}
+\subsection{Git}
 Git est un gestionnaire de version recent. Il a ete cree en 200x par Linux Torvald. Il utilise, contrairement a Subversion, un systeme distribue. C'est a dire que toutes les copies du depot sont des serveurs. Il presente une grande flexibilite au niveau de la grstion du contenu et de la creation des branches.
 
 Julien Ponge entretient un depot Git synchronise par rapport au Subversion. Nous avons travaille sur ce depot et cree un fork. Nous pouvions a tout moment synchronise notre depot par rapport au depot d'origine et ainsi, appliquee toutes les modifications des contrbuteurs a notre depot. Cela permettait de preparer l'application de nos modifications de manieres aisee.
-\subsubsection{GitHub}
+\subsection{GitHub}
 Ces depots git sont hebergees par une plateforme colaborative, GitHub. Cette plateforme permet de creer, dupliquer, supprimer ou consulter des depots. Toutes les realisations faites sont ouvertes et disponibles a pour tout le monde.
-\subsection{Outils de developpement}
-\subsubsection{IntelliJ Idea}
+\section{Outils de developpement}
+\subsection{IntelliJ Idea}
 -> IDE specialisee technologies Java
 Nombreuses fonctionnalitees presentes
 -> Recherche implementation 
@@ -46,7 +45,7 @@ Nombreuses fonctionnalitees presentes
 IntelliJ est un environnement de developpement integre similaire a Eclipse. Il est proprietaire et necessite une license pour son fonctionnement. Cependant, JetBrain, l'editeur de IntelliJ, a une politique d'ouverture pour les projets open-source et tout ces projets beneficient d'une license dediee. 
 
 Il presente certaines divergences avec les IDE comme Eclipse et NetBeans. Il possede une plus grande veriete de fonctionnalite et l'integration d'un grand nombre de composants. On trouve ainsi l'integration de framework recent comme GWT ou d'outils comme Git. L'integration de Maven et egalement tres completes. 
-\subsubsection{Yourkit}
+\subsection{Yourkit}
 Profiler Java
 -> Temps, nombres d'appels des methodes
 -> Affichage de la charge a tout moment
