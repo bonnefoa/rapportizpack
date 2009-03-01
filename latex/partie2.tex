@@ -14,10 +14,6 @@ Chacun de ces tickets peut etre assigne a un sprint.
 \subsection{Sprint}
 Un sprint est un ensemble de ticket a resoudre pour une date donnee. En generale, la duree d'un sprint etait de 2 semaines, parfois 1 semaine. A chaque fin de sprint, une reunion etait organisee pour discuter des resultats, des reports a effectuer ou des tickets a creer.
 \section{Gestionnaire de version}
--Depot central svn
-
-- Git : distribue
-- Linus Torvald
 
 - GitHub : Gestionnaire de depot Git
 -> Fork du projet
@@ -29,11 +25,13 @@ Tout projet informatique se doit d'etre sous gestionnaire de version. Sans compt
 
 Le depot de reference est un depot Subversion. Les contributeurs appliquent leurs modifications sur ce depot. Cependant, pour des raisons de facilite et pour ne pas perturbe le developpement, il a ete decide de travailler sur un fork Git.
 \subsection{Git}
-Git est un gestionnaire de version recent. Il a ete cree en 200x par Linux Torvald. Il utilise, contrairement a Subversion, un systeme distribue. C'est a dire que toutes les copies du depot sont des serveurs. Il presente une grande flexibilite au niveau de la grstion du contenu et de la creation des branches.
+Git est un gestionnaire de version recent. Il a ete cree en 2004 par Linux Torvald pour remplacer BitKeeper, l'ancien gestionnaire de version du noyau linux. Il s'agit, a l'instar de BitKeeper, d'un systeme distribue. Toutes les copies du depot sont elles-memes des serveurs. Chaque personne travaille donc sur son propre depot et se synchronis par rapport a d'autres depots. C'est de cette aspect distribue que provient une grande partie de la puissance de Git. Un utilisateur a acces a l'historique entier une fois qu'il a clone le depot. Il peut effectuer toutes les operations voulues sur son depot en etant deconnecte et chaque clone et une sauvegarde integrale du depot. La communication se fait soit par ssh, https, ftp, rsync ou par le protocol git.
 
-Julien Ponge entretient un depot Git synchronise par rapport au Subversion. Nous avons travaille sur ce depot et cree un fork. Nous pouvions a tout moment synchronise notre depot par rapport au depot d'origine et ainsi, appliquee toutes les modifications des contrbuteurs a notre depot. Cela permettait de preparer l'application de nos modifications de manieres aisee.
+Il apporte egalement des fonctionnalites evoluees. L'un des principaux point est la gestion des branches. La creation, suppression et fusion des branches est remarquable de simplicite et d'efficacite. La taille d'un depot Git est faible compare a des gestionnaires comme subversion.
+
+Julien Ponge entretient un depot Git synchronise par rapport au Subversion. Nous avons travaille sur ce depot et cree un fork. Nous pouvions a tout moment synchronise notre depot par rapport au depot d'origine et ainsi, appliquee toutes les modifications des contrbuteurs a notre depot. Cela permettait de preparer l'application de nos modifications de manieres aisee. Tout ces depots sont heberges sur GitHub.
 \subsection{GitHub}
-Ces depots git sont hebergees par une plateforme colaborative, GitHub. Cette plateforme permet de creer, dupliquer, supprimer ou consulter des depots. Toutes les realisations faites sont ouvertes et disponibles a pour tout le monde.
+GitHub est une plateforme colaborative. Cette plateforme permet de creer, forker, supprimer ou consulter des depots Git. Il est possible de choisir de donner les droits de commit a d'autres personnes sur nos depots. Toutes les realisations faites sont ouvertes et disponibles a tout le monde. C'est a dire que tout le monde est libre de cloner ou de forker les projets presents sur GitHub. Cette plateforme pernet d'avoir un depot de reference disponible 
 \section{Outils de developpement}
 \subsection{IntelliJ Idea}
 -> IDE specialisee technologies Java

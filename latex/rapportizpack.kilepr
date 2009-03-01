@@ -3,7 +3,7 @@ img_extIsRegExp=false
 img_extensions=.eps .jpg .jpeg .png .pdf .ps .fig .gif
 kileprversion=2
 kileversion=2.0
-lastDocument=partie2.tex
+lastDocument=partie3.tex
 masterDocument=
 name=rapportIzpack
 pkg_extIsRegExp=false
@@ -15,12 +15,21 @@ src_extensions=.tex .ltx .latex .dtx .ins
 MakeIndex=
 QuickBuild=
 
+[item:abstract.tex]
+archive=true
+column=709677856
+encoding=
+highlight=
+line=0
+open=false
+order=-1
+
 [item:annexes.tex]
 archive=true
-column=0
+column=20
 encoding=UTF-8
 highlight=LaTeX
-line=0
+line=23
 open=false
 order=0
 
@@ -29,6 +38,15 @@ archive=true
 column=0
 encoding=ISO 8859-1
 highlight=LaTeX
+line=0
+open=false
+order=-1
+
+[item:glossaire.tex]
+archive=true
+column=709677856
+encoding=
+highlight=
 line=0
 open=false
 order=-1
@@ -44,45 +62,72 @@ order=-1
 
 [item:master.tex]
 archive=true
-column=15
-encoding=ISO 8859-1
+column=0
+encoding=UTF-8
 highlight=LaTeX
-line=54
+line=33
 open=false
 order=0
 
 [item:partie1.tex]
 archive=true
-column=23
+column=8
 encoding=ISO 8859-1
 highlight=LaTeX
-line=10
-open=true
+line=0
+open=false
 order=0
 
 [item:partie2.tex]
 archive=true
-column=18
-encoding=ISO 8859-1
+column=106
+encoding=UTF-8
 highlight=LaTeX
-line=12
+line=52
 open=true
-order=1
+order=0
 
 [item:partie3.tex]
 archive=true
-column=33
+column=13
 encoding=ISO 8859-1
 highlight=LaTeX
-line=34
-open=false
-order=2
+line=44
+open=true
+order=1
 
 [item:rapportizpack.kilepr]
 archive=true
 column=1
 encoding=
 highlight=
+line=0
+open=false
+order=-1
+
+[item:remerciement.tex]
+archive=true
+column=0
+encoding=UTF-8
+highlight=LaTeX
+line=0
+open=false
+order=-1
+
+[item:titlepage.tex]
+archive=true
+column=17
+encoding=UTF-8
+highlight=LaTeX
+line=0
+open=false
+order=-1
+
+[item:titlepage2.tex]
+archive=true
+column=17
+encoding=UTF-8
+highlight=LaTeX
 line=0
 open=false
 order=-1
