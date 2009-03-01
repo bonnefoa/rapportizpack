@@ -19,11 +19,13 @@ A la fin de l'installation, il est possible de generer un script d'installation 
 Izpack est utilise dans de grand projets comme Jboss, Xwiki, Glassfish... A l'heure actuelle, les telechargements mensuels s'elevent a 15.000.
 % Image des telechargement?
 \section{Architecture}
-
 \subsection{Architecture globale}
-\subsection{Installeur}
-\subsubsection{Exemples de panels}
+Globalement, Izpack possede 2 composants, le compilateur qui va gerer la creation de l'installeur et l'installeur.
 \subsection{Compilateur}
+Le compilateur package l'ensemble des fichiers necessaires dans un seul jar. Selon la description de l'installation, il va incorporer les panels necessaires au lancement de celle-ci. 
+\subsection{Installeur}
+La partie installation concerne toute la logique et la presentation du processus d'installation. 
+\subsubsection{Exemples de panels}
 
 \section{Exemples d'installation}
 \subsection{Description du xml}
