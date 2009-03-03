@@ -1,8 +1,32 @@
 \section{Decription}
+IzPack est un generateur d'installeur d'application open-source cree en 2001 par Julien Ponge.
 \subsection{Generateur d'installeur}
+A partir d'une application et par l'ecriture d'un descripteur d'installation en XML, il est capable de generer un fichier d'installation cross-plateforme. Tout type de programme peut etre package, que ce soit une application C++, Java... Izpack permet la creation rapide d'installeur pour ces programmes.
 \subsection{Open-source}
+Izpack est sous license Apache2. Une importante communaute s'est regroupee autour de ce projet qui a permit son evolution jusqu'a maintenant. 
+
 \subsection{Fonctionnalites}
+Izpack possede plusieurs fonctionnalites, nous allons en voir les principales:
+\subsubsection{Cross-plateforme}
+Izpack cree un installeur Java. Il suffit donc que la machine ait un machine virtuelle pour pouvoir lancer l'installation, independament de la plateforme et du systeme d'exploitation.
+\subsubsection{Customization}
+Izpack possede un ensemble de panels qui vont constituer l'installateur graphique. L'aspect globale et l'aspect des panels est personnalisable par l'utilisateur via le descripteur XML.
+\subsubsection{Internationnalisation}
+Izpack supporte la creation d'installeur multilangues. 
+\subsubsection{Installation automatique}
+A la fin de l'installation, il est possible de generer un script d'installation automatique. Ce script permet de reproduire l'installation realisee sur d'autres machines.
 \subsection{Popularitee}
+Izpack est utilise dans de grand projets comme Jboss, Xwiki, Glassfish... A l'heure actuelle, les telechargements mensuels s'elevent a 15.000.
+% Image des telechargement?
+\section{Architecture}
+\subsection{Architecture globale}
+Globalement, Izpack possede 2 composants, le compilateur qui va gerer la creation de l'installeur et l'installeur.
+\subsection{Compilateur}
+Le compilateur package l'ensemble des fichiers necessaires dans un seul jar. Selon la description de l'installation, il va incorporer les panels necessaires au lancement de celle-ci. 
+\subsection{Installeur}
+La partie installation concerne toute la logique et la presentation du processus d'installation. 
+\subsubsection{Exemples de panels}
+
 \section{Exemples d'installation}
 \subsection{Description du xml}
 \subsection{Generation du jar}
