@@ -14,6 +14,16 @@ DOM -> root possede 3 enfants (\n; <noeud1>; \n)
 \end{verbatim}
 \subsection{Presence de nanoxml}
 \subsection{Utilisation de nanoxml}
+\begin{verbatim}
+        StdXMLParser parser = new StdXMLParser();
+        parser.setBuilder(XMLBuilderFactory.createXMLBuilder());
+        parser.setReader(new StdXMLReader(in));
+        parser.setValidator(new NonValidator());
+
+        // We get the data
+        XMLElement data = (XMLElement) parser.parse();
+\end{verbatim}
+
 \section{Elaboration de la solution}
 \subsection{Remplacer les appels}
 \subsection{Utilisation d'un design pattern}
