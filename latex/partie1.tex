@@ -3,23 +3,22 @@ IzPack est un générateur d'installeur d'application open-source crée en 2001 
 \subsection{Générateur d'installeur}
 A partir d'une application cree, Izpack est capable de generer un installateur. Cet installateur pourra etre utilise pour deployer l'application sur n'importe quelle machine. L'interet d'Izpack reside dans le fait que cree une installation est souvent laborieux et n'apporte que peu de plus-value au programme. Izpack propose une solution pour creer cet installeur de maniere simple et universelle. 
 
-Izpack 
 Tout type de programme peut etre package, que ce soit une application C++, Java...
 \subsection{Open-source}
-Izpack est sous license Apache2. Cette license permet l'acces au code source et l'utilisation du logicielle. Il est tout a fait possible de l'utiliser pour une application commerciale voire, de modifier les sources pour correspondre a ses besoins. Une importante communaute s'est regroupee autour de ce projet ce qui a permit son evolution jusqu'a maintenant.
+Izpack est sous license Apache 2. Cette license permet l'acces au code source et l'utilisation du logicielle. Il est tout a fait possible de l'utiliser pour une application commerciale voire meme, de modifier les sources pour correspondre a ses besoins. Une importante communaute s'est regroupee autour de ce projet ce qui a permit son evolution jusqu'a maintenant. Il est souhaite mais pas obligatoire de contribuer si des modifications utiles ont ete realisees afin d'en faire profiter la communaute, mais ce n'est pas une obligation. 
 
 \subsection{Fonctionnalités}
-Izpack possède plusieurs fonctionnalités, nous allons en voir les principales :
-\subsubsection{multi-plateforme}
-Izpack crée un installeur Java. Il suffit donc que la machine ait un machine virtuelle pour pouvoir lancer l'installation, indépendamment de la plateforme et du système d'exploitation.
+Izpack est un systeme modulaire, il possède de nombreuses fonctionnalités pour creer un installeur adapte a chacun.
+\subsubsection{Multi-plateforme}
+L'installeur generee par Izpack est un jar (java archive). Il suffit donc que la machine ait un machine virtuelle pour pouvoir lancer l'installation, indépendamment de la plateforme et du système d'exploitation. Il est neanmoins possibles de faire des traitements specifiques a certaines plateforme ou de wrapper l'installeur pour etre specifique a une plateforme. 
 \subsubsection{Personnalisation}
-Izpack possède un ensemble de ``panneaux'' (panel en anglais) qui vont constituer l'installateur graphique. L'aspect global et l'aspect des panels est personnalisable par l'utilisateur via le descripteur XML.
+Izpack possède un ensemble de panels qui vont constituer l'installateur graphique. Chaque panels remplint une fonction specifique. L'aspect global et l'aspect des panels est personnalisable par l'utilisateur via le descripteur XML.
 \subsubsection{Internationalisation}
 Izpack supporte la création d'installeur multilangues. Pour la localisation, tout repose sur des fichiers XML.
 \subsubsection{Installation automatique}
 A la fin de l'installation, il est possible de générer un script d'installation automatique. Ce script permet de reproduire l'installation réalisée sur d'autres machines.
 \subsection{Popularité}
-Izpack est utilisé dans de grand projets comme Jboss, Xwiki, Glassfish... A l'heure actuelle, les téléchargements mensuels s'élèvent a 15.000.
+Izpack est utilisé dans de grand projets comme Jboss, Xwiki, Glassfish... A l'heure actuelle, les téléchargements mensuels s'élèvent a 25.000.
 % Image des telechargement?
 \section{Architecture}
 \subsection{Architecture globale}

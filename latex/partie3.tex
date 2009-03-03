@@ -12,8 +12,12 @@
 Nano -> root possede 1 enfant
 DOM -> root possede 3 enfants (\n; <noeud1>; \n)
 \end{verbatim}
-\subsection{Presence de nanoxml}
-\subsection{Utilisation de nanoxml}
+\subsection{Presence de Nanoxml}
+Comme nous avons pu le voir, IzPack utilise intesement des fichiers XML pour gerer les generations d'installations. En effet, les fichiers XML presentent l'avantage d'etre lisible, ecrivables et facilement traitables. Pour traiter ces fichiers, une librairies a ete utilisee, il s'agit de NanoXml.
+
+NanoXml est une librairie de gestion de Xml java. Elle presente la particularite d'etre legere (~150Ko). Il est possible, grace a cette librairie, d'ecrire ou de parser des fichiers Xml. Une fois le fichier parse, on recupere en memoire la structure de l'arbre Xml qui peut alors etre exploite.
+
+\subsection{Utilisation de Nanoxml}
 \begin{verbatim}
         StdXMLParser parser = new StdXMLParser();
         parser.setBuilder(XMLBuilderFactory.createXMLBuilder());
@@ -37,7 +41,7 @@ XMLElements de NanoXml ~ Node Element
 Dom possede pls types de noeuds : Comment, Text, element
 
 Xinclude : gerer de maniere native par Javax
-XfragmentL Non present dans la specifiaction W3C:
+Xfragment Non present dans la specifiaction W3C:
 -> Permet include de noeuds sans racines
 Passage par une feuille XSL
 -> include puis suppression des Xfragment
