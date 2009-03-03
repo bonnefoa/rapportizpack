@@ -1,53 +1,62 @@
-\section{Plannification et gestion de projet}
+\section{Planification et gestion de projet}
 \subsection{Lighthouse}
-Lighthouse est un gestionnaire de projet. Il permet d'assigner des taches, de les repartir et de le gerer. On peut distinguer deux entites principales, les tickets et les sprints.
-% Need schema pour le workflow lightouse
+Lighthouse est un gestionnaire de projet. Il permet d'assigner des tâches, de les répartir et de les gérer. On peut distinguer deux entités principales, les tickets et les sprints.
+% Need schema pour le workflow lighthouse
 \subsection{Ticket}
-Les Tickets representent une tache a realiser. Ils peuvent etre cree par n'importe quel participant au projet. Ce ticket peut ensuite etre assigner a une personne et possede plusieurs etats.
+Les Tickets représentent une tâche à réaliser. Ils peuvent être crées par n'importe quel participant au projet. Ce ticket peut ensuite être assigner à une personne et possède plusieurs états.
 \begin{description}
-\item[Nouveau] Le ticket vient d'etre cree. Il peut etre assigne doit etre assigne pour etre traite.
-\item[Ouvert] Le ticket commence a etre traite.
-\item[Clos] Le ticket a ete resolue et est ferme.
-% \item[Ouvert] Le ticket vient d'etre cree et 
+\item[Nouveau] Le ticket vient d'être crée. Il peut être assigné (et le doit pour être traité).
+\item[Ouvert] Le ticket commence a être traité.
+\item[Clos] Le ticket a été résolu et est fermé.
 \end{description}
-Chacun de ces tickets peut etre assigne a un sprint.
+Chacun de ces tickets peut être assigné à un sprint.
 \subsection{Sprint}
-Un sprint est un ensemble de ticket a resoudre pour une date donnee. En generale, la duree d'un sprint etait de 2 semaines, parfois 1 semaine. A chaque fin de sprint, une reunion etait organisee pour discuter des resultats, des reports a effectuer ou des tickets a creer.
+Un sprint est un ensemble de ticket à résoudre pour une date donnée. En général, la durée d'un sprint était de 2 semaines, parfois une. A chaque fin de sprint, une réunion était organisée pour discuter des résultats, des reports à effectuer ou des tickets à créer.
 \section{Gestionnaire de version}
 
-- GitHub : Gestionnaire de depot Git
--> Fork du projet
+- GitHub : Gestionnaire de dépôt Git
+-> Duplicat (fork) du projet
 -> Travail collaboratif et ouvert 
 -> Consultation de l'historique
 -> Visionnage des branches
 
-Tout projet informatique se doit d'etre sous gestionnaire de version. Sans compter que le fait que le projet soit open-source et actif provoquait des changements importants dans le code. Il fallait donc pouvoir travailler en parallele aux changement operer par les contributeurs et pour appliquer nos modifications le jour venus.
+Tout projet informatique se doit d'être sous gestionnaire de version. Sans compter que le fait que le projet soit open-source et actif provoquait des changements importants dans le code. Il fallait donc pouvoir travailler en parallèle aux changement opérer par les contributeurs et pour appliquer nos modifications le jour venus.
 
-Le depot de reference est un depot Subversion. Les contributeurs appliquent leurs modifications sur ce depot. Cependant, pour des raisons de facilite et pour ne pas perturbe le developpement, il a ete decide de travailler sur un fork Git.
+Le dépôt de référence est un dépôt Subversion. Les contributeurs appliquent leurs modifications sur ce dépôt. Cependant, pour des raisons de facilité et pour ne pas perturber le développement, il a été décidé de travailler sur un fork Git.
 \subsection{Git}
-Git est un gestionnaire de version recent. Il a ete cree en 2004 par Linux Torvald pour remplacer BitKeeper, l'ancien gestionnaire de version du noyau linux. Il s'agit, a l'instar de BitKeeper, d'un systeme distribue. Toutes les copies du depot sont elles-memes des serveurs. Chaque personne travaille donc sur son propre depot et se synchronis par rapport a d'autres depots. C'est de cette aspect distribue que provient une grande partie de la puissance de Git. Un utilisateur a acces a l'historique entier une fois qu'il a clone le depot. Il peut effectuer toutes les operations voulues sur son depot en etant deconnecte et chaque clone et une sauvegarde integrale du depot. La communication se fait soit par ssh, https, ftp, rsync ou par le protocol git.
+Git est un gestionnaire de version récent. Il a été crée en 2004 par Linux Torvald pour remplacer BitKeeper, l'ancien gestionnaire de version du noyau linux.
+Il s'agit, à l'instar de BitKeeper, d'un système distribué. Toutes les copies du dépôt sont elles-mêmes des serveurs.
+Chaque personne travaille donc sur son propre dépôt et se synchronise par rapport à d'autres dépôts. C'est de cet aspect distribué que provient une grande partie de la puissance de Git.
+Un utilisateur a accès à l'historique entier une fois qu'il a cloné le dépôt. Il peut effectuer toutes les operations voulues sur son dépôt en étant déconnecté et chaque clone est une sauvegarde intégrale du dépôt.
+La communication se fait soit par le protocole ssh, https, ftp, rsync ou par le protocole git.
 
-Il apporte egalement des fonctionnalites evoluees. L'un des principaux point est la gestion des branches. La creation, suppression et fusion des branches est remarquable de simplicite et d'efficacite. La taille d'un depot Git est faible compare a des gestionnaires comme subversion.
+Il apporte également des fonctionnalités évoluées. L'un des principaux points est la gestion des branches. La création, suppression et fusion des branches est remarquable de simplicité et d'efficacité.
+La taille d'un dépôt Git est faible comparée à celle d'autres gestionnaires comme subversion.
 
-Julien Ponge entretient un depot Git synchronise par rapport au Subversion. Nous avons travaille sur ce depot et cree un fork. Nous pouvions a tout moment synchronise notre depot par rapport au depot d'origine et ainsi, appliquee toutes les modifications des contrbuteurs a notre depot. Cela permettait de preparer l'application de nos modifications de manieres aisee. Tout ces depots sont heberges sur GitHub.
+Julien Ponge entretient un dépôt Git synchronisé par rapport au Subversion. Nous avons travaillé sur ce dépôt et crée un fork.
+Nous pouvions à tout moment synchroniser notre dépôt par rapport au dépôt d'origine et ainsi, appliquer toutes les modifications des contributeurs à notre dépôt.
+Cela permettait de préparer l'application de nos modifications de manière aisée. Tout ces dépôts sont hébergés sur GitHub.
 \subsection{GitHub}
-GitHub est une plateforme colaborative. Cette plateforme permet de creer, forker, supprimer ou consulter des depots Git. Il est possible de choisir de donner les droits de commit a d'autres personnes sur nos depots. Toutes les realisations faites sont ouvertes et disponibles a tout le monde. C'est a dire que tout le monde est libre de cloner ou de forker les projets presents sur GitHub. Cette plateforme pernet d'avoir un depot de reference disponible 
-\section{Outils de developpement}
+GitHub est une plateforme collaborative. Cette plateforme permet de créer, dupliquer, supprimer ou consulter des dépôts Git.
+Il est possible de choisir de donner les droits de commit à d'autres personnes sur nos dépôts. Toutes les réalisations faites sont ouvertes et disponibles à tout le monde.
+C'est à dire que tout le monde est libre de cloner ou de forker les projets présents sur GitHub.
+Cette plateforme permet d'avoir un dépôt de référence disponible 
+\section{Outils de développement}
 \subsection{IntelliJ Idea}
--> IDE specialisee technologies Java
-Nombreuses fonctionnalitees presentes
+-> IDE spécialisée technologies Java
+Nombreuses fonctionnalités présentes
 -> Recherche implementation 
 -> Preserve Case
 -> Refactoring puissant
 
-IntelliJ est un environnement de developpement integre similaire a Eclipse. Il est proprietaire et necessite une license pour son fonctionnement. Cependant, JetBrain, l'editeur de IntelliJ, a une politique d'ouverture pour les projets open-source et tout ces projets beneficient d'une license dediee. 
+IntelliJ est un environnement de développement intégré similaire à Eclipse. Il est propriétaire et nécessite une licence pour son fonctionnement. Cependant, JetBrain, l'éditeur de IntelliJ, a une politique d'ouverture pour les projets open-source et tout ces projets bénéficient d'une licence dédiée.
 
-Il presente certaines divergences avec les IDE comme Eclipse et NetBeans. Il possede une plus grande veriete de fonctionnalite et l'integration d'un grand nombre de composants. On trouve ainsi l'integration de framework recent comme GWT ou d'outils comme Git. L'integration de Maven et egalement tres completes. 
+Il présente certaines divergences avec les IDE comme Eclipse et NetBeans. Il possède une plus grande variété de fonctionnalités et l'intégration d'un grand nombre de composants. On trouve ainsi l'intégration de framework récent comme GWT ou d'outils comme Git. L'intégration de Maven et également très complète.
 \subsection{Yourkit}
 Profiler Java
--> Temps, nombres d'appels des methodes
+-> Temps, nombres d'appels des méthodes
 -> Affichage de la charge a tout moment
 
-Yourkit est un outil de profiling. Il permet d'avoir un rapport detaille sur l'utilisation des resources par le programmes. On peut ainsi recuperer le nombre d'appel a une methode, le temps passe dans une methode, l'utilisation des resources a un temps donne.
+Yourkit est un outil de profiling. Il permet d'avoir un rapport détaillé sur l'utilisation des ressources par le programmes. On peut ainsi récupérer le nombre d'appel à une méthode, le temps passé dans une méthode, l'utilisation des ressources à un temps donné.
 
-Le but du profiling a ete de reperer les optimisations possibles sur les modifications que l'on a operees.
+Le but du profiling a été de repérer les optimisations possibles sur les modifications que l'on a opérées.
