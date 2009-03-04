@@ -6,8 +6,7 @@ Le projet etant open-source et actif, il evolue sans cesse. La partie sur laquel
 % -> -> DOM : Tout est noeud
 % -> -> NanoXml : Base sur les tags (elements)
 \section{Nanoxml}
-Comme nous avons pu le voir, IzPack utilise intessement des fichiers XML pour gerer la generation d'installations. En effet, les fichiers XML presentent l'avantage d'etre lisible, ecrivable a la main et traitables. Pour traiter ces fichiers, une librairies a ete utilisee, il s'agit de NanoXml.
-
+Comme nous avons pu le voir, IzPack utilise intessement des fichiers XML pour gerer la generation d'installations. En effet, les fichiers XML presentent l'avantage d'etre lisible, ecrivable a la main et traitables. Pour traiter ces fichiers, une librairie a ete utilisee, il s'agit de NanoXml.
 \subsection{Le projet NanoXml}
 NanoXml est une librairie open-source de gestion de Xml java. Elle presente la particularite d'etre legere (~108Ko). Il est possible, grace a cette librairie, d'ecrire ou de parser des fichiers Xml. Une fois le fichier parse, on recupere en memoire la structure de l'arbre Xml qui peut alors etre exploite. Le choix de cette librairie a ete faite au commencement de Izpack a cause de sa taille. En effet, il ete important de ne pas surcharge l'application a installe par un installeur imposant. 
 
@@ -17,13 +16,22 @@ On trouve differents elements dans NanoXml.
 \subsubsection{StdXMLParser}
 Le parser permet de creer un arbre logique representant le fichier xml qui lui a ete passe. Il est systematiquement utilise au moment de la lecture du fichier afin de recuperer l'arbre.
 \subsubsection{XMLElement}
+Le XMLElement represente un element logique du xml en memoire. Par exemple :
+\begin{verbatim}
+<root>
+	<enfant>
+		content
+	</enfant>
+</root>
+\end{verbatim}
+En parsant un fichier contenant ce Xml, on a un XMLElement nomme root qui possede 1 enfant. Son enfant est un XMLElement ne dont le contenue est content.
 
+L'arborescence du XML est donc realise par un ensemble de XMLElement. XMLElement permet de recuperer la liste des enfants, le contenu, recherche un enfant par son nom, retirer un enfant, ajouter un enfant ou modifier le contenu. Il s'agit de loin de la classe la plus utilisee de la librairie NanoXml dans Izpack. En effet, on compte pas moins de 499 utilisations au commencement de ce projet.
 \subsubsection{XMLWriter}
-Le XMLWriter permet d'ecrire des fichiers XML. Il reproduit, a partir d'un XML element, le fichier XML correspondant.
-
-
-
-
+Le XMLWriter permet d'ecrire des fichiers XML. Il reproduit, a partir d'un XML element, le fichier XML correspondant. Il n'est utilise que pour generer un xml temporaire ou pour ecrire le xml d'installation automatique. 
+\subsection{Utilisation typique dans Izpack}
+\subsubsection{Parse de fichier}
+Le parse du fichier est execute pour recuperer le XML.
 \begin{verbatim}
         StdXMLParser parser = new StdXMLParser();
         parser.setBuilder(XMLBuilderFactory.createXMLBuilder());
@@ -33,9 +41,30 @@ Le XMLWriter permet d'ecrire des fichiers XML. Il reproduit, a partir d'un XML e
         // We get the data
         XMLElement data = (XMLElement) parser.parse();
 \end{verbatim}
-
+\subsubsection{Ecriture d'un xml}
+\begin{verbatim}
+       XMLWriter writer = new XMLWriter(out);
+        ...
+        writer.write(xmlElemetn);
+\end{verbatim}
+\subsubsection{Utilisation de XMLElement}
+\begin{verbatim}
+String id = el.getAttribute("id");
+String packImgId = el.getAttribute("packImgId");
+boolean loose = "true".equalsIgnoreCase(el.getAttribute("loose", "false"));
+String description = requireChildNamed(el, "description").getContent();
+boolean required = requireYesNoAttribute(el, "required");
+String group = el.getAttribute("group");
+String installGroups = el.getAttribute("installGroups");
+String excludeGroup = el.getAttribute("excludeGroup");
+boolean uninstall = "yes".equalsIgnoreCase(el.getAttribute("uninstall", "yes"));
+String parent = el.getAttribute("parent");
+String conditionid = el.getAttribute("condition");
+\end{verbatim}
 \section{Elaboration de la solution}
+Face a ce probleme, notre travail a ete de chercher une solution pour permettre de remplacer de NanoXml et de l'appliquer au projet. Mais ils y avaient plusieurs problemes a cela.
 \subsection{Les differences entre javax et NanoXml}
+
 \begin{verbatim}
 <!--comment>commentaire<comment-->
 <root>
