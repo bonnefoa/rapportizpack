@@ -1,21 +1,21 @@
-\section{Etat au commencement du projet}
+\section{État au commencement du projet}
 -> Utilisation intensive de XML
--> Philosophie de nanoXXml et de DOM differente
+-> Philosophie de nanoXml et de DOM différente
 -> -> DOM : Tout est noeud
--> -> NanoXml : Base sur les tags (elements)
+-> -> NanoXml : Base sur les tags (éléments)
 \begin{verbatim}
 <!--comment>commentaire<comment-->
 <root>
 	<noeud1>text</noeud1>
 </root>
 
-Nano -> root possede 1 enfant
-DOM -> root possede 3 enfants (\n; <noeud1>; \n)
+Nano -> root possède 1 enfant
+DOM -> root possède 3 enfants (\n; <noeud1>; \n)
 \end{verbatim}
-\subsection{Presence de Nanoxml}
-Comme nous avons pu le voir, IzPack utilise intesement des fichiers XML pour gerer les generations d'installations. En effet, les fichiers XML presentent l'avantage d'etre lisible, ecrivables et facilement traitables. Pour traiter ces fichiers, une librairies a ete utilisee, il s'agit de NanoXml.
+\subsection{Présence de Nanoxml}
+Comme nous avons pu le voir, IzPack utilise intensement des fichiers XML pour gérer les générations d'installations. En effet, les fichiers XML présentent l'avantage d'être lisible, ecrivables et facilement traitables. Pour traiter ces fichiers, une librairies a été utilisée, il s'agit de NanoXml.
 
-NanoXml est une librairie de gestion de Xml java. Elle presente la particularite d'etre legere (~150Ko). Il est possible, grace a cette librairie, d'ecrire ou de parser des fichiers Xml. Une fois le fichier parse, on recupere en memoire la structure de l'arbre Xml qui peut alors etre exploite.
+NanoXml est une librairie de gestion de Xml java. Elle présente la particularité d'être légère (~150Ko). Il est possible, grâce a cette librairie, d'écrire ou de parser des fichiers Xml. Une fois le fichier parse, on récupère en mémoire la structure de l'arbre Xml qui peut alors être exploite.
 
 \subsection{Utilisation de Nanoxml}
 \begin{verbatim}
@@ -28,7 +28,7 @@ NanoXml est une librairie de gestion de Xml java. Elle presente la particularite
         XMLElement data = (XMLElement) parser.parse();
 \end{verbatim}
 
-\section{Elaboration de la solution}
+\section{Élaboration de la solution}
 \subsection{Remplacer les appels}
 \subsection{Utilisation d'un design pattern}
 Extraction d'interface du xmlElement.
@@ -38,9 +38,9 @@ Extraction d'interface du xmlElement.
 
 XMLElements de NanoXml ~ Node Element
 
-Dom possede pls types de noeuds : Comment, Text, element
+Dom possède plusieurs types de noeuds : Comment, Text, element
 
-Xinclude : gerer de maniere native par Javax
+Xinclude : géré de maniere native par Javax
 Xfragment Non present dans la specifiaction W3C:
 -> Permet include de noeuds sans racines
 Passage par une feuille XSL
@@ -57,3 +57,13 @@ NanoXml : 116Ko
 Adaptateur : 44Ko
 \subsection{Support de fonctionnalitees XML}
 DTD, xinclude
+
+\section{Au delà du sujet}
+Une fois l'objectif du projet atteint, nous avons décidé d'accepter l'offre de Julien Ponge en devenant contributeurs officiels du projet. Au même moment, nos apports étaient intégrés au dépot officiels et se retrouveront dans la prochaine version 4.3.
+
+\subsection{Suivi de nos apports}
+Etant désormais développeur sur le projet IzPack nous avons pu suivre et corriger les problèmes rencontrés par la communauté de IzPack.
+
+\subsection{Correction de bugs}
+
+\subsection{Ajout/Amélioration}
