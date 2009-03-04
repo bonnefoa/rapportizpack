@@ -29,9 +29,9 @@ archive=true
 column=20
 encoding=UTF-8
 highlight=LaTeX
-line=23
-open=false
-order=0
+line=49
+open=true
+order=1
 
 [item:conclusion.tex]
 archive=true
@@ -80,19 +80,19 @@ order=0
 
 [item:partie2.tex]
 archive=true
-column=52
+column=44
 encoding=UTF-8
 highlight=LaTeX
-line=11
+line=0
 open=false
 order=0
 
 [item:partie3.tex]
 archive=true
-column=9
+column=212
 encoding=UTF-8
 highlight=LaTeX
-line=43
+line=13
 open=true
 order=0
 
