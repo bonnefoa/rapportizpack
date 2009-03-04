@@ -10,7 +10,7 @@ Comme nous avons pu le voir, IzPack utilise intensemment des fichiers XML pour g
 \subsection{Le projet NanoXml}
 NanoXml est une librairie java open-source de gestion de Xml. Elle presente la particularite d'etre legere (108Ko). Il est possible, grace a cette librairie, d'ecrire ou de parser des fichiers Xml. Une fois le fichier parse, on recupere en memoire la structure de l'arbre Xml qui peut alors etre exploite. Le choix de cette librairie a ete fait au commencement de Izpack a cause de sa taille. En effet, il est important que le la partie installeur ne prenne pas le pas sur le logiciel a installer.
 
-Cependant, ce projet n'est plus mis a jour depuis 7 ans, et des bugs ont ete decouvert. Entre temps, java a ajoute a sa JRE (depuis la version 1.4) tout ce qu'il faut pour gerer le xml. Il devenait interessant de remplacer NanoXml par Jaxp(Java API for XML Processing), la librairie fournie par la machine virtuelle.
+Cependant ce projet n'est plus mis a jour depuis 7 ans, et des bugs ont ete decouvert. Entre temps, java a ajoute a sa JRE (depuis la version 1.4) tout ce qu'il faut pour gerer le xml. Il devenait interessant de remplacer NanoXml par Jaxp (Java API for XML Processing), la librairie fournie par la machine virtuelle.
 \subsection{Les differents composants de NanoXml}
 On trouve differents elements dans NanoXml.
 \subsubsection{StdXMLParser}
@@ -89,7 +89,7 @@ La principale difference vient de l'element atomique : le noeud de DOM ne repres
 \end{lstlisting}
 Dans ce morceau de xml, nanoXML comptera 1 enfant a l'element \verb|root| : \verb|noeud1|. DOM comptera 3 noeuds : du texte (le retour a la ligne et la tabulation), \verb|noeud1| et a nouveau du texte (un retour a la ligne).
 
-DOM possede neanmoins une interface, \verb|Element|, qui correspond a la classe \verb|XMLElement| de nanoXML.
+DOM possede neanmoins une interface derivant de \verb|Node|, \verb|Element|, qui correspond a la classe \verb|XMLElement| de nanoXML.
 
 \subsubsection{Methode getContent}
 pas pareil, mais pas d'exemple en tete
@@ -105,6 +105,8 @@ XMLElements de NanoXml ~ Node Element
 
 
 \subsubsection{Xinclude}
+La balise \verb|xinclude| permet d'inclure un fichier xml externe. Ainsi, on peut utiliser un xml très succinct (et donc facilement lisible/compréhensible) qui inclut d'autres fichiers xml decrivant uniquement certaines parties de l'installation. Cette fonctionnalite, absente de nanoXML, a ete mise en place en modifiant directement le code se son parseur.
+
 Xinclude : géré de maniere native par Jaxp
 Xfragment Non present dans la specifiaction W3C:
 -> Permet include de noeuds sans racines
@@ -116,13 +118,13 @@ Une fonctionnalite de nanoXML est la gestion des numeros de lignes. Lors qu'une 
 
 Du point de vue de DOM, les numeros de lignes n'ont pas de signification : une fois le fichier xml parse, seul l'arbre DOM construit en memoire importe. Cet arbre reecrit dans un fichier ne correspondra pas forcement (pour les numeros de lignes, l'indentation, etc) au fichier de depart, sans parler des ajouts/suppressions/modifications de noeuds.
 
-A l'inverse du point de vue de SAX, les numeros de lignes sont obtenu facilement. Dans ce cas la, il est utile de savoir a quel endroit on se trouve dans le document.
+A l'inverse du point de vue de SAX, les numeros de lignes sont obtenues facilement. Dans ce cas la, il est utile de savoir a quel endroit on se trouve dans le document.
 
 Afin d'obtenir les numeros de ligne dans un arbre DOM, les deux points de vue ont ete utilises grace a un Transformer.
 On cree une source SAX, a laquelle on ajoute un filtre pour ecouter les evenements (et stocker les numeros de lignes en cas de debut de balise).
 En parallele, on cree un resultat DOM, qui contiendra le resultat du parse (l'arbre DOM).
-Enfin, on utilise un Transformer : il va utiliser la source SAX (les numeros de lignes sont stockees) et remplir le resultat DOM.
-Il suffit de parcourir l'arbre DOM pour ajouter a chaque element son numero de ligne.
+On utilise ensuite un Transformer : il va utiliser la source SAX (les numeros de lignes sont stockees a ce moment par le filtre) et remplir le resultat DOM.
+Enfin, il suffit de parcourir l'arbre DOM pour ajouter a chaque element son numero de ligne.
 Ce nombre est stocke dans les ``user data'', ajoute dans la version 3  de DOM pour stocker diverses informations supplementaires dans un noeud.
 
 \section{Application et tests}
@@ -156,3 +158,4 @@ Nous avons egalement corrige plusieurs bugs.
 \end{itemize}
 
 \subsection{Ajout/Amélioration}
+% uninstalldatawriter si j'ai le temps
