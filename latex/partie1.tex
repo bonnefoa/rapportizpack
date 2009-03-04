@@ -64,7 +64,7 @@ De nombreux exemples complexes existent, par exemple l'installeur de IzPack, cel
 
 Ce xml (install.xml) décrit complètement l'installation.
 Une balise \verb|info| permet de définir les informations concernant l'application : 
-\begin{lstlisting}
+\begin{lstlisting}[language=xml]
 <info>
 	<appname>Sample Installation</appname>
 	<appversion>1.4 beta 666</appversion>
@@ -72,7 +72,7 @@ Une balise \verb|info| permet de définir les informations concernant l'applicat
 </info>
 \end{lstlisting}
 Une autre balise, \verb|guipref| permet de définir quelques propriétés de la fenêtre de l'installeur :
-\begin{lstlisting}
+\begin{lstlisting}[language=xml]
 <guiprefs width="640" height="480" resizable="yes"/>
 \end{lstlisting}
 Les langues sont définies par la balise \verb|locale| :
@@ -84,13 +84,13 @@ Les langues sont définies par la balise \verb|locale| :
 \end{lstlisting}
 Des fichiers externes nécessaires à l'installation peuvent être définis par la balise \verb|resources| :
 
-\begin{lstlisting}
+\begin{lstlisting}[language=xml]
 <resources>
 	<res id="LicencePanel.licence" src="Licence.txt"/>
 </resources>
 \end{lstlisting}
 Les panels visibles par l'utilisateur sont décrits dans la balise \verb|panels| :
-\begin{lstlisting}
+\begin{lstlisting}[language=xml]
 <panels>
 	<panel classname="HelloPanel"/>
 	...
@@ -98,17 +98,17 @@ Les panels visibles par l'utilisateur sont décrits dans la balise \verb|panels|
 </panels>
 \end{lstlisting}
 Enfin la balise \verb|packs| contient la description des packs (les differentes parties, optionnelles ou non, de l'application) a installer.
-\begin{lstlisting}
+\begin{lstlisting}[language=xml]
 <packs>
-<pack name="Base" required="yes">
-	<description>The base files</description>
-	<file src="Readme.txt" targetdir="$INSTALL_PATH"/>
+	<pack name="Base" required="yes">
+		<description>The base files</description>
+		<file src="Readme.txt" targetdir="$INSTALL_PATH"/>
+		...
+	</pack>
+	<pack name="Docs" required="no">
+		...
+	</pack>
 	...
-</pack>
-<pack name="Docs" required="no">
-	...
-</pack>
-...
 </packs>
 \end{lstlisting}
 Bien sûr d'autres options existent, mais celles présentées ici suffisent à créer notre installeur.
