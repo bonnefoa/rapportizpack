@@ -61,9 +61,14 @@ boolean uninstall = "yes".equalsIgnoreCase(el.getAttribute("uninstall", "yes"));
 String parent = el.getAttribute("parent");
 String conditionid = el.getAttribute("condition");
 \end{verbatim}
+\section{Javax}
+Javax, le processor Xml de Sun, respecte les normes W3C. Il y a deux manieres d'exploiter les XML avec Javax, soit en utilisant le parseur Sax, soit en utilisant le parseur DOM.
+\subsection{SAX}
+SAX 
+\subsection{DOM}
 \section{Elaboration de la solution}
 Face a ce probleme, notre travail a ete de chercher une solution pour permettre de remplacer de NanoXml et de l'appliquer au projet. Mais ils y avaient plusieurs problemes a cela.
-\subsection{Les differences entre javax et NanoXml}
+\subsection{Les differences entre Javax et NanoXml}
 
 \begin{verbatim}
 <!--comment>commentaire<comment-->
