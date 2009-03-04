@@ -26,12 +26,12 @@ order=-1
 
 [item:annexes.tex]
 archive=true
-column=20
+column=0
 encoding=UTF-8
 highlight=LaTeX
-line=49
+line=103
 open=true
-order=1
+order=0
 
 [item:conclusion.tex]
 archive=true
@@ -65,7 +65,7 @@ archive=true
 column=0
 encoding=UTF-8
 highlight=LaTeX
-line=33
+line=99
 open=false
 order=0
 
@@ -89,12 +89,12 @@ order=0
 
 [item:partie3.tex]
 archive=true
-column=212
+column=0
 encoding=UTF-8
 highlight=LaTeX
-line=13
+line=96
 open=true
-order=0
+order=1
 
 [item:rapportizpack.kilepr]
 archive=true

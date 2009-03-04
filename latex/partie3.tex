@@ -80,8 +80,10 @@ Comme nous avons vu precedement, les 2 api ne proposent pas la meme approche pou
 
 Nous allons donc comparer l'interface DOM et NanoXml pour determiner la meilleure approche a prendre.
 \subsubsection{Parse du XML}
-\subsubsection{Utilisation du XML}
 
+\subsubsection{Utilisation du XML}
+\subsubsection{Representation du XML}
+Nous avons vu que Dom considere tout les elements comme des noeuds alors que NanoXml se base sur les tags. Concretement, en suivant l'exemple suivant:
 \begin{verbatim}
 <!--comment>commentaire<comment-->
 <root>
@@ -89,8 +91,10 @@ Nous allons donc comparer l'interface DOM et NanoXml pour determiner la meilleur
 </root>
 
 Nano -> root possede 1 enfant
-DOM -> root possede 3 enfants (\n; <noeud1>; \n)
+DOM -> root possede 3 enfants (\n<noeud1>\n)
 \end{verbatim}
+Les nodes de DOM ne representent pas la meme entite que les element de NanoXml. Les Nodes englobant une plus grande variete de composants.
+
 \subsection{Remplacer les appels}
 \subsection{Utilisation d'un design pattern}
 Extraction d'interface du xmlElement.
