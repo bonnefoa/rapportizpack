@@ -1,4 +1,4 @@
-\section{État au commencement du projet}
+% \section{État au commencement du projet}
 Le projet etant open-source et actif, il evolue sans cesse. La partie sur laquelle nous avons travaille est relativement stable mais son utilisation peut varier dans le code. Nous allons voir la portee de l'utilisation de nanoXml, comment il est utilise et enfin la solution apportee.
 
 % -> Utilisation intensive de XML
@@ -10,7 +10,7 @@ Comme nous avons pu le voir, IzPack utilise intessement des fichiers XML pour ge
 \subsection{Le projet NanoXml}
 NanoXml est une librairie open-source de gestion de Xml java. Elle presente la particularite d'etre legere (~108Ko). Il est possible, grace a cette librairie, d'ecrire ou de parser des fichiers Xml. Une fois le fichier parse, on recupere en memoire la structure de l'arbre Xml qui peut alors etre exploite. Le choix de cette librairie a ete faite au commencement de Izpack a cause de sa taille. En effet, il ete important de ne pas surcharge l'application a installe par un installeur imposant. 
 
-Cependant, ce projet n'est plus de mise a jour depuis 7 ans. Entretemps, java integre depuis la version 1.4 un parser Xml et des bugs ont ete decouvert. Il devenait interessant de remplacer NanoXml par Javax, la librairie fournie par la machine virtuelle.
+Cependant, ce projet n'est plus de mise a jour depuis 7 ans. Entretemps, java integre depuis la version 1.4 un parser Xml et des bugs ont ete decouvert. Il devenait interessant de remplacer NanoXml par Jaxp(Java API for XML Processing), la librairie fournie par la machine virtuelle.
 \subsection{Les differentes composantes de NanoXml}
 On trouve differents elements dans NanoXml.
 \subsubsection{StdXMLParser}
@@ -63,14 +63,24 @@ boolean uninstall = "yes".equalsIgnoreCase(el.getAttribute("uninstall", "yes"));
 String parent = el.getAttribute("parent");
 String conditionid = el.getAttribute("condition");
 \end{verbatim}
-\section{Javax}
-Javax, le processor Xml de Sun, respecte les normes W3C. Il y a deux manieres d'exploiter les XML avec Javax, soit en utilisant le parseur Sax, soit en utilisant le parseur DOM.
+\section{Jaxp}
+Jaxp, le processor Xml de Sun, respecte les normes W3C. Il y a deux manieres d'exploiter les XML avec Jaxp, soit en utilisant le parseur Sax, soit en utilisant le parseur DOM.
 \subsection{SAX}
-SAX 
+SAX (Simple API for Xml) est une API pour parser les XML. Cette API possede la particularite de proceder par evenement. C'est a dire que le parser va lire le fichier ligne par ligne et envoye un evenement pour chaque element particulier qu'il rencontre. 
+
+On a des evenements de commentaires, de text ou d'elements. L'avantages de cette API est l'utilisation memoire faible, comme le xml n'est pas mis en memoire mais lu et traite au fur et a mesure. Il permet de traiter sans probleme les fichiers important. En contrepartie, le traitement et la facilite de manipulation est plus difficile.
 \subsection{DOM}
+L'interface DOM(Document Object Model) de jaxp propose de mettre en memoire le xml et offre une interaction basee sur des nodes. En DOM, tout est nodes. Les commentaires, le texte ou les elements sont representes par des noeuds. Des sous-classes specialisent ces noeuds. comme Comment, Element ou Text.
+
+La manipulation des elements du xml se fait grace aux nodes. Il est possible de recuperer le voisin d'une node, d'enlever ou d'ajouter un enfant et de recuperer ou de modifier le contenue.
 \section{Elaboration de la solution}
 Face a ce probleme, notre travail a ete de chercher une solution pour permettre de remplacer de NanoXml et de l'appliquer au projet. Mais ils y avaient plusieurs problemes a cela.
-\subsection{Les differences entre Javax et NanoXml}
+\subsection{Les differences entre Jaxp et NanoXml}
+Comme nous avons vu precedement, les 2 api ne proposent pas la meme approche pour le traitement des Xml. Nous avons choisies d'utiliser l'interface DOM vu que les avantages de SAX ne sont pas necessaires et qu'il etait peut concevable de traiter les XML avce SAX dans IzPack.
+
+Nous allons donc comparer l'interface DOM et NanoXml pour determiner la meilleure approche a prendre.
+\subsubsection{Parse du XML}
+\subsubsection{Utilisation du XML}
 
 \begin{verbatim}
 <!--comment>commentaire<comment-->
@@ -92,7 +102,7 @@ XMLElements de NanoXml ~ Node Element
 
 Dom possède plusieurs types de noeuds : Comment, Text, element
 
-Xinclude : géré de maniere native par Javax
+Xinclude : géré de maniere native par Jaxp
 Xfragment Non present dans la specifiaction W3C:
 -> Permet include de noeuds sans racines
 Passage par une feuille XSL
