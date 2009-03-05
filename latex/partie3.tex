@@ -6,51 +6,49 @@ Le projet etant open-source et actif, il evolue sans cesse. La partie sur laquel
 % -> -> DOM : Tout est noeud
 % -> -> NanoXml : Base sur les tags (elements)
 \section{Nanoxml}
-Comme nous avons pu le voir, IzPack utilise intessement des fichiers XML pour gerer la generation d'installations. En effet, les fichiers XML presentent l'avantage d'etre lisible, ecrivable a la main et traitables. Pour traiter ces fichiers, une librairie a ete utilisee, il s'agit de NanoXml.
+Comme nous avons pu le voir, IzPack utilise intensemment des fichiers XML pour gerer la generation d'installations. En effet, les fichiers XML presentent l'avantage d'etre lisible, ecrivable a la main et traitables. Pour traiter ces fichiers, une librairie a ete utilisee, il s'agit de NanoXml.
 \subsection{Le projet NanoXml}
-NanoXml est une librairie open-source de gestion de Xml java. Elle presente la particularite d'etre legere (~108Ko). Il est possible, grace a cette librairie, d'ecrire ou de parser des fichiers Xml. Une fois le fichier parse, on recupere en memoire la structure de l'arbre Xml qui peut alors etre exploite. Le choix de cette librairie a ete faite au commencement de Izpack a cause de sa taille. En effet, il ete important de ne pas surcharge l'application a installe par un installeur imposant. 
+NanoXml est une librairie java open-source de gestion de Xml. Elle presente la particularite d'etre legere (108Ko). Il est possible, grace a cette librairie, d'ecrire ou de parser des fichiers Xml. Une fois le fichier parse, on recupere en memoire la structure de l'arbre Xml qui peut alors etre exploite. Le choix de cette librairie a ete fait au commencement de Izpack a cause de sa taille. En effet, il est important que le la partie installeur ne prenne pas le pas sur le logiciel a installer.
 
-Cependant, ce projet n'est plus de mise a jour depuis 7 ans. Entretemps, java integre depuis la version 1.4 un parser Xml et des bugs ont ete decouvert. Il devenait interessant de remplacer NanoXml par Jaxp(Java API for XML Processing), la librairie fournie par la machine virtuelle.
-\subsection{Les differentes composantes de NanoXml}
+Cependant ce projet n'est plus mis a jour depuis 7 ans, et des bugs ont ete decouvert. Entre temps, java a ajoute a sa JRE (depuis la version 1.4) tout ce qu'il faut pour gerer le xml. Il devenait interessant de remplacer NanoXml par Jaxp (Java API for XML Processing), la librairie fournie par la machine virtuelle.
+\subsection{Les differents composants de NanoXml}
 On trouve differents elements dans NanoXml.
 \subsubsection{StdXMLParser}
 Le parser permet de creer un arbre logique representant le fichier xml qui lui a ete passe. Il est systematiquement utilise au moment de la lecture du fichier afin de recuperer l'arbre.
 \subsubsection{XMLElement}
 Le XMLElement represente un element logique du xml en memoire. Par exemple :
-\begin{verbatim}
+\begin{lstlisting}[language=xml]
 <root>
-	<enfant>
+	<child>
 		content
-	</enfant>
+	</child>
 </root>
-Nano -> root possède 1 enfant
-DOM -> root possède 3 enfants (\n; <noeud1>; \n)
-\end{verbatim}
-En parsant un fichier contenant ce Xml, on a un XMLElement nomme root qui possede 1 enfant. Son enfant est un XMLElement ne dont le contenue est content.
+\end{lstlisting}
+En parsant un fichier contenant ce Xml, on a un XMLElement nomme root qui possede 1 enfant, \verb|child|. Son enfant est un XMLElement dont le contenu est content.
 
-L'arborescence du XML est donc realise par un ensemble de XMLElement. XMLElement permet de recuperer la liste des enfants, le contenu, recherche un enfant par son nom, retirer un enfant, ajouter un enfant ou modifier le contenu. Il s'agit de loin de la classe la plus utilisee de la librairie NanoXml dans Izpack. En effet, on compte pas moins de 499 utilisations au commencement de ce projet.
+L'arborescence du XML est donc realise par un ensemble de XMLElement. XMLElement permet de recuperer la liste des enfants, le contenu, rechercher un enfant par son nom, retirer un enfant, ajouter un enfant ou modifier le contenu. Il s'agit de loin de la classe la plus utilisee de la librairie NanoXml dans Izpack. En effet, on ne comptait pas moins de 499 utilisations au commencement de ce projet.
 \subsubsection{XMLWriter}
 Le XMLWriter permet d'ecrire des fichiers XML. Il reproduit, a partir d'un XML element, le fichier XML correspondant. Il n'est utilise que pour generer un xml temporaire ou pour ecrire le xml d'installation automatique. 
 \subsection{Utilisation typique dans Izpack}
 \subsubsection{Parse de fichier}
 Le parse du fichier est execute pour recuperer le XML.
-\begin{verbatim}
-        StdXMLParser parser = new StdXMLParser();
-        parser.setBuilder(XMLBuilderFactory.createXMLBuilder());
-        parser.setReader(new StdXMLReader(in));
-        parser.setValidator(new NonValidator());
+\begin{lstlisting}
+StdXMLParser parser = new StdXMLParser();
+parser.setBuilder(XMLBuilderFactory.createXMLBuilder());
+parser.setReader(new StdXMLReader(in));
+parser.setValidator(new NonValidator());
 
-        // We get the data
-        XMLElement data = (XMLElement) parser.parse();
-\end{verbatim}
+// We get the data
+XMLElement data = (XMLElement) parser.parse();
+\end{lstlisting}
 \subsubsection{Ecriture d'un xml}
-\begin{verbatim}
-       XMLWriter writer = new XMLWriter(out);
-        ...
-        writer.write(xmlElemetn);
-\end{verbatim}
+\begin{lstlisting}
+XMLWriter writer = new XMLWriter(out);
+...
+writer.write(xmlElemetn);
+\end{lstlisting}
 \subsubsection{Utilisation de XMLElement}
-\begin{verbatim}
+\begin{lstlisting}
 String id = el.getAttribute("id");
 String packImgId = el.getAttribute("packImgId");
 boolean loose = "true".equalsIgnoreCase(el.getAttribute("loose", "false"));
@@ -62,38 +60,39 @@ String excludeGroup = el.getAttribute("excludeGroup");
 boolean uninstall = "yes".equalsIgnoreCase(el.getAttribute("uninstall", "yes"));
 String parent = el.getAttribute("parent");
 String conditionid = el.getAttribute("condition");
-\end{verbatim}
+\end{lstlisting}
 \section{Jaxp}
 Jaxp, le processor Xml de Sun, respecte les normes W3C. Il y a deux manieres d'exploiter les XML avec Jaxp, soit en utilisant le parseur Sax, soit en utilisant le parseur DOM.
 \subsection{SAX}
 SAX (Simple API for Xml) est une API pour parser les XML. Cette API possede la particularite de proceder par evenement. C'est a dire que le parser va lire le fichier ligne par ligne et envoye un evenement pour chaque element particulier qu'il rencontre. 
 
-On a des evenements de commentaires, de text ou d'elements. L'avantages de cette API est l'utilisation memoire faible, comme le xml n'est pas mis en memoire mais lu et traite au fur et a mesure. Il permet de traiter sans probleme les fichiers important. En contrepartie, le traitement et la facilite de manipulation est plus difficile.
+On a des evenements de commentaires, de text ou d'elements. L'avantages de cette API est l'utilisation memoire faible, puisque le xml n'est pas mis en memoire mais lu et traite au fur et a mesure. Il permet de traiter sans probleme les fichiers importants. En contrepartie, le traitement et la manipulation d'un xml est plus difficile.
 \subsection{DOM}
-L'interface DOM(Document Object Model) de jaxp propose de mettre en memoire le xml et offre une interaction basee sur des nodes. En DOM, tout est nodes. Les commentaires, le texte ou les elements sont representes par des noeuds. Des sous-classes specialisent ces noeuds. comme Comment, Element ou Text.
+L'interface DOM(Document Object Model) de jaxp propose de mettre en memoire le xml et offre une interaction basee sur des noeuds (node en anglais). En DOM, tout est noeud, et le xml est equivalent a un arbre de noeuds. Les commentaires, le texte ou les elements sont representes par des noeuds. Des sous-classes specialisent ces noeuds. comme \verb|Comment|, \verb|Element| ou \verb|Text|.
 
-La manipulation des elements du xml se fait grace aux nodes. Il est possible de recuperer le voisin d'une node, d'enlever ou d'ajouter un enfant et de recuperer ou de modifier le contenue.
+La manipulation des elements du xml se fait grace aux nodes. Il est possible de recuperer le voisin d'une node, d'enlever ou d'ajouter un enfant et de recuperer ou de modifier le contenu.
 \section{Elaboration de la solution}
-Face a ce probleme, notre travail a ete de chercher une solution pour permettre de remplacer de NanoXml et de l'appliquer au projet. Mais ils y avaient plusieurs problemes a cela.
+Notre travail a ete de chercher une solution pour permettre de remplacer de NanoXml et de l'appliquer au projet. Mais ils y avaient plusieurs problemes a cela.
 \subsection{Les differences entre Jaxp et NanoXml}
-Comme nous avons vu precedement, les 2 api ne proposent pas la meme approche pour le traitement des Xml. Nous avons choisies d'utiliser l'interface DOM vu que les avantages de SAX ne sont pas necessaires et qu'il etait peut concevable de traiter les XML avce SAX dans IzPack.
+Comme nous avons vu precedement, les deux API ne proposent pas la meme approche pour le traitement des Xml. Nous avons choisies d'utiliser l'interface DOM vu que les avantages de SAX ne sont pas necessaires et qu'il etait peu concevable de traiter les XML avec SAX dans IzPack.
 
 Nous allons donc comparer l'interface DOM et NanoXml pour determiner la meilleure approche a prendre.
 \subsubsection{Parse du XML}
 
-\subsubsection{Utilisation du XML}
-\subsubsection{Representation du XML}
-Nous avons vu que Dom considere tout les elements comme des noeuds alors que NanoXml se base sur les tags. Concretement, en suivant l'exemple suivant:
-\begin{verbatim}
-<!--comment>commentaire<comment-->
+\subsubsection{Manipulation du XML}
+La principale difference vient de l'element atomique : le noeud de DOM ne represente pas la meme notion que l'element de nanoXML. Des lors, la manipulation des voisins, enfants, etc doit etre adapte.
+\begin{lstlisting}[language=xml]
+<!-- commentaire -->
 <root>
 	<noeud1>text</noeud1>
 </root>
+\end{lstlisting}
+Dans ce morceau de xml, nanoXML comptera 1 enfant a l'element \verb|root| : \verb|noeud1|. DOM comptera 3 noeuds : du texte (le retour a la ligne et la tabulation), \verb|noeud1| et a nouveau du texte (un retour a la ligne).
 
-Nano -> root possede 1 enfant
-DOM -> root possede 3 enfants (\n<noeud1>\n)
-\end{verbatim}
-Les nodes de DOM ne representent pas la meme entite que les element de NanoXml. Les Nodes englobant une plus grande variete de composants.
+DOM possede neanmoins une interface derivant de \verb|Node|, \verb|Element|, qui correspond a la classe \verb|XMLElement| de nanoXML.
+
+\subsubsection{Methode getContent}
+pas pareil, mais pas d'exemple en tete
 
 \subsection{Remplacer les appels}
 \subsection{Utilisation d'un design pattern}
@@ -104,32 +103,59 @@ Extraction d'interface du xmlElement.
 
 XMLElements de NanoXml ~ Node Element
 
-Dom possède plusieurs types de noeuds : Comment, Text, element
+
+\subsubsection{Xinclude}
+La balise \verb|xinclude| permet d'inclure un fichier xml externe. Ainsi, on peut utiliser un xml très succinct (et donc facilement lisible/compréhensible) qui inclut d'autres fichiers xml decrivant uniquement certaines parties de l'installation. Cette fonctionnalite, absente de nanoXML, a ete mise en place en modifiant directement le code se son parseur.
 
 Xinclude : géré de maniere native par Jaxp
 Xfragment Non present dans la specifiaction W3C:
 -> Permet include de noeuds sans racines
 Passage par une feuille XSL
 -> include puis suppression des Xfragment
+
+\subsubsection{Numero de ligne}
+Une fonctionnalite de nanoXML est la gestion des numeros de lignes. Lors qu'une incoherence est detectee dans un xml lu, IzPack previent l'utilisateur de l'erreur, et indique le numero de la ligne responsable dans le xml.
+
+Du point de vue de DOM, les numeros de lignes n'ont pas de signification : une fois le fichier xml parse, seul l'arbre DOM construit en memoire importe. Cet arbre reecrit dans un fichier ne correspondra pas forcement (pour les numeros de lignes, l'indentation, etc) au fichier de depart, sans parler des ajouts/suppressions/modifications de noeuds.
+
+A l'inverse du point de vue de SAX, les numeros de lignes sont obtenues facilement. Dans ce cas la, il est utile de savoir a quel endroit on se trouve dans le document.
+
+Afin d'obtenir les numeros de ligne dans un arbre DOM, les deux points de vue ont ete utilises grace a un Transformer.
+On cree une source SAX, a laquelle on ajoute un filtre pour ecouter les evenements (et stocker les numeros de lignes en cas de debut de balise).
+En parallele, on cree un resultat DOM, qui contiendra le resultat du parse (l'arbre DOM).
+On utilise ensuite un Transformer : il va utiliser la source SAX (les numeros de lignes sont stockees a ce moment par le filtre) et remplir le resultat DOM.
+Enfin, il suffit de parcourir l'arbre DOM pour ajouter a chaque element son numero de ligne.
+Ce nombre est stocke dans les ``user data'', ajoute dans la version 3  de DOM pour stocker diverses informations supplementaires dans un noeud.
+
 \section{Application et tests}
 \subsection{Test unitaires de comparaison}
-Comparaison entre le comportement de nanoXml et de l'adaptateur
+Afin d'avoir un comportement le plus fidele possible a celui de nanoXML, de nombreux tests unitaires ont ete ecrits.
+Ces tests unitaires effectuent des actions identiques avec DOM et nanoXML, et compare les resultats.
+En couvrant la quasi-totalite des methodes utilises dans IzPack avec de nombreux cas d'utilisation, nous avons pu assurer un comportement fidele.
 \subsection{Integration a IzPack}
-\subsection{Test Globale et Profiling}
+\subsection{Test Global et Profiling}
 
 \section{Resultats}
 \subsection{Diminution de la taille des installeurs}
 NanoXml : 116Ko
 Adaptateur : 44Ko
 \subsection{Support de fonctionnalitees XML}
-DTD, xinclude
+Le passage a un parseur plus robuste et recent apporte de nombreuses nouveautes.
+Desormais les DTD (document de validation d'un xml) sont pris en charge.
+De plus, l'inclusion de fichiers xml dans d'autres est supporte nativement, sans avoir a modifier le code du parseur.
 
 \section{Au delà du sujet}
-Une fois l'objectif du projet atteint, nous avons décidé d'accepter l'offre de Julien Ponge en devenant contributeurs officiels du projet. Au même moment, nos apports étaient intégrés au dépot officiels et se retrouveront dans la prochaine version 4.3.
+Une fois l'objectif du projet atteint, nous avons décidé d'accepter l'offre de Julien Ponge en devenant contributeurs officiels du projet. Au même moment, nos apports étaient intégrés au dépot officiel et se retrouveront dans la prochaine version 4.3.
 
 \subsection{Suivi de nos apports}
-Etant désormais développeur sur le projet IzPack nous avons pu suivre et corriger les problèmes rencontrés par la communauté de IzPack.
+Etant désormais développeurs sur le projet IzPack nous avons pu suivre et corriger les problèmes rencontrés par la communauté de IzPack.
+Nous avons par exemple corrige un test unitaire sur les numeros de ligne echouant \cite{IZPACK-306} ou un probleme de chemin d'inclusion de xml \cite{IZPACK-303}.
 
 \subsection{Correction de bugs}
+Nous avons egalement corrige plusieurs bugs.
+\begin{itemize}
+ \item Un bug cache dans l'installation automatique la faisait quitter silencieusement \cite{IZPACK-309}
+\end{itemize}
 
 \subsection{Ajout/Amélioration}
+% uninstalldatawriter si j'ai le temps
