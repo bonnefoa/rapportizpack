@@ -117,6 +117,8 @@ Nous avons donc choisi la solution de l'adaptateur pour notre probleme. Pour cel
 Dans un premier temps, nous avons reperer les classes utilisees par Izpack et les methodes de ces classes utilisees. Nous avons reduits l'utilisation de NanoXml a 3 classes : StdXMLParser, StdXMLWriter et XMLElement.
 \subsubsection{StdXMLParser et StdXMLWriter}
 StdXMLParser et StdXMLWriter sont utilisees avec parcimonie. On compte une trentaine d'utilisation pour StdXMLParser et 8 utilisations pour StdXMLWriter. Modifier l'interface pour ces deux classes n'etaient pas un probleme. Ces deux classes ont donc ete remplacees par 2 nouvelles classes realisant les memes fonctionnalites avec des prototypes differents.
+
+Nous avons cree les interfaces IXmlParser et IXmlWriter ainsi que leurs implementations. Ce ne sont pas des adaptateurs de NanoXml etant donnes qu'elles ne recopient pas l'interface de NanoXml et elles ne sont pas indispensables. Cependant, elles permettent de simplifier l'utilisation de Jaxp et de factoriser le code sur un endroit.
 \subsubsection{XMLElement}
 XMLElement ne presente pas d'interfaces et est utilises systematiquement quand il y a du XML a traiter. Il etait donc impensable de traiter et remplacer toutes les utilisations de XMLElement par des appels a Jaxp etant donne son nombre d'utilisation. Nous avons donc concentre nos efforts sur cette classe et appliquer le pattern adaptateur dessus.
 
@@ -187,30 +189,44 @@ Avec l'ajout des fonctionnalites XInclude et XFragment a NanoXml, une batterie d
 \subsubsection{Les tests unitaires classiques}
 Nous avons crees une batterie de tests unitaires classiques pour notre adaptateur. Ils s'assurent entre autre que le parse, l'exploitation de l'arbre en memoire et l'ecriture du Xml se font correctement.
 \subsection{Integration a IzPack}
+Une fois la solution realisee, l'integration a IzPack s'est faite de maniere relativement aisee. Sur toutes les utilisations de NanoXml dans Izpack, nous avons utilisee une des classes de notre adaptateur. L'integration s'est faite de maniere relativement aisee et nous avons pu commencer les test sur applications apres.
+\subsubsection{Test fonctionnels}
+Une phase de test fonctionnels a ete realisee pour tester l'integrite de l'application apres l'integration de notre solution. Ces tests sont des tests manuels sur les installations generes par Izpack. Nous avons donc teste dans un premier temps l'application d'exemple fournit par Izpack. Ces tests ont permis de faire ressortir quelques problemes que nous avons pu regler rapidement.
 
-\subsection{Test Global et Profiling}
-
+Suite a cela, nous avons essayer de generer et lancer un installeur plus consequent. Nous avons pour cela utilise l'installeur de Glassfish. La generation et l'installation de glassfish s'est deroule sans probleme.
+\subsubsection{Profiling}
+Apres la phase d'implementation et de test, nous avons pu commence une phase d'optimisation. En utilisant YourKit, nous avons essaye de detecter les methodes chronophages lors d'une installation et les modifier eventuellements.
 \section{Resultats}
+Le principal but de notre a ete de pouvoir abandonner NanoXml ce qui est chose faite. De plus, l'integration de notre solution a apporte un certain nombres d'avantages.
 \subsection{Diminution de la taille des installeurs}
-NanoXml : 116Ko
-Adaptateur : 44Ko
+Tout d'abord, l'abandon de NanoXml diminue la taille de IzPack et des installeurs generees comme cette librairies n'a plus a etre embarquees dans les installeurs. NanoXml pese, une fois compile, 116Ko. Notre adaptateur pese 44Ko. Chaque installeur genere par Izpack perdera donc 72Ko. Ce chiffre peut paraitre faible mais portee si l'installeur est telechargee 10000 fois sur un site, plus de 720Mo de bande passante sont economisee.
 \subsection{Support de fonctionnalitees XML}
-Le passage a un parseur plus robuste et recent apporte de nombreuses nouveautes.
+Outre le fait d'avoir un parseur plus fiable et recent, un certains nombres de nouveautes ont ete apporte.
+\subsubsection{Support de la DTD}
 Desormais les DTD (document de validation d'un xml) sont pris en charge.
+\subsubsection{Support natif de Xinclude}
 De plus, l'inclusion de fichiers xml dans d'autres est supporte nativement, sans avoir a modifier le code du parseur.
+\subsection{Integration dans la branche principale}
+Regulierement, nous synchronisions notre depot avec la branche principale pour prendre en compte les modifications qui ont ete realisees sur Izpack. Cette synchronisation se passait generalement sans encombre grace a Git excepte quand les modifications concernaient la manipulation de XML et que les fichiers etaient consequent (>3000 lignes).
 
+Cette synchronisation reguliere etait en vue de preparer le merge vers sur la branche principale. Ainsi, une fois notre solution achevee et testee, Julien Ponge a extrait un patch qui a ete soumis a la communaute des developpeurs d'Izpack. Apres quoi, les modifications ont ete portee sur la branche principales et seront disponibles pour la prochaines version d'Izpack, la 4.3.
 \section{Au delà du sujet}
-Une fois l'objectif du projet atteint, nous avons décidé d'accepter l'offre de Julien Ponge en devenant contributeurs officiels du projet. Au même moment, nos apports étaient intégrés au dépot officiel et se retrouveront dans la prochaine version 4.3.
-
+Une fois l'objectif du projet atteint, nous avons décidé d'accepter l'offre de Julien Ponge en devenant contributeurs officiels du projet.
 \subsection{Suivi de nos apports}
-Etant désormais développeurs sur le projet IzPack nous avons pu suivre et corriger les problèmes rencontrés par la communauté de IzPack.
-Nous avons par exemple corrige un test unitaire sur les numeros de ligne echouant \cite{IZPACK-306} ou un probleme de chemin d'inclusion de xml \cite{IZPACK-303}.
+Notre solution etant integree, il est possible que des bugs subsistent dans notre implementation ou une mauvaise interpretation de notre part ne correspond pas au comportement attendus. Le statut de developpeur nous permet de suivre et corriger les problèmes rencontrés par la communauté de IzPack.
+\subsubsection{Tests corriges}
+Nous avons par exemple corrige des tests unitaires sur les numeros de ligne echouant \cite{IZPACK-306} et sur les conditionsTest \cite{IZPACK-305}.
+\subsubsection{Rectification sur une interpretation}
+Un probleme est apparu lors de l'utilisation du Xinclude\cite{IZPACK-303}. Ce probleme a ete notifie par un developpeur utilisant la Snapshot et donc ayant recupere nos modifications.
 
+Par defaut, Jaxp resout le chemin de maniere relative au repertoire d'execution et c'est ce qui a ete realisee dans notre implementation. Or, le comportement attendu, plus naturel, est de resoudre le chemin d'inclusion relativement au document incluant le xml.
 \subsection{Correction de bugs}
 Nous avons egalement corrige plusieurs bugs.
-\begin{itemize}
- \item Un bug cache dans l'installation automatique la faisait quitter silencieusement \cite{IZPACK-309}
-\end{itemize}
+\subsubsection{Probleme lors de l'installation automatique}
+Un panel, le TreePacksPanels, ne respectait pas la configuration enregistree lors de l'installation normale.\cite{IZPACK-223}
 
-\subsection{Ajout/Amélioration}
-% uninstalldatawriter si j'ai le temps
+Un bug cache dans l'installation automatique la faisait quitter silencieusement \cite{IZPACK-309}
+\subsubsection{Web installers}
+Izpack possede une fonction de creation d'installeurs Web. L'installeur generera des modules qui pourront etre depose sur un serveur web. Cela permet de creer un installeur leger contenant le noyau dur. Les modules aditionnels seront telecharges si ils sont selectionnes.
+
+Cette fonctionnalite presente des lacunes dans la documentation \cite{IZPACK-224} et un bug de fonctionnalite\cite{IZPACK-281}. De plus, il est possible de refactorer la classe utilisee\cite{IZPACK-307}.
