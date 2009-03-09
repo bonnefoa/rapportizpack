@@ -71,6 +71,7 @@ On a des evenements de commentaires, de text ou d'elements. L'avantages de cette
 L'interface DOM(Document Object Model) de jaxp propose de mettre en memoire le xml et offre une interaction basee sur des noeuds (node en anglais). En DOM, tout est noeud, et le xml est equivalent a un arbre de noeuds. Les commentaires, le texte ou les elements sont representes par des noeuds. Des sous-classes specialisent ces noeuds. comme \verb|Comment|, \verb|Element| ou \verb|Text|.
 
 La manipulation des elements du xml se fait grace aux nodes. Il est possible de recuperer le voisin d'une node, d'enlever ou d'ajouter un enfant et de recuperer ou de modifier le contenu.
+%--------------------------------------------------------------------------
 \section{Elaboration de la solution}
 Notre travail a ete de chercher une solution pour permettre de remplacer de NanoXml et de l'appliquer au projet. Mais ils y avaient plusieurs problemes a cela.
 \subsection{Les differences entre Jaxp et NanoXml}
@@ -93,25 +94,43 @@ DOM possede neanmoins une interface derivant de \verb|Node|, \verb|Element|, qui
 
 \subsubsection{Methode getContent}
 pas pareil, mais pas d'exemple en tete
-
-\subsection{Remplacer les appels}
-\subsection{Utilisation d'un design pattern}
+\subsection{Solutions possibles}
+Pour remplacer NanoXml, plusieurs approches etaient possibles. 
+\subsubsection{Remplacer les appels}
+La premiere solution, bete et mechante, est de remplacer systematiquement les appels de NanoXml par des appels de Jaxp. Cependant, cette solution a des inconvenients evidents :
+\begin{list}
+\item[La duplication de la logique] Tout le code necessaire a l'appel du parseur ou du Node est repartie et duplique dans tout le programme. C'est d'abord une infraction au principe dry (don't repeat yourself) et rend le code difficile a maintenir. Les bugs sont plus difficiles a cibler et la correction doit se faire sur toutes les replications.
+\item[Les difficultees de tester la solution] Un autre probleme et le test de cette solution. Il faut en theorie passer par toute les utilisations des appels pour tester correctement la solution. Cette contrainte est difficilement realisable.
+\item[]
+\end{list}
+\subsubsection{Utilisation d'un design pattern}
 Extraction d'interface du xmlElement.
 -> IXmlElements
 -> IXmlParser
 -> IXmlWriter
 
 XMLElements de NanoXml ~ Node Element
-
-
+\subsection{Creation de l'adaptateur}
 \subsubsection{Xinclude}
 La balise \verb|xinclude| permet d'inclure un fichier xml externe. Ainsi, on peut utiliser un xml très succinct (et donc facilement lisible/compréhensible) qui inclut d'autres fichiers xml decrivant uniquement certaines parties de l'installation. Cette fonctionnalite, absente de nanoXML, a ete mise en place en modifiant directement le code se son parseur.
 
-Xinclude : géré de maniere native par Jaxp
-Xfragment Non present dans la specifiaction W3C:
--> Permet include de noeuds sans racines
-Passage par une feuille XSL
--> include puis suppression des Xfragment
+Cette fonctionnalite est presente de base dans Jaxp. Il faut pour cela rendre que le parser prenne en compte les namespaces XML. En effet, le Xinclude appartient au namespace xi. Il faut donc utiliser la balise <xi:include/> au lieu de <xinclude/>. Le simple fait de rendre le parser namepaceAware permet d'utiliser la fonctionnalite Xinclude. 
+
+La fonctionnalite Xfragment n'est pas presente dans les specifications. Elle permet principalement d'ajouter des elements sans racines avec Xinclude. C'est a dire qu'au contenu du xml a ajouter, on va retirer les noeuds <xfragment>. Par exemple: 
+\begin{lstlisting}[language=xml]
+<xfragment>
+<root1>
+	<noeud1>text</noeud1>
+</root1>
+<root2>
+	<noeud1>text</noeud1>
+</root2>
+</xfragment>
+\end{lstlisting}
+Si ce xml est rajoute, 2 elements, <root1> et <root2> seront rajoute a l'emplacement du Xinclude. Sans le xfragment, le Xml ne serait pas valide et il y aurait erreur au moment du parse. Le Xfragment agit ici comme contenaire temporaire d'elements.
+
+Cette fonctionnalite a ete rajoute a NanoXml et il etait necessaire de la conserver. Cependant, elle ne fait pas partie des specifications W3C et le parseur n'offrait pas de base cette fonctionnalite. Il a fallut trouver une 
+
 
 \subsubsection{Numero de ligne}
 Une fonctionnalite de nanoXML est la gestion des numeros de lignes. Lors qu'une incoherence est detectee dans un xml lu, IzPack previent l'utilisateur de l'erreur, et indique le numero de la ligne responsable dans le xml.
