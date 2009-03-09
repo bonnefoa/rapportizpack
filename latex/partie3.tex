@@ -27,7 +27,7 @@ Le XMLElement represente un element logique du xml en memoire. Par exemple :
 En parsant un fichier contenant ce Xml, on a un XMLElement nomme root qui possede 1 enfant, \verb|child|. Son enfant est un XMLElement dont le contenu est content.
 
 L'arborescence du XML est donc realise par un ensemble de XMLElement. XMLElement permet de recuperer la liste des enfants, le contenu, rechercher un enfant par son nom, retirer un enfant, ajouter un enfant ou modifier le contenu. Il s'agit de loin de la classe la plus utilisee de la librairie NanoXml dans Izpack. En effet, on ne comptait pas moins de 499 utilisations au commencement de ce projet.
-\subsubsection{XMLWriter}
+\subsubsection{StdXMLWriter}
 Le XMLWriter permet d'ecrire des fichiers XML. Il reproduit, a partir d'un XML element, le fichier XML correspondant. Il n'est utilise que pour generer un xml temporaire ou pour ecrire le xml d'installation automatique. 
 \subsection{Utilisation typique dans Izpack}
 \subsubsection{Parse de fichier}
@@ -110,18 +110,39 @@ Cela presente plusieurs avantages.
 \begin{description}
 \item[Centralisation de la logique] Toute la logique de traduction est centralisee en un endroit. Il est facile de corrige les eventuelles erreurs.
 \item[Rapidite de deploiement] L'adaptateur presente l'avantage de ne pas changer la logique d'utilisation. Les changements d'appels se resument a changer le nom de la classe et les imports.
+\end{description}
 \subsection{Creation de l'adaptateur}
 Nous avons donc choisi la solution de l'adaptateur pour notre probleme. Pour cela, nous avons proceder en plusieurs etapes.
 \subsection{Reperer les utilisations des classes de NanoXml}
-Dans un premier temps, nous avons reperer les classes utilisees par Izpack et les methodes de ces classes utilisees. Nous avons reduits l'utilisation de NanoXml a 3 classes : StdXMLParser, StdXMLWriter et XMLElement. 
+Dans un premier temps, nous avons reperer les classes utilisees par Izpack et les methodes de ces classes utilisees. Nous avons reduits l'utilisation de NanoXml a 3 classes : StdXMLParser, StdXMLWriter et XMLElement.
 \subsubsection{StdXMLParser et StdXMLWriter}
-StdXMLParser et StdXMLWriter sont utilisees avec parcimonie. On compte une trentaine d'utilisation pour StdXMLParser et 8 utilisations pour StdXMLWriter. Modifier l'interface pour ces deux classes n'etaient pas un probleme. Ces deux classes ont donc ete remplacees par 2 nou
-\subsubsection{XmlElement}
+StdXMLParser et StdXMLWriter sont utilisees avec parcimonie. On compte une trentaine d'utilisation pour StdXMLParser et 8 utilisations pour StdXMLWriter. Modifier l'interface pour ces deux classes n'etaient pas un probleme. Ces deux classes ont donc ete remplacees par 2 nouvelles classes realisant les memes fonctionnalites avec des prototypes differents.
+\subsubsection{XMLElement}
+XMLElement ne presente pas d'interfaces et est utilises systematiquement quand il y a du XML a traiter. Il etait donc impensable de traiter et remplacer toutes les utilisations de XMLElement par des appels a Jaxp etant donne son nombre d'utilisation. Nous avons donc concentre nos efforts sur cette classe et appliquer le pattern adaptateur dessus.
+
+Dans un premier temps, nous avons extrait l'interface de XMLElement avec toutes les methodes utilisees par Izpack.
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.2\textwidth]{../image/sol_casInitial.png}
+	\hfil
+	\includegraphics[width=0.4\textwidth]{../image/sol_extractionInterface.png}
+	\caption{Extraction de l'interface}
+\end{figure}
+Nous avons ensuite cree l'implementation de l'adaptateur respectant l'interface. Izpack utilise alors la meme interface mais notre implementation etait utilise. 
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.4\textwidth]{../image/sol_implementation.png}
+	\caption{Implementation de l'adaptateur}
+\end{figure}
+Il suffit alors de supprimer NanoXml, ses utilisations ayant ete remplace par notre implementation.
+\subsection{Fonctionnalites supplementaires}
+NanoXml presentait de nombreuses lacunes au niveau respect des standards et fonctionnalites. Cependant, il proposait des fonctionnalites evoluees par rapport a une utilisation standard de Jaxp. Comme ces fonctionnalites etaient utilisees, il nous a fallut les reimplementer.
 \subsubsection{Xinclude}
 La balise \verb|xinclude| permet d'inclure un fichier xml externe. Ainsi, on peut utiliser un xml très succinct (et donc facilement lisible/compréhensible) qui inclut d'autres fichiers xml decrivant uniquement certaines parties de l'installation. Cette fonctionnalite, absente de nanoXML, a ete mise en place en modifiant directement le code se son parseur.
 
 Cette fonctionnalite est presente de base dans Jaxp. Il faut pour cela rendre que le parser prenne en compte les namespaces XML. En effet, le Xinclude appartient au namespace xi. Il faut donc utiliser la balise <xi:include/> au lieu de <xinclude/>. Le simple fait de rendre le parser namepaceAware permet d'utiliser la fonctionnalite Xinclude. 
 
+\subsubsection{Xfragment}
 La fonctionnalite Xfragment n'est pas presente dans les specifications. Elle permet principalement d'ajouter des elements sans racines avec Xinclude. C'est a dire qu'au contenu du xml a ajouter, on va retirer les noeuds <xfragment>. Par exemple: 
 \begin{lstlisting}[language=xml]
 <xfragment>
@@ -149,13 +170,24 @@ En parallele, on cree un resultat DOM, qui contiendra le resultat du parse (l'ar
 On utilise ensuite un Transformer : il va utiliser la source SAX (les numeros de lignes sont stockees a ce moment par le filtre) et remplir le resultat DOM.
 Enfin, il suffit de parcourir l'arbre DOM pour ajouter a chaque element son numero de ligne.
 Ce nombre est stocke dans les ``user data'', ajoute dans la version 3  de DOM pour stocker diverses informations supplementaires dans un noeud.
-
 \section{Application et tests}
-\subsection{Test unitaires de comparaison}
+Une fois la solution realisee, nous l'avons soumis a un certains nombre de test afin de la verifier.
+\subsection{Tests}
 Afin d'avoir un comportement le plus fidele possible a celui de nanoXML, de nombreux tests unitaires ont ete ecrits.
-Ces tests unitaires effectuent des actions identiques avec DOM et nanoXML, et compare les resultats.
-En couvrant la quasi-totalite des methodes utilises dans IzPack avec de nombreux cas d'utilisation, nous avons pu assurer un comportement fidele.
+\subsubsection{Test unitaires de comparaison}
+La solution a d'abord etait elabore de maniere isolee. Le projet contenait notre adaptateur et la librairie NanoXml. Nous avons alors realise une batterie de test couvrant toutes les methodes de l'interface extraites. Ces tests unitaires effectuent des actions identiques avec notre adaptateur et NanoXML, et compare les resultats. 
+
+Prenons l'exemple de la methode getName(). Le meme Xml est parser par les 2 librairies. Un parcours recursif de l'arbre XML est effectue sur les 2 arbres en memoire. Pour chaque element, on compare le resultat de la methode getName() sur l'element courant. Les retours devant etre toujours egaux.
+
+Comme les methodes de XMLElement sont souvent des recuperations d'informations de la meme nature que getName(), nous avons generalise ce test a ces methodes. Pour cela, une methode se charge de parcourir de maniere recursive l'arbre et d'invoquer la methode testee en comparant leurs resultats. Ceci nous a permit de nous assurer du comportement de l'adaptateur et de deceler des anomalies sur NanoXml.
+
+En couvrant la quasi-totalite des methodes utilises dans IzPack avec de nombreux cas d'utilisation, nous avons pu nous assurer du respect du comportement de notre adaptateur.
+\subsubsection{Les tests unitaires sur Xinclude et Xfragment}
+Avec l'ajout des fonctionnalites XInclude et XFragment a NanoXml, une batterie de test unitaires a ete fournies. Nous avons donc repris ces tests et nous les avons integres aux tests de l'adaptateurs. 
+\subsubsection{Les tests unitaires classiques}
+Nous avons crees une batterie de tests unitaires classiques pour notre adaptateur. Ils s'assurent entre autre que le parse, l'exploitation de l'arbre en memoire et l'ecriture du Xml se font correctement.
 \subsection{Integration a IzPack}
+
 \subsection{Test Global et Profiling}
 
 \section{Resultats}
