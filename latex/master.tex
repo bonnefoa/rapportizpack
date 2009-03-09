@@ -1,4 +1,4 @@
-\documentclass[a4paper,11pt]{report}
+\documentclass[a4paper,12pt]{report}
 \usepackage[utf-8]{inputenc}
 \usepackage{graphicx}
 \usepackage{latexsym,a4,epsfig,times}
@@ -70,6 +70,16 @@ pdfpagemode= UseOutlines,
 \thispagestyle{empty}
 \listoffigures
 \thispagestyle{empty}
+%---------------------------------------
+\fancypagestyle{plain}{
+\fancyhf[]{}
+\renewcommand{\headrulewidth}{0.5pt} 
+\renewcommand{\footrulewidth}{0pt}
+\cfoot{\thepage}
+\rfoot{}
+\lhead{\leftmark}
+\rhead{\rightmark}
+}
 %--------------------------------------
 \chapter*{Introduction\markboth{Introduction}{}}
 \setcounter{page}{1} 
@@ -123,6 +133,5 @@ pdfpagemode= UseOutlines,
 \pagenumbering{Roman}
 \addcontentsline{toc}{chapter}{Annexe}
 \input{annexes}
-
 \end{document}
 
