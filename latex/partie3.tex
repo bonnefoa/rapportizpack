@@ -10,7 +10,7 @@ Comme nous avons pu le voir, IzPack utilise intensemment des fichiers XML pour g
 \subsection{Le projet NanoXml}
 NanoXml est une librairie java open-source de gestion de Xml. Elle presente la particularite d'etre legere (108Ko). Il est possible, grace a cette librairie, d'ecrire ou de parser des fichiers Xml. Une fois le fichier parse, on recupere en memoire la structure de l'arbre Xml qui peut alors etre exploite. Le choix de cette librairie a ete fait au commencement de Izpack a cause de sa taille. En effet, il est important que le la partie installeur ne prenne pas le pas sur le logiciel a installer.
 
-Cependant ce projet n'est plus mis a jour depuis 7 ans, et des bugs ont ete decouvert. Entre temps, java a ajoute a sa JRE (depuis la version 1.4) tout ce qu'il faut pour gerer le xml. Il devenait interessant de remplacer NanoXml par Jaxp (Java API for XML Processing), la librairie fournie par la machine virtuelle.
+Cependant ce projet n'est plus mis a jour depuis 7 ans, et des bugs ont ete decouverts. Entre temps, java a ajoute a sa JRE (depuis la version 1.4) tout ce qu'il faut pour gerer le xml. Il devenait interessant de remplacer NanoXml par Jaxp (Java API for XML Processing), la librairie fournie par la machine virtuelle.
 \subsection{Les differents composants de NanoXml}
 On trouve differents elements dans NanoXml.
 \subsubsection{StdXMLParser}
@@ -41,15 +41,30 @@ parser.setValidator(new NonValidator());
 // We get the data
 XMLElement data = (XMLElement) parser.parse();
 \end{lstlisting}
+Avec cet exemple, on cree les objets necessaires au parse d'un fichier, et on recupere dans data l'element racine du xml.
+
 \subsubsection{Ecriture d'un xml}
 \begin{lstlisting}
 XMLWriter writer = new XMLWriter(out);
 ...
-writer.write(xmlElemetn);
+writer.write(xmlElement);
 \end{lstlisting}
+Pour ecrire un xml represente par l'arbre DOM dans xmlElement, il suffit de le passer a un XMLWriter.
+
 \subsubsection{Utilisation de XMLElement}
+La manipulation d'un XMLElement se fait avec ses methodes :
+\begin{itemize}
+	\item get/setAttribute pour gerer les attributs du noeud
+	\item get/setContent pour gerer le contenu
+	\item add/removeChild pour gerer les noeuds fils
+	\item etc
+\end{itemize}
+
+Voici un exemple d'utilisation :
 \begin{lstlisting}
-String id = el.getAttribute("id");
+XMLElement el;
+//...
+String id = elt.getAttribute("id");
 String packImgId = el.getAttribute("packImgId");
 boolean loose = "true".equalsIgnoreCase(el.getAttribute("loose", "false"));
 String description = requireChildNamed(el, "description").getContent();
@@ -75,7 +90,7 @@ La manipulation des elements du xml se fait grace aux nodes. Il est possible de 
 \section{Elaboration de la solution}
 Notre travail a ete de chercher une solution pour permettre de remplacer de NanoXml et de l'appliquer au projet. Mais ils y avaient plusieurs problemes a cela.
 \subsection{Les differences entre Jaxp et NanoXml}
-Comme nous avons vu precedement, les deux API ne proposent pas la meme approche pour le traitement des Xml. Nous avons choisies d'utiliser l'interface DOM vu que les avantages de SAX ne sont pas necessaires et qu'il etait peu concevable de traiter les XML avec SAX dans IzPack.
+Comme nous avons vu precedement, les deux API ne proposent pas la meme approche pour le traitement des Xml. Nous avons choisies d'utiliser l'interface DOM vu que les avantages de SAX ne sont pas necessaires et qu'il etait peu concevable de traiter les XML avec SAX dans IzPack. De plus, NanoXml et DOM ont une representation similaire du xml.
 
 Nous allons donc comparer l'interface DOM et NanoXml pour determiner la meilleure approche a prendre.
 \subsubsection{Parse du XML}
@@ -92,23 +107,26 @@ Dans ce morceau de xml, nanoXML comptera 1 enfant a l'element \verb|root| : \ver
 
 DOM possede neanmoins une interface derivant de \verb|Node|, \verb|Element|, qui correspond a la classe \verb|XMLElement| de nanoXML.
 
-\subsubsection{Methode getContent}
-pas pareil, mais pas d'exemple en tete
+\subsubsection{Contenu textuel du noeud}
+NanoXml propose une methode pour recuperer le contenu textuel d'un noeud : getContent. DOM propose une methode semblant equivalente : getNodeValue. Cependant, le comportement de ces deux methodes est completement different.
+
+% TODO : exemple de code et differences
+
 \subsection{Solutions possibles}
 Pour remplacer NanoXml, plusieurs approches etaient possibles. 
 \subsubsection{Remplacer les appels individuellements}
 La premiere solution, bete et mechante, est de remplacer systematiquement les appels de NanoXml par des appels de Jaxp. Cependant, cette solution a des inconvenients evidents :
 \begin{description}
-\item[La duplication de la logique] Tout le code necessaire a l'appel du parseur ou du Node est repartie et duplique dans tout le programme. C'est d'abord une infraction au principe dry (don't repeat yourself) et rend le code difficile a maintenir. Les bugs sont plus difficiles a cibler et la correction doit se faire sur toutes les replications.
+\item[La duplication de la logique] Tout le code necessaire a l'appel du parseur ou du Node est repartie et duplique dans tout le programme. C'est d'abord une infraction au principe DRY (don't repeat yourself) et rend le code difficile a maintenir. Les bugs sont plus difficiles a cibler et la correction doit se faire sur toutes les replications.
 \item[Les difficultees de tester la solution] Un autre probleme et le test de cette solution. Il faut en theorie passer par toute les utilisations des appels pour tester correctement la solution. Cette contrainte est difficilement realisable.
 \item[La penibilite de la tache] Remplacer chacun des nombreux appels a NanoXml par un appel Jaxp est tres laborieux. 
 \end{description}
 \subsubsection{Centraliser la logique de modification}
-L'autre solution possible est de centraliser toute la logique de tansaction dans des classes dediees. Ces classes vont copier les interfaces de NanoXml mais vont generer des appels a Jaxp en backend. C'est le principe du design pattern adaptateur.
+L'autre solution possible est de centraliser toute la logique de transaction dans des classes dediees. Ces classes vont copier les interfaces de NanoXml mais vont generer en realite des appels a Jaxp. C'est le principe du design pattern adaptateur.
 
 Cela presente plusieurs avantages.
 \begin{description}
-\item[Centralisation de la logique] Toute la logique de traduction est centralisee en un endroit. Il est facile de corrige les eventuelles erreurs.
+\item[Centralisation de la logique] Toute la logique de traduction est centralisee en un endroit. Il est facile de corriger les eventuelles erreurs.
 \item[Rapidite de deploiement] L'adaptateur presente l'avantage de ne pas changer la logique d'utilisation. Les changements d'appels se resument a changer le nom de la classe et les imports.
 \end{description}
 \subsection{Creation de l'adaptateur}
@@ -116,7 +134,7 @@ Nous avons donc choisi la solution de l'adaptateur pour notre probleme. Pour cel
 \subsection{Reperer les utilisations des classes de NanoXml}
 Dans un premier temps, nous avons reperer les classes utilisees par Izpack et les methodes de ces classes utilisees. Nous avons reduits l'utilisation de NanoXml a 3 classes : StdXMLParser, StdXMLWriter et XMLElement.
 \subsubsection{StdXMLParser et StdXMLWriter}
-StdXMLParser et StdXMLWriter sont utilisees avec parcimonie. On compte une trentaine d'utilisation pour StdXMLParser et 8 utilisations pour StdXMLWriter. Modifier l'interface pour ces deux classes n'etaient pas un probleme. Ces deux classes ont donc ete remplacees par 2 nouvelles classes realisant les memes fonctionnalites avec des prototypes differents.
+StdXMLParser et StdXMLWriter sont utilisees avec parcimonie. On compte une trentaine d'utilisations pour StdXMLParser et 8 utilisations pour StdXMLWriter. Modifier l'interface pour ces deux classes n'etaient pas un probleme. Ces deux classes ont donc ete remplacees par 2 nouvelles classes realisant les memes fonctionnalites avec des prototypes differents.
 
 Nous avons cree les interfaces IXmlParser et IXmlWriter ainsi que leurs implementations. Ce ne sont pas des adaptateurs de NanoXml etant donnes qu'elles ne recopient pas l'interface de NanoXml et elles ne sont pas indispensables. Cependant, elles permettent de simplifier l'utilisation de Jaxp et de factoriser le code sur un endroit.
 \subsubsection{XMLElement}
@@ -125,9 +143,9 @@ XMLElement ne presente pas d'interfaces et est utilises systematiquement quand i
 Dans un premier temps, nous avons extrait l'interface de XMLElement avec toutes les methodes utilisees par Izpack.
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=0.2\textwidth]{../image/sol_casInitial.png}
+	\includegraphics[width=0.15\textwidth]{../image/sol_casInitial.png}
 	\hfil
-	\includegraphics[width=0.4\textwidth]{../image/sol_extractionInterface.png}
+	\includegraphics[width=0.3\textwidth]{../image/sol_extractionInterface.png}
 	\caption{Extraction de l'interface}
 \end{figure}
 Nous avons ensuite cree l'implementation de l'adaptateur respectant l'interface. Izpack utilise alors la meme interface mais notre implementation etait utilise. 
@@ -140,9 +158,9 @@ Il suffit alors de supprimer NanoXml, ses utilisations ayant ete remplace par no
 \subsection{Fonctionnalites supplementaires}
 NanoXml presentait de nombreuses lacunes au niveau respect des standards et fonctionnalites. Cependant, il proposait des fonctionnalites evoluees par rapport a une utilisation standard de Jaxp. Comme ces fonctionnalites etaient utilisees, il nous a fallut les reimplementer.
 \subsubsection{Xinclude}
-La balise \verb|xinclude| permet d'inclure un fichier xml externe. Ainsi, on peut utiliser un xml très succinct (et donc facilement lisible/compréhensible) qui inclut d'autres fichiers xml decrivant uniquement certaines parties de l'installation. Cette fonctionnalite, absente de nanoXML, a ete mise en place en modifiant directement le code se son parseur.
+La balise \verb|xinclude| permet d'inclure un fichier xml externe. Ainsi, on peut utiliser un xml très succinct (et donc facilement lisible/compréhensible) qui inclut d'autres fichiers xml decrivant uniquement certaines parties de l'installation. Cette fonctionnalite, absente de nanoXML, avait ete mise en place en modifiant directement le code se son parseur.
 
-Cette fonctionnalite est presente de base dans Jaxp. Il faut pour cela rendre que le parser prenne en compte les namespaces XML. En effet, le Xinclude appartient au namespace xi. Il faut donc utiliser la balise <xi:include/> au lieu de <xinclude/>. Le simple fait de rendre le parser namepaceAware permet d'utiliser la fonctionnalite Xinclude. 
+Cette fonctionnalite est presente de base dans Jaxp. Il faut pour cela que le parser prenne en compte les namespaces XML. En effet, le Xinclude appartient au namespace xi. Il faut donc utiliser la balise <xi:include/> au lieu de <xinclude/>. Le simple fait de rendre le parser namepaceAware permet d'utiliser la fonctionnalite Xinclude. 
 
 \subsubsection{Xfragment}
 La fonctionnalite Xfragment n'est pas presente dans les specifications. Elle permet principalement d'ajouter des elements sans racines avec Xinclude. C'est a dire qu'au contenu du xml a ajouter, on va retirer les noeuds <xfragment>. Par exemple: 
@@ -156,9 +174,9 @@ La fonctionnalite Xfragment n'est pas presente dans les specifications. Elle per
 </root2>
 </xfragment>
 \end{lstlisting}
-Si ce xml est rajoute, 2 elements, <root1> et <root2> seront rajoute a l'emplacement du Xinclude. Sans le xfragment, le Xml ne serait pas valide et il y aurait erreur au moment du parse. Le Xfragment agit ici comme contenaire temporaire d'elements.
+Si ce xml est rajoute, 2 elements, <root1> et <root2> seront rajoute a l'emplacement du Xinclude. Sans le xfragment, le Xml ne serait pas valide et il y aurait erreur au moment du parse. Le Xfragment agit ici comme conteneur temporaire d'elements.
 
-Cette fonctionnalite a ete rajoute a NanoXml et il etait necessaire de la conserver. Cependant, elle ne fait pas partie des specifications W3C et le parseur n'offrait pas de base cette fonctionnalite. Il a fallut trouver une solution pour 
+Cette fonctionnalite a ete rajoute a NanoXml et il etait necessaire de la conserver. Cependant, elle ne fait pas partie des specifications W3C et le parseur n'offrait pas de base cette fonctionnalite. Il a fallut trouver une solution pour assurer la continuite.
 \subsubsection{Numero de ligne}
 Une fonctionnalite de nanoXML est la gestion des numeros de lignes. Lors qu'une incoherence est detectee dans un xml lu, IzPack previent l'utilisateur de l'erreur, et indique le numero de la ligne responsable dans le xml.
 
@@ -173,13 +191,13 @@ On utilise ensuite un Transformer : il va utiliser la source SAX (les numeros de
 Enfin, il suffit de parcourir l'arbre DOM pour ajouter a chaque element son numero de ligne.
 Ce nombre est stocke dans les ``user data'', ajoute dans la version 3  de DOM pour stocker diverses informations supplementaires dans un noeud.
 \section{Application et tests}
-Une fois la solution realisee, nous l'avons soumis a un certains nombre de test afin de la verifier.
+Une fois la solution realisee, nous l'avons soumis a un certains nombre de tests afin de la verifier.
 \subsection{Tests}
 Afin d'avoir un comportement le plus fidele possible a celui de nanoXML, de nombreux tests unitaires ont ete ecrits.
 \subsubsection{Test unitaires de comparaison}
-La solution a d'abord etait elabore de maniere isolee. Le projet contenait notre adaptateur et la librairie NanoXml. Nous avons alors realise une batterie de test couvrant toutes les methodes de l'interface extraites. Ces tests unitaires effectuent des actions identiques avec notre adaptateur et NanoXML, et compare les resultats. 
+La solution a d'abord etait elabore de maniere isolee. Le projet contenait notre adaptateur et la librairie NanoXml. Nous avons alors realise une batterie de test couvrant toutes les methodes de l'interface extraites et de tres nombreux cas. Ces tests unitaires effectuent des actions identiques avec notre adaptateur et NanoXML, et compare les resultats. 
 
-Prenons l'exemple de la methode getName(). Le meme Xml est parser par les 2 librairies. Un parcours recursif de l'arbre XML est effectue sur les 2 arbres en memoire. Pour chaque element, on compare le resultat de la methode getName() sur l'element courant. Les retours devant etre toujours egaux.
+Prenons l'exemple de la methode getName(). Le meme fichier Xml est parse par les 2 librairies. Un parcours recursif de l'arbre XML est effectue sur les 2 arbres en memoire. Pour chaque element, on compare le resultat de la methode getName() sur l'element courant. Les retours devant etre toujours egaux.
 
 Comme les methodes de XMLElement sont souvent des recuperations d'informations de la meme nature que getName(), nous avons generalise ce test a ces methodes. Pour cela, une methode se charge de parcourir de maniere recursive l'arbre et d'invoquer la methode testee en comparant leurs resultats. Ceci nous a permit de nous assurer du comportement de l'adaptateur et de deceler des anomalies sur NanoXml.
 
@@ -197,9 +215,9 @@ Suite a cela, nous avons essayer de generer et lancer un installeur plus consequ
 \subsubsection{Profiling}
 Apres la phase d'implementation et de test, nous avons pu commence une phase d'optimisation. En utilisant YourKit, nous avons essaye de detecter les methodes chronophages lors d'une installation et les modifier eventuellements.
 \section{Resultats}
-Le principal but de notre a ete de pouvoir abandonner NanoXml ce qui est chose faite. De plus, l'integration de notre solution a apporte un certain nombres d'avantages.
+Le principal but de notre projet a ete de pouvoir abandonner NanoXml ce qui est chose faite. De plus, l'integration de notre solution a apporte un certain nombres d'avantages.
 \subsection{Diminution de la taille des installeurs}
-Tout d'abord, l'abandon de NanoXml diminue la taille de IzPack et des installeurs generees comme cette librairies n'a plus a etre embarquees dans les installeurs. NanoXml pese, une fois compile, 116Ko. Notre adaptateur pese 44Ko. Chaque installeur genere par Izpack perdera donc 72Ko. Ce chiffre peut paraitre faible mais portee si l'installeur est telechargee 10000 fois sur un site, plus de 720Mo de bande passante sont economisee.
+Tout d'abord, l'abandon de NanoXml diminue la taille de IzPack et des installeurs generees comme cette librairies n'a plus a etre embarquees dans les installeurs. NanoXml pese, une fois compile, 116Ko. Notre adaptateur pese 44Ko. Chaque installeur genere par Izpack perdera donc 72Ko. Ce chiffre peut paraitre faible mais portee si l'installeur est telechargee 25000 fois sur un site, presque 1800Mo de bande passante sont economises.
 \subsection{Support de fonctionnalitees XML}
 Outre le fait d'avoir un parseur plus fiable et recent, un certains nombres de nouveautes ont ete apporte.
 \subsubsection{Support de la DTD}
@@ -217,16 +235,16 @@ Izpack est une communaute Open-Source, sa structure et son fonctionnement sont p
 \subsubsection{Codehaus}
 Le projet est recement passe sous CodeHaus, une fondation dediees au developpement de projets open-source. A ce titre, elle propose un certains nombre d'outils fournis par des sponsors. Par exemple, Atlassian fournit pour les projets leur systeme de suivie de bug, JIRA, JetBrain fournit une license IntelliJ...
 \subsubsection{Structure de la communaute}
-Les projets sous CodeHaus sont une meritocratie. Un despote supervise un projet. Les developpeurs desirant rejoindre un projet doivent apporter une contribution et montrer leurs motivation et etre approuve par le despote. En general, les decisions se prennent de maniere democratiques pour tout ce qui concernent le projet.
+Les projets sous CodeHaus sont une meritocratie. Un despote supervise un projet. Les developpeurs desirant rejoindre un projet doivent apporter une contribution, montrer leurs motivation et etre approuve par le despote. En general, les decisions se prennent de maniere democratiques pour tout ce qui concernent le projet.
 
-Une mailing-list pour les developpeurs permet de communiquer les informations et prendre les decisions d'un  commun accord. Pour eviter tout blocage dans les decisions, le despote a toujours le dernier mot.
+Une mailing-list pour les developpeurs permet de communiquer les informations et prendre les decisions d'un commun accord. Pour eviter tout blocage dans les decisions, le despote a toujours le dernier mot.
 
 Dans le cas de Izpack, le despote est Julien Ponge.
-\subsubsection{Traqueur de bug, Jira}
+\subsubsection{Système de suivi de bugs, Jira}
 L'evolution du projet peut etre suivie via Jira. Les anomalies, lacunes et ameliorations possibles font l'objet d'un ticket. Jira permet alors de suivre et de modifier les tickets avec un workflow est similaire a LightHouse.
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=0.4\textwidth]{../image/jira.png}
+	\includegraphics[width=0.8\textwidth]{../image/jira.png}
 	\caption{Dashboard Jira}
 \end{figure}
 \subsection{Suivi de nos apports}
@@ -248,4 +266,11 @@ Izpack possede une fonction de creation d'installeurs Web. L'installeur generera
 
 Cette fonctionnalite presente des lacunes dans la documentation \cite{IZPACK-224} et un bug de fonctionnalite\cite{IZPACK-281}. De plus, il est possible de refactorer la classe utilisee\cite{IZPACK-307}.
 \subsubsection{UserInputPanels}
-Le panel UserInputPanels doit permettre de decider de l'alignement des elements. C'est a dire qu'il est possible de les placer a gauche, a droite ou au centre\cite{IZPACK-176}. Actuellement, tout les elements sont alignes a gauche. Le travail est en cours de realisation mais les modifications rentrent en concurrence avec le refactoring de dennis.
+Le panel UserInputPanels doit permettre de decider de l'alignement des elements. C'est a dire qu'il est possible de les placer a gauche, a droite ou au centre \cite{IZPACK-176}. Actuellement, tout les elements sont alignes a gauche. Le travail est en cours de realisation mais les modifications rentrent en concurrence avec le refactoring de dennis.
+
+
+\subsection{Ameliorations}
+% TODO resoudre les bugs jira pour avoir a mettre :p
+Outre les corrections de bugs, la qualite du code a ete egalement ameliore. Par exemple, une correction de bug \cite{IZPACK-3xx} a trouve sa correction dans un refactoring de certaines classes, rendant le code plus lisible et portable.
+
+De meme, certaines methodes inutilisees \cite{IZPACK-3xx} (prevues pour des vieilles versions de java) ont pu etre supprimer.

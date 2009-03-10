@@ -6,7 +6,7 @@ A partir d'une application cree, Izpack est capable de generer un installateur. 
 
 Tout type de programme peut etre package, que ce soit une application C++, Java...
 \subsection{Open-source}
-Izpack est sous license Apache 2. Cette license permet l'acces au code source et l'utilisation du logiciel. Il est tout a fait possible de l'utiliser pour une application commerciale voire meme, de modifier les sources pour correspondre a ses besoins. Une importante communaute s'est regroupee autour de ce projet ce qui a permit son evolution jusqu'a maintenant. Si un developpeur apporte des modifications utiles, il est encourage a en faire profiter la communaute, mais ce n'est pas une obligation.
+Izpack est sous license Apache 2. Cette license permet l'acces au code source et l'utilisation libre du logiciel. Il est tout a fait possible de l'utiliser pour une application commerciale voire meme, de modifier les sources pour correspondre a ses besoins. Une importante communaute s'est regroupee autour de ce projet ce qui a permit son evolution jusqu'a maintenant. Si un developpeur apporte des modifications utiles, il est encourage a en faire profiter la communaute, mais ce n'est pas une obligation.
 \subsection{Fonctionnalités}
 Izpack est un systeme modulaire, il possède de nombreuses fonctionnalités pour creer un installeur adapte a chacun.
 \subsubsection{Multi-plateforme}
@@ -39,7 +39,7 @@ Izpack est utilisé dans de grand projets comme Jboss, Xwiki, Glassfish... A l'h
 \subsection{Architecture globale}
 Globalement, Izpack possède 2 composants, le compilateur qui va gérer la création de l'installeur et l'installeur.
 \subsection{Compilateur}
-Le compilateur package l'ensemble des fichiers nécessaires dans un seul fichier jar. Selon la description de l'installation, il va incorporer les panels nécessaires au lancement de celle-ci. Cette partie est utilise par le developpeur qui souhaite creer un installeur.
+Le compilateur package l'ensemble des fichiers nécessaires dans un seul fichier jar. Selon la description de l'installation, il va incorporer les panels nécessaires au lancement de celle-ci. Cette partie est utilisee par le developpeur qui souhaite creer un installeur.
 \subsection{Installeur}
 La partie installation concerne toute la logique et la présentation du processus d'installation. Cette partie sera executer par un utilisateur souhaitant installer le logiciel.
 \subsubsection{Exemples de panels}
@@ -112,7 +112,26 @@ Bien sûr d'autres options existent, mais celles présentées ici suffisent à c
 \subsection{Génération du jar}
 Pour générer notre installeur, il suffit d'avoir de lancer la commande suivante : (l'executable \verb|compile| provient de IzPack)
 \begin{verbatim}
-	compile install.xml
+$ compile install.xml
+.::  IzPack - Version 4.1.0 ::.
+
+< compiler specifications version: 1.0 >
+
+- Copyright (c) 2001-2008 Julien Ponge
+- Visit http://izpack.org/ for the latest releases
+- Released under the terms of the Apache Software License version 2.0.
+
+-> Processing  : install.xml
+-> Output      : install.jar
+-> Base path   : .
+-> Kind        : standard
+-> Compression : default
+-> Compr. level: -1
+-> IzPack home : .
+
+...
+
+Build time: Tue Mar 10 16:50:27 CET 2009
 \end{verbatim}
 Cette exécution va produire un fichier install.jar : notre installeur.
 \subsection{Installation}
@@ -126,6 +145,18 @@ Il suffit désormais de lancer le jar pour installer notre application.
 
 \subsection{Installation automatique}
 En lancant l'installeur avec un script d'installation automatisee en parametre, l'installation est rejouee a l'identique automatiquement.
+\begin{verbatim}
+$ java -jar install.jar automated.xml
+[ Starting automated installation ]
+[ Starting to unpack ]
+[ Processing package: Base (1/3) ]
+[ Processing package: Docs (2/3) ]
+[ Processing package: Sources (3/3) ]
+[ Unpacking finished ]
+[ Writing the uninstaller data ... ]
+[ Automated installation done ]
+\end{verbatim}
+
 
  %---------------------------------------------------------
 \section{Problèmes actuels}
