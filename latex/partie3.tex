@@ -211,7 +211,24 @@ Regulierement, nous synchronisions notre depot avec la branche principale pour p
 
 Cette synchronisation reguliere etait en vue de preparer le merge vers sur la branche principale. Ainsi, une fois notre solution achevee et testee, Julien Ponge a extrait un patch qui a ete soumis a la communaute des developpeurs d'Izpack. Apres quoi, les modifications ont ete portee sur la branche principales et seront disponibles pour la prochaines version d'Izpack, la 4.3.
 \section{Au delà du sujet}
-Une fois l'objectif du projet atteint, nous avons décidé d'accepter l'offre de Julien Ponge en devenant contributeurs officiels du projet.
+Une fois l'objectif du projet atteint, nous avons décidé d'accepter l'offre de Julien Ponge en devenant contributeurs officiels du projet. 
+\subsection{Le projet Izpack}
+Izpack est une communaute Open-Source, sa structure et son fonctionnement sont particuliers.
+\subsubsection{Codehaus}
+Le projet est recement passe sous CodeHaus, une fondation dediees au developpement de projets open-source. A ce titre, elle propose un certains nombre d'outils fournis par des sponsors. Par exemple, Atlassian fournit pour les projets leur systeme de suivie de bug, JIRA, JetBrain fournit une license IntelliJ...
+\subsubsection{Structure de la communaute}
+Les projets sous CodeHaus sont une meritocratie. Un despote supervise un projet. Les developpeurs desirant rejoindre un projet doivent apporter une contribution et montrer leurs motivation et etre approuve par le despote. En general, les decisions se prennent de maniere democratiques pour tout ce qui concernent le projet.
+
+Une mailing-list pour les developpeurs permet de communiquer les informations et prendre les decisions d'un  commun accord. Pour eviter tout blocage dans les decisions, le despote a toujours le dernier mot.
+
+Dans le cas de Izpack, le despote est Julien Ponge.
+\subsubsection{Traqueur de bug, Jira}
+L'evolution du projet peut etre suivie via Jira. Les anomalies, lacunes et ameliorations possibles font l'objet d'un ticket. Jira permet alors de suivre et de modifier les tickets avec un workflow est similaire a LightHouse.
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.4\textwidth]{../image/jira.png}
+	\caption{Dashboard Jira}
+\end{figure}
 \subsection{Suivi de nos apports}
 Notre solution etant integree, il est possible que des bugs subsistent dans notre implementation ou une mauvaise interpretation de notre part ne correspond pas au comportement attendus. Le statut de developpeur nous permet de suivre et corriger les problèmes rencontrés par la communauté de IzPack.
 \subsubsection{Tests corriges}
@@ -230,3 +247,5 @@ Un bug cache dans l'installation automatique la faisait quitter silencieusement 
 Izpack possede une fonction de creation d'installeurs Web. L'installeur generera des modules qui pourront etre depose sur un serveur web. Cela permet de creer un installeur leger contenant le noyau dur. Les modules aditionnels seront telecharges si ils sont selectionnes.
 
 Cette fonctionnalite presente des lacunes dans la documentation \cite{IZPACK-224} et un bug de fonctionnalite\cite{IZPACK-281}. De plus, il est possible de refactorer la classe utilisee\cite{IZPACK-307}.
+\subsubsection{UserInputPanels}
+Le panel UserInputPanels doit permettre de decider de l'alignement des elements. C'est a dire qu'il est possible de les placer a gauche, a droite ou au centre\cite{IZPACK-176}. Actuellement, tout les elements sont alignes a gauche. Le travail est en cours de realisation mais les modifications rentrent en concurrence avec le refactoring de dennis.
