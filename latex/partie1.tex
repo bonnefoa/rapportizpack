@@ -1,14 +1,18 @@
- %---------------------------------------------------------
+%---------------------------------------------------------
 \section{Description}
-IzPack est un générateur d'installeur d'application open-source crée en 2001 par Julien Ponge.
+IzPack est un projet open-source crée en 2001 par Julien Ponge. C'est un generateur d'installeur et il presente a ce titre de nombreuses fonctionnalitees.
 \subsection{Générateur d'installeur}
-A partir d'une application cree, Izpack est capable de generer un installateur. Cet installateur pourra etre utilise pour deployer l'application sur n'importe quelle machine. L'interet d'Izpack reside dans le fait que creer un installeur est souvent laborieux et n'apporte que peu de plus-value au programme. Izpack propose une solution pour creer cet installeur de maniere simple et universelle. 
+Une application, une fois realisee, necessite un certains nombre d'operations sur la machine pour etre operationnelle. Ces operations vont de la decompression de l'archive dans un repertoire au lancement de script de configuration en passant par la validation de la license et la creation de raccourcis. Creer un installeur pour une application est souvent laborieux et n'apporte que peu de plus-value au programme. 
 
-Tout type de programme peut etre package, que ce soit une application C++, Java...
+L'interet d'Izpack reside dans le fait qu'il propose une solution pour creer cet installeur de maniere simple et universelle. En effet, a partir d'une application cree, Izpack est capable de generer un installateur. Cet installateur pourra etre utilise pour deployer l'application sur n'importe quelle machine. De plus, tout type de programme peut etre package, que ce soit une application C++ ou Java. Izpack se chargeant juste de la logique d'installation, il est totalement independant du contenu qu'il installe.
 \subsection{Open-source}
+Le projet Izpack est placee sous une license Open-source. A ce titre, le code source est librement selon les termes de la license. De plus, une communautee s'est regroupee autour du projet.
+\subsubsection{La communaute Izpack}
+Cette communaute open-source fait vivre et evoluer le projet. Les personnes rejoignant les projets sont des personnes aux motivations diverses. Ces personnes peuvent etre des passionnes interesse par le projet ou des salaries utilisant Izpack et apportant leurs contribution. Les formes de contributions sont variees. Elles peuvent prendre la forme d'aide aux utilisateurs, de readaction de documentation, de correction de bugs ou d'ajouts de fonctionnalites.
+\subsubsection{License}
 Izpack est sous license Apache 2. Cette license permet l'acces au code source et l'utilisation libre du logiciel. Il est tout a fait possible de l'utiliser pour une application commerciale voire meme, de modifier les sources pour correspondre a ses besoins. Une importante communaute s'est regroupee autour de ce projet ce qui a permit son evolution jusqu'a maintenant. Si un developpeur apporte des modifications utiles, il est encourage a en faire profiter la communaute, mais ce n'est pas une obligation.
 \subsection{Fonctionnalités}
-Izpack est un systeme modulaire, il possède de nombreuses fonctionnalités pour creer un installeur adapte a chacun.
+Izpack est un systeme modulaire, il possède de nombreuses fonctionnalités pour creer un installeur adapté a chacun.
 \subsubsection{Multi-plateforme}
 L'installeur generee par Izpack est un jar (java archive). Il suffit donc que la machine ait un machine virtuelle pour pouvoir lancer l'installation, indépendamment de la plateforme et du système d'exploitation. Il est neanmoins possibles de faire des traitements specifiques a certaines plateforme ou de convertir l'installeur pour etre specifique a une plateforme. 
 \subsubsection{Personnalisation}
@@ -27,7 +31,7 @@ A la fin de l'installation, il est possible de générer un script d'installatio
 	\includegraphics[width=12cm]{../image/SaveInstallXML.png}
 	\caption{Fin d'installation, enregistrement du script d'installation automatisee}
 \end{figure}
-\subsection{Popularité}
+\subsection{Popularité du projet}
 Izpack est utilisé dans de grand projets comme Jboss, Xwiki, Glassfish... A l'heure actuelle, les téléchargements mensuels s'élèvent a 25.000.
 \begin{figure}[H]
 	\centering
@@ -42,6 +46,26 @@ Globalement, Izpack possède 2 composants, le compilateur qui va gérer la créa
 Le compilateur package l'ensemble des fichiers nécessaires dans un seul fichier jar. Selon la description de l'installation, il va incorporer les panels nécessaires au lancement de celle-ci. Cette partie est utilisee par le developpeur qui souhaite creer un installeur.
 \subsection{Installeur}
 La partie installation concerne toute la logique et la présentation du processus d'installation. Cette partie sera executer par un utilisateur souhaitant installer le logiciel.
+\subsection{Processus d'installation}
+Dans un premier temps, le compilateur va compiler l'application.
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.4\textwidth]{../image/archi_architecture.png}
+	\caption{Phase de compilation}
+\end{figure}
+L'installateur genere comprend l'application en elle-meme et toute la partie installation necessaire et adaptee au besoin de l'application. Cette application est alors prete a etre deployee sur une autre machine.
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.4\textwidth]{../image/archi_installation.png}
+	\caption{Phase d'installation}
+\end{figure}
+Le processus d'installation est gere par la partie installeur de Izpack. Cette phase va permettre de deployer l'application sur toute les machines necessaires.
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.3\textwidth]{../image/archi_installe.png}
+	\caption{Application deployee}
+\end{figure}
+
 \subsubsection{Exemples de panels}
 Chaque ecran que verra l'utilisateur est decrit par un panel.
 Il existe de nombreux types de panels : des panel pour accueillir l'utilisateur et lui afficher des informations (HelloPanel et HTMLInfoPanel), d'autres pour demander à l'utilisateur des informations (UserInputPanel), etc.
