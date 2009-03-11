@@ -258,11 +258,14 @@ Ici, pour tout les éléments, on recopie l'élément.
 Dans le cas du xfragment, on omet la copie. 
 Au final, le xfragment est supprimé du XML ce qui est le but recherché.
 \subsubsection{Numéro de ligne}
-Une fonctionnalité de nanoXML est la gestion des numéros de lignes. Lors qu'une incohérence est détectée dans un xml lu, IzPack prévient l'utilisateur de l'erreur, et indique le numéro de la ligne responsable dans le xml.
+Une fonctionnalité de nanoXML est la gestion des numéros de lignes. 
+Lors qu'une incohérence est détectée dans un XML lu, IzPack prévient l'utilisateur de l'erreur, et indique le numéro de la ligne responsable dans le xml.
 
-Du point de vue de DOM, les numéros de lignes n'ont pas de signification : une fois le fichier xml parsé, seul l'arbre DOM construit en mémoire importe. Cet arbre, réécrit dans un fichier ne correspondra pas forcement (pour les numéros de lignes, l'indentation, etc) au fichier de départ, sans parler des ajouts/suppressions/modifications de noeuds.
+Du point de vue de DOM, les numéros de lignes n'ont pas de signification : une fois le fichier XML parsé, seul l'arbre DOM construit en mémoire importe. 
+Cet arbre, réécrit dans un fichier ne correspondra pas forcèment (pour les numéros de lignes, l'indentation, etc) au fichier de départ, sans parler des ajouts/suppressions/modifications de noeuds.
 
-A l'inverse du point de vue de SAX, les numéros de lignes sont obtenues facilement. Dans ce cas là, il est utile de savoir à quel endroit on se trouve dans le document.
+Au contraire, pour SAX, les numéros de lignes sont obtenues facilement.
+Dans ce cas là, il est utile de savoir à quel endroit on se trouve dans le document.
 
 Afin d'obtenir les numéros de ligne dans un arbre DOM, les deux points de vue ont été utilisés grâce à un \verb|Transformer|.
 On crée une source SAX, à laquelle on ajoute un filtre pour écouter les évènements (et stocker les numéros de lignes en cas de début de balise).
@@ -270,15 +273,15 @@ En parallèle, on crée un résultat DOM, qui contiendra le résultat du parse (
 On utilise ensuite un Transformer : il va utiliser la source SAX (les numéros de lignes sont stockées à ce moment par le filtre) et remplir le résultat DOM.
 Enfin, il suffit de parcourir l'arbre DOM pour ajouter a chaque élément son numéro de ligne.
 Ce nombre est stocké dans les ``user data'', ajoutés dans la version 3  de DOM pour stocker diverses informations supplémentaires dans un noeud.
-
 % TODO : schéma
-
 \section{Application et tests}
 Une fois la solution réalisée, nous l'avons soumis à un certain nombre de tests afin de la vérifier.
 \subsection{Tests}
-Afin d'avoir un comportement le plus fidèle possible à celui de nanoXML, de nombreux tests unitaires ont été écrits.
+Afin d'avoir un comportement le plus fidèle possible à celui de NanoXML et assurer la fiabilité de la solution, de nombreux tests unitaires ont été écrits.
 \subsubsection{Test unitaires de comparaison}
-La solution a d'abord été élaborée de manière isolée. Le projet contenait notre adaptateur et la librairie NanoXml.
+La solution a d'abord été élaborée de manière isolée.
+Un projet indépendant contenant NanoXml à été créé. 
+C'est sur ce projet que nous avons travaillé et développer notre adaptateur.
 Nous avons alors réalisé une batterie de tests couvrant toutes les méthodes de l'interface extraites et de très nombreux cas.
 Ces tests unitaires effectuent des actions identiques avec notre adaptateur et NanoXML, et comparent les résultats.
 
@@ -292,20 +295,19 @@ Ceci nous a permis de nous assurer du comportement de l'adaptateur et de décele
 
 En couvrant la quasi totalité des méthodes utilisées dans IzPack avec de nombreux cas d'utilisation, nous avons pu nous assurer du respect du comportement de notre adaptateur.
 \subsubsection{Les tests unitaires sur Xinclude et Xfragment}
-Avec l'ajout des fonctionnalites XInclude et XFragment a NanoXml, une batterie de test unitaires a été fournies.
+Avec l'ajout des fonctionnalités XInclude et XFragment à NanoXml, une batterie de test unitaires a été fournies.
 Nous avons donc repris ces tests et nous les avons intégrés aux tests de l'adaptateur.
 \subsubsection{Les tests unitaires classiques}
 Nous avons créé une batterie de tests unitaires classiques pour notre adaptateur.
 Ils s'assurent entre autre que le parse, l'exploitation de l'arbre en mémoire et l'écriture du Xml se font correctement.
 \subsection{Intégration a IzPack}
 L'intégration à IzPack de notre travail fut relativement aisée : les objets de NanoXml ont été remplacés par ceux de notre adapteur.
-Les appels n'ont quasiment pas été changés, les méthodes exposées dans les deux cas étant les même.
+Les appels n'ont quasiment pas été changés, les méthodes exposées dans les deux cas étant les mêmes.
 Cette intégration effectuée, nous avons pu commencer les tests sur application.
-
 \subsubsection{Test fonctionnels}
 Une phase de test fonctionnels a été réalisée pour tester l'intégrité de l'application après l'intégration de notre solution.
 Ces tests sont des tests manuels sur les installations générés par Izpack.
-Nous avons donc testé dans un premier temps l'application d'exemple fournie par Izpack.
+Nous avons donc testé dans un premier temps l'application d'exemple fourni par Izpack.
 Ces tests ont permis de faire ressortir quelques problèmes que nous avons pu régler rapidement.
 
 Suite à cela, nous avons essayé de générer et lancer un installeur plus conséquent.
@@ -318,7 +320,6 @@ En utilisant YourKit, nous avons essayé de détecter les méthodes chronophages
 \section{Résultats}
 Le principal but de notre projet a été de pouvoir abandonner NanoXml ce qui est chose faite.
 De plus, l'intégration de notre solution a apporté un certain nombres d'avantages.
-
 \subsection{Diminution de la taille des installeurs}
 Tout d'abord, l'abandon de NanoXml diminue la taille de IzPack et des installeurs générés car cette librairie n'a plus besoin d'être présente dans les installeurs.
 NanoXml pèse, une fois compilé, 116Ko.
@@ -331,25 +332,26 @@ Outre le fait d'avoir un parseur plus fiable et récent, un certain nombre de no
 Désormais les DTD (document de validation d'un xml) sont pris en charge.
 \subsubsection{Support natif de Xinclude}
 De plus, l'inclusion de fichiers xml dans d'autres est supporté nativement, sans avoir à modifier le code du parseur.
-
 \subsection{Intégration dans la branche principale}
 Régulièrement, nous synchronisions notre dépôt avec la branche principale pour prendre en compte les modifications qui ont été réalisées sur Izpack.
 Cette synchronisation se passait généralement sans encombre grâce à Git, excepté quand les modifications concernaient la manipulation de XML et que les fichiers étaient conséquents (>3000 lignes).
 
 Cette synchronisation régulière était en vue de préparer le merge vers sur la branche principale.
-insi, une fois notre solution achevée et testée, Julien Ponge a extrait un patch qui a été soumis à la communauté des développeurs d'Izpack.
-Après quoi, les modifications ont été portées sur la branche principaleet seront disponibles pour la prochaines version d'Izpack, la 4.3.
-
+Ainsi, une fois notre solution achevée et testée, Julien Ponge a extrait un patch qui a été soumis à la communauté des développeurs d'Izpack.
+Après quoi, les modifications ont été portées sur la branche principale et seront disponibles pour la prochaines version d'Izpack, la 4.3.
 \section{Au delà du sujet}
 Une fois l'objectif du projet atteint, nous avons décidé d'accepter l'offre de Julien Ponge en devenant contributeurs officiels du projet.
 \subsection{Le projet Izpack}
-Izpack est une communauté Open-Source, sa structure et son fonctionnement sont particuliers.
+Izpack est une communauté Open-Source, sa structure et son fonctionnement sont particuliers. 
+Le projet est récemment passé sous CodeHaus. 
+Des outils et des moyens de communications sont dédiées au projet.
 \subsubsection{Codehaus}
-Le projet est récemment passe sous CodeHaus, une fondation dédiée au développement de projets open-source.
-A ce titre, elle propose un certains nombre d'outils fournis par des sponsors.
-Par exemple, Atlassian fournit pour les projets leur système de suivie de bug, JIRA, JetBrain fournit une licence IntelliJ...
+CodeHaus est une fondation dédiée au développement de projets open-source.
+A ce titre, elle propose une plateforme pour aider au développement de ces projets avec un certains nombre d'outils fournis par des sponsors.
+Par exemple, Atlassian fournit pour les projets leur système de suivie de bug, JIRA, JetBrain fournit une licence IntelliJ, etc...
 \subsubsection{Structure de la communauté}
-Les projets sous CodeHaus sont des méritocraties. Un despote supervise un projet.
+Les projets sous CodeHaus sont des méritocraties. 
+Un despote supervise un projet.
 Les développeurs désirant rejoindre un projet doivent apporter une contribution, montrer leur motivation et être approuvés par le despote.
 En général, les décisions se prennent de manière démocratiques pour tout ce qui concernent le projet.
 
@@ -357,7 +359,6 @@ Une mailing-list pour les développeurs permet de communiquer les informations e
 Pour éviter tout blocage dans les décisions, le despote a toujours le dernier mot.
 
 Dans le cas de Izpack, le despote est Julien Ponge.
-
 \subsubsection{Système de suivi de bugs, Jira}
 L'évolution du projet peut être suivie via Jira.
 Les anomalies, lacunes et améliorations possibles font l'objet d'un ticket.
@@ -367,15 +368,13 @@ Jira permet alors de suivre et de modifier les tickets avec un workflow similair
 	\includegraphics[width=0.8\textwidth]{../image/jira.png}
 	\caption{Dashboard Jira}
 \end{figure}
-
 \subsection{Suivi de nos apports}
 Notre solution étant intégrée, il est possible que des bugs subsistent dans notre implémentation ou qu'une mauvaise interprétation de notre part mène à un comportement inattendu.
 Le statut de développeur nous permet de suivre et corriger les problèmes rencontrés par la communauté de IzPack.
-
 \subsubsection{Tests corrigés}
-Nous avons par exemple corrigé des tests unitaires sur les numéros de ligne échouant \cite{IZPACK-306} et sur les conditionsTest \cite{IZPACK-305}.
+Nous avons par exemple corrigé des tests unitaires sur les numéros de ligne échouant et sur les conditionsTest.
 \subsubsection{Rectification sur une interprétation}
-Un problème est apparu lors de l'utilisation du Xinclude \cite{IZPACK-303}.
+Un problème est apparu lors de l'utilisation du Xinclude.
 Ce problème a été notifié par un développeur utilisant la version de développement et donc ayant récupéré nos modifications.
 
 Par défaut, Jaxp résout le chemin de manière relative au répertoire d'exécution et c'est ce qui a été réalisée dans notre implementation.
@@ -384,23 +383,24 @@ Or le comportement attendu, plus naturel, est de résoudre le chemin d'inclusion
 \subsection{Correction de bugs}
 Nous avons également corrigé plusieurs bugs.
 \subsubsection{Problème lors de l'installation automatique}
-Un panel, le TreePacksPanels, ne respectait pas la configuration enregistrée lors de l'installation normale \cite{IZPACK-223}.
+Un panel, le TreePacksPanels, ne respectait pas la configuration enregistrée lors de l'installation normale. 
+Le problème provenait d'un problème de packaging, la classe devant faire le travail automatique n'était pas présente lors de l'installation.
 
-Un bug caché dans l'installation automatique pouvait la faire quitter silencieusement \cite{IZPACK-309}.
+Un bug caché dans l'installation automatique pouvait la faire quitter silencieusement.
 \subsubsection{Web installers}
 Izpack possède une fonction de création d'installeurs Web.
-L'installeur générera des modules qui pourront être déposés sur un serveur web.
-Cela permet de créer un installeur léger contenant uniquement le noyau dur.
-Les modules additionnels seront telechargés s'ils sont sélectionnés.
+Cette fonctionnalité permet de générer des modules d'installations qui pourront être déposés sur un serveur web avec un installeur léger contenant uniquement le noyau dur.
+Les modules additionnels seront alors téléchargés s'ils sont sélectionnés.
 
-Cette fonctionnalité présente des lacunes dans la documentation \cite{IZPACK-224} et un bug de fonctionnalité \cite{IZPACK-281}.
-De plus, il est possible de refactorer la classe utilisée \cite{IZPACK-307}.
+Cette fonctionnalité présentait des lacunes dans la documentation et un bug de fonctionnalité.
+De plus, un refactoring des classes concernés est en cours de traitement.
 \subsubsection{UserInputPanels}
 Le panel UserInputPanels doit permettre de décider de l'alignement des éléments.
-C'est a dire qu'il est possible de les placer à gauche, à droite ou au centre \cite{IZPACK-176}. Actuellement, tout les éléments sont alignés à gauche.
-Le travail est en cours de réalisation mais les modifications entrent en concurrence avec le refactoring de Dennis.
+C'est a dire qu'il est possible de les placer à gauche, à droite ou au centre. Actuellement, tout les éléments sont alignés à gauche.
+Le travail est en cours de réalisation mais les modifications entrent en concurrence avec le refactoring de Dennis Reil, un autre contributeur.
 
-\subsection{Améliorations}
-Outre les corrections de bugs, la qualité du code a été également amélioré. Par exemple, une correction de bug \cite{IZPACK-309} a trouvé sa correction dans un refactoring de certaines classes, rendant le code plus lisible et améliorant sa qualité.
-
-De même, certaines méthodes inutilisées \cite{IZPACK-336} (prévues pour des vieilles versions de java) ont pu être supprimer.
+% TODO What the *** ???
+% \subsection{Améliorations}
+% Outre les corrections de bugs, la qualité du code a été également amélioré. Par exemple, une correction de bug a trouvé sa correction dans un refactoring de certaines classes, rendant le code plus lisible et améliorant sa qualité.
+% 
+% De même, certaines méthodes inutilisées (prévues pour des vieilles versions de java) ont pu être supprimer.
