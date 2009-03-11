@@ -67,24 +67,22 @@ Cette partie est utilisée par le développeur qui souhaite créer un installeur
 La partie installation concerne toute la logique et la présentation du processus d'installation. Cette partie sera exécuter par un utilisateur souhaitant installer le logiciel.
 \subsection{Processus d'installation}
 Dans un premier temps, le compilateur va compiler l'application.
+
+
+
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=0.4\textwidth]{../image/archi_architecture.png}
+	\includegraphics[width=0.8\textwidth]{../image/partie_compil.png}
 	\caption{Phase de compilation}
 \end{figure}
 L'installateur généré comprend l'application en elle-même et toute la partie installation nécessaire et adaptée aux besoins de l'application.
 Cette application est alors prête à être déployée sur une autre machine.
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=0.4\textwidth]{../image/archi_installation.png}
+	\includegraphics[width=0.8\textwidth]{../image/partie_install.png}
 	\caption{Phase d'installation}
 \end{figure}
 Le processus d'installation est géré par la partie installeur de Izpack. Cette phase va permettre de déployer l'application sur toutes les machines nécessaires.
-\begin{figure}[H]
-	\centering
-	\includegraphics[width=0.3\textwidth]{../image/archi_installe.png}
-	\caption{Application déployée}
-\end{figure}
 
 \subsubsection{Exemples de panels}
 Il existe de nombreux types de panels : des panel pour accueillir l'utilisateur et lui afficher des informations (HelloPanel et HTMLInfoPanel), d'autres pour demander à l'utilisateur des informations (UserInputPanel), etc...
