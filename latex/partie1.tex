@@ -200,9 +200,10 @@ Izpack a débuté en 2001.
 A cette époque, la Jdk en était à la version 1.3. Il y avait donc des fonctionnalités absentes comme la genericité. 
 On trouve ainsi, encore maintenant, du code utilisant de vieilles structures de données (des tableaux d'objets ou des Vectors) ou des styles de programmation abandonnés.
 \subsection{Nanoxml}
+%TODO Supprimer les redites de la partie 3
 Une amélioration possible concerne la gestion des fichiers XML, qui ont une grande importance dans IzPack.
 L'absence de processeur XML intégré à la JRE 1.3 a forcé l'utilisation d'une librairie externe pour traiter les XML.
-IzPack se base donc sur nanoXML, une librairie Xml, choisie en raison de sa faible taille.
+IzPack se base donc sur une librqirie externe; nanoXML.
 Cette librairie n'est malheureusement plus mise à jour (la dernière mise à jour date de 2003) et possède encore quelques bugs.
 De plus, les versions récentes de l'environnement java (JRE) possèdent de base tout ce qu'il faut pour gérer le xml.
 Se débarrasser de la dépendance à nanoXML et se reposer uniquement sur la JRE permettrait donc non seulement de rendre la gestion des XML plus sûre et robuste, mais également de diminuer la taille des installeurs générés.
