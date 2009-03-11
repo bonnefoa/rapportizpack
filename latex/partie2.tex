@@ -1,46 +1,62 @@
-Pour diriger et faciliter l'evolution du projet, un certains nombres d'outils et de methodes ont ete mis en place au debut du projet. L'environnement avait pour but de permettre un developpement agile. On peut distinguer 3 parties, la gestion du projet, la gestion des sources et les outils de developpements.
+Pour diriger et faciliter l'évolution du projet, un certain nombre d'outils et de méthodes ont été mis en place au début du projet.
+L'environnement avait pour but de permettre un développement agile. On peut distinguer 3 parties, la gestion du projet, la gestion des sources et les outils de développements.
 \section{Planification et gestion de projet}
-La methode agile preconise des iterations courtes avec des objectifs clairs et conscits a realiser a chaque iteration. A chaque iteration, un point etait fait avec le client pour definir les objectifs pour la prochaine iteration, le client ici etant notre tuteur, Julien Ponge. L'outil pour gerer les objectifs et les iterations est LightHouse.
+La méthode agile préconise des itérations courtes avec des objectifs clairs et concis à réaliser à chaque itération.
+A chaque itération, un point est fait avec le client pour définir les objectifs pour la prochaine itération, le client ici étant notre tuteur, Julien Ponge.
+L'outil pour gérer les objectifs et les itérations est LightHouse.
 \subsection{Lighthouse}
-Lighthouse est un gestionnaire de projet en ligne. Il se presente sous la forme d'une apllication web et propose toutes les fonctionnalitees necessaires a la gestions des objectifs. On peut distinguer deux entités principales, les tickets et les sprints.
+Lighthouse est un gestionnaire de projet en ligne.
+Il se présente sous la forme d'une application web et propose toutes les fonctionnalités nécessaires à la gestions des objectifs.
+On peut distinguer deux entités principales, les tickets et les sprints.
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.4\textwidth]{../image/lighthouse.png}
 	\caption{Page d'accueil de Lighthouse}
 \end{figure}
 \subsection{Ticket}
-Les Tickets représentent un objectif à réaliser. Ils peuvent être crées par n'importe quel participant au projet. Ce ticket peut ensuite être assigner à une personne et possède plusieurs états.
+Les Tickets représentent un objectif à réaliser.
+Ils peuvent être crées par n'importe quel participant au projet. Ce ticket peut ensuite être assigner à une personne et possède plusieurs états.
 \begin{description}
-\item[Nouveau] Le ticket vient d'être crée. Il peut être assigné (et le doit pour être traité).
-\item[Ouvert] Le ticket commence a être traité.
+\item[Nouveau] Le ticket vient d'être créé. Il peut être assigné (et le doit pour être traité).
+\item[Ouvert] Le ticket commence à être traité.
 \item[Clos] Le ticket a été résolu et est fermé.
 \end{description}
 Chacun de ces tickets peut être assigné à un sprint.
 \subsection{Sprint}
-Un sprint est un ensemble de ticket à résoudre pour une date donnée. En général, la durée d'un sprint était de 2 semaines, parfois une. A chaque fin de sprint, une réunion était organisée pour discuter des résultats, des reports à effectuer ou des tickets à créer.
+Un sprint est un ensemble de tickets à résoudre pour une date donnée.
+En général, la durée d'un sprint était de 2 semaines, parfois une.
+A chaque fin de sprint, une réunion était organisée pour discuter des résultats, des reports à effectuer ou des tickets à créer.
 \section{Gestionnaire de version}
-Tout projet informatique se doit d'être sous gestionnaire de version. Sans compter le fait que le projet soit open-source et actif provoquait des changements importants dans le code. Il fallait donc pouvoir travailler en parallèle des changements opérés par les contributeurs et pouvoir appliquer facilement nos modifications le jour venu.
+Tout projet informatique se doit d'être sous gestionnaire de version.
+De plus, le fait que le projet soit open-source et actif provoquait des changements importants dans le code.
+Il fallait donc pouvoir travailler en parallèle des changements opérés par les contributeurs et pouvoir appliquer facilement nos modifications le jour venu.
 
-Le dépôt de référence d'IzPack est un dépôt Subversion. Les contributeurs appliquent leurs modifications sur ce dépôt. Cependant, pour des raisons de facilité et pour ne pas perturber le développement, il a été décidé de travailler sur un fork Git.
+Le dépôt de référence d'IzPack est un dépôt Subversion.
+Les contributeurs appliquent leurs modifications sur ce dépôt.
+Cependant, pour des raisons de facilité et pour ne pas perturber le développement, il a été décidé de travailler sur un fork Git.
 \subsection{Git}
 Git est un gestionnaire de version récent. Il a été crée en 2004 par Linus Torvald pour remplacer BitKeeper, l'ancien gestionnaire de version du noyau linux.
-Il s'agit, à l'instar de BitKeeper, d'un système distribué. Toutes les copies du dépôt sont elles-mêmes des serveurs.
-Chaque personne travaille donc sur son propre dépôt et se synchronise par rapport à d'autres dépôts. C'est de cet aspect distribué que provient une grande partie de la puissance de Git.
-Un utilisateur a accès à l'historique entier une fois qu'il a cloné le dépôt. Il peut effectuer toutes les operations voulues sur son dépôt en étant déconnecté et chaque clone est une sauvegarde intégrale du dépôt.
-Ainsi, n'importe quel developpeur a acces a toutes les fonctionnalites d'un gestionnaire de version meme s'il n'est pas connecte au depot central.
-La communication entre depots Git se fait soit par le protocole ssh, https, ftp, rsync ou par le protocole git.
+Il s'agit, à l'instar de BitKeeper, d'un système distribué.
+Toutes les copies du dépôt sont elles-mêmes des serveurs.
+Chaque personne travaille donc sur son propre dépôt et se synchronise par rapport à d'autres dépôts.
+C'est de cet aspect distribué que provient une grande partie de la puissance de Git.
+Un utilisateur a accès à l'historique entier une fois qu'il a cloné le dépôt.
+Il peut effectuer toutes les operations voulues sur son dépôt en étant déconnecté et chaque clone est une sauvegarde intégrale du dépôt.
+Ainsi, n'importe quel développeur a accès à toutes les fonctionnalités d'un gestionnaire de version même s'il n'est pas connecte au dépôt central.
+La communication entre dépôts Git se fait soit par le protocole ssh, https, ftp, rsync ou par le protocole git.
 
-Git se demarque également sur des fonctionnalités évoluées. L'un de ses principaux points forts est la gestion des branches. La création, suppression et fusion des branches est remarquable de simplicité et d'efficacité.
+Git se démarque également sur des fonctionnalités évoluées. L'un de ses principaux points forts est la gestion des branches. La création, suppression et fusion des branches est remarquable de simplicité et d'efficacité.
 La taille d'un dépôt Git est faible comparée à celle d'autres gestionnaires comme subversion.
 
 Julien Ponge entretient un dépôt Git synchronisé par rapport au Subversion. Nous avons travaillé sur un fork de ce dépôt.
 Nous pouvions à tout moment synchroniser notre dépôt par rapport au dépôt d'origine et ainsi, appliquer toutes les modifications des contributeurs à notre dépôt.
 Cela permettait de préparer l'application de nos modifications de manière aisée. Tout ces dépôts sont hébergés sur GitHub.
 \subsection{GitHub}
-GitHub est une plateforme collaborative hebergeant des depots Git. Cette plateforme permet de créer, dupliquer, supprimer ou consulter des dépôts Git.
-Il est possible de donner les droits de commit à d'autres personnes sur nos dépôts. Toutes les réalisations faites sont ouvertes et disponibles à tout le monde, c'est à dire que n'importe qui est libre de consulter, cloner ou de forker les projets présents sur GitHub.
+GitHub est une plateforme collaborative hébergeant des dépôts Git. Cette plateforme permet de créer, dupliquer, supprimer ou consulter des dépôts Git.
+Il est possible de donner les droits de commit à d'autres personnes sur nos dépôts.
+Toutes les réalisations faites sont ouvertes et disponibles à tout le monde, c'est à dire que n'importe qui est libre de consulter, cloner ou de forker les projets présents sur GitHub.
 
-Cette plateforme a été choisi par Julien Ponge pour héberger son dépot Git. Nous nous sommes donc créés des comptes sur GitHub et l'avons dupliqué. L'utilisation d'un dépot public basé sur celui de Julien Ponge a permis non seulement de faciliter les mises à jour, mais également de lui permettre de suivre facilement notre travail.
+Cette plateforme a été choisi par Julien Ponge pour héberger son dépôt Git. Nous nous sommes donc créés des comptes sur GitHub et l'avons forké. L'utilisation d'un dépôt public basé sur celui de Julien Ponge a permis non seulement de faciliter les mises à jour, mais également de lui permettre de suivre facilement notre travail.
 
 
 %- GitHub : Gestionnaire de dépôt Git
@@ -57,10 +73,14 @@ Cette plateforme a été choisi par Julien Ponge pour héberger son dépot Git. 
 %-> Recherche implementation 
 %-> Preserve Case
 %-> Refactoring puissant
-IntelliJ est un environnement de développement intégré similaire à Eclipse. Il est propriétaire et nécessite une licence pour son fonctionnement. Cependant, JetBrain, l'éditeur de IntelliJ, a une politique d'ouverture pour les projets open-source. Les projets sous CodeHaus et Apache bénéficient d'une licence dédiée et gratuite. 
+IntelliJ est un environnement de développement intégré similaire à Eclipse.
+Il est propriétaire et nécessite une licence pour son fonctionnement. Cependant, JetBrain, l'éditeur de IntelliJ, a une politique d'ouverture pour les projets open-source.
+Les projets sous CodeHaus et Apache bénéficient d'une licence dédiée et gratuite. 
 
-Il présente certaines divergences avec des IDE comme Eclipse et NetBeans. Il possède une plus grande variété de fonctionnalités et l'intégration d'un grand nombre de composants. On trouve ainsi l'intégration de frameworks récents comme GWT ou d'outils comme Git. L'intégration de Maven et également très complète.
-De plus, ses capacites de modification de code (refactoring) sont au dessus de celles des autres IDE : preservation de la casse lors d'un renommage, etc...
+Il présente certaines divergences avec des IDE comme Eclipse et NetBeans.
+Il possède une plus grande variété de fonctionnalités et l'intégration d'un grand nombre de composants.
+On trouve ainsi l'intégration de frameworks récents comme GWT ou d'outils comme Git. L'intégration de Maven est également très complète.
+De plus, ses capacités de modification de code (refactoring) sont au dessus de celles des autres IDE : préservation de la casse lors d'un renommage, etc.
 \subsection{Yourkit}
 %Profiler Java
 %-> Temps, nombres d'appels des méthodes
