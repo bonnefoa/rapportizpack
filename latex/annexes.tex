@@ -1,103 +1,114 @@
-\chapter{Utilisation des éléments nanoXml}
-
-\subsection{Parse par nanoXML}
-\begin{verbatim}
-	StdXMLParser parser = new StdXMLParser();
-	parser.setBuilder(XMLBuilderFactory.createXMLBuilder());
-	parser.setReader(new StdXMLReader(in));
-	parser.setValidator(new NonValidator());
-\end{verbatim}
-\subsection{IXMLParser}
-3 utilistations
- Utilisé pour parser les fichiers.
- -> com.izforge.izpack.compiler.CompilerConfig
- -> com.izforge.izpack.installer.WebRepositoryAccessor
-\subsection{IXMLReader}
-5 utilisations
-com.izforge.izpack.compiler.CompilerConfig.java
-com.izforge.izpack.installer.WebRepositoryAccessor.java
-\subsection{NonValidator}
-12 utilisations
-  com.izforge.izpack
-    LocaleDatabase.java
-  com.izforge.izpack.compiler
-    CompilerConfig.java
-  com.izforge.izpack.installer
-    AutomatedInstaller.java
-    CompileWorker.java
-    InstallerFrame.java
-    ProcessPanelWorker.java
-  com.izforge.izpack.panels
-    ShortcutPanel.java
-    UserInputPanel.java
-  com.izforge.izpack.util
-    SpecHelper.java
-\subsection{StdXMLParser}
-24 utilisations
-  com.izforge.izpack
-    LocaleDatabase.java 
-  com.izforge.izpack.compiler 
-    CompilerConfig.java 
-  com.izforge.izpack.installer 
-    AutomatedInstaller.java 
-    CompileWorker.java 
-    InstallerFrame.java 
-    ProcessPanelWorker.java 
-  com.izforge.izpack.panels 
-    ShortcutPanel.java 
-    UserInputPanel.java 
-  com.izforge.izpack.util 
-    SpecHelper.java 
-\subsection{StdXMLReader}
-16 utilisations
-  com.izforge.izpack 
-    LocaleDatabase.java 
-  com.izforge.izpack.compiler 
-    CompilerConfig.java 
-  com.izforge.izpack.installer 
-    AutomatedInstaller.java 
-    CompileWorker.java 
-    InstallerFrame.java 
-    ProcessPanelWorker.java 
-    WebRepositoryAccessor.java 
-  com.izforge.izpack.panels 
-    ShortcutPanel.java 
-    UserInputPanel.java 
-  com.izforge.izpack.util 
-    SpecHelper.java 
-\subsection{XMLBuilderFactory}
-12 utilisations
-  com.izforge.izpack 
-    LocaleDatabase.java 
-  com.izforge.izpack.compiler 
-    CompilerConfig.java 
-  com.izforge.izpack.installer 
-    AutomatedInstaller.java 
-    CompileWorker.java 
-    InstallerFrame.java 
-    ProcessPanelWorker.java 
-  com.izforge.izpack.panels 
-    ShortcutPanel.java 
-    UserInputPanel.java 
-  com.izforge.izpack.util 
-    SpecHelper.java 
-
-\subsection{XMLElement}
-499 utilisations
-\subsection{XMLException}
-  com.izforge.izpack.compiler 
-    CompilerConfig.java 
-\subsection{XMLParserFactory}
-3 utilisations
-Found usages 
-  com.izforge.izpack.compiler 
-    CompilerConfig.java 
-  com.izforge.izpack.installer 
-    WebRepositoryAccessor.java 
-\subsection{XMLWriter}
-8 utilisations
-  com.izforge.izpack.compiler 
-    CompilerConfig.java 
-    Packager.java 
-  com.izforge.izpack.installer 
-    InstallerFrame.java 
+\section*{Plannification}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=1\textwidth]{../image/sprint1a4.png}
+	\caption{Sprint 1 à 4}
+\end{figure}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=1\textwidth]{../image/sprint5a9.png}
+	\caption{Sprint 5 à 9}
+\end{figure}
+% \chapter{Utilisation des éléments nanoXml}
+% 
+% \subsection{Parse par nanoXML}
+% \begin{verbatim}
+% 	StdXMLParser parser = new StdXMLParser();
+% 	parser.setBuilder(XMLBuilderFactory.createXMLBuilder());
+% 	parser.setReader(new StdXMLReader(in));
+% 	parser.setValidator(new NonValidator());
+% \end{verbatim}
+% \subsection{IXMLParser}
+% 3 utilistations
+%  Utilisé pour parser les fichiers.
+%  -> com.izforge.izpack.compiler.CompilerConfig
+%  -> com.izforge.izpack.installer.WebRepositoryAccessor
+% \subsection{IXMLReader}
+% 5 utilisations
+% com.izforge.izpack.compiler.CompilerConfig.java
+% com.izforge.izpack.installer.WebRepositoryAccessor.java
+% \subsection{NonValidator}
+% 12 utilisations
+%   com.izforge.izpack
+%     LocaleDatabase.java
+%   com.izforge.izpack.compiler
+%     CompilerConfig.java
+%   com.izforge.izpack.installer
+%     AutomatedInstaller.java
+%     CompileWorker.java
+%     InstallerFrame.java
+%     ProcessPanelWorker.java
+%   com.izforge.izpack.panels
+%     ShortcutPanel.java
+%     UserInputPanel.java
+%   com.izforge.izpack.util
+%     SpecHelper.java
+% \subsection{StdXMLParser}
+% 24 utilisations
+%   com.izforge.izpack
+%     LocaleDatabase.java 
+%   com.izforge.izpack.compiler 
+%     CompilerConfig.java 
+%   com.izforge.izpack.installer 
+%     AutomatedInstaller.java 
+%     CompileWorker.java 
+%     InstallerFrame.java 
+%     ProcessPanelWorker.java 
+%   com.izforge.izpack.panels 
+%     ShortcutPanel.java 
+%     UserInputPanel.java 
+%   com.izforge.izpack.util 
+%     SpecHelper.java 
+% \subsection{StdXMLReader}
+% 16 utilisations
+%   com.izforge.izpack 
+%     LocaleDatabase.java 
+%   com.izforge.izpack.compiler 
+%     CompilerConfig.java 
+%   com.izforge.izpack.installer 
+%     AutomatedInstaller.java 
+%     CompileWorker.java 
+%     InstallerFrame.java 
+%     ProcessPanelWorker.java 
+%     WebRepositoryAccessor.java 
+%   com.izforge.izpack.panels 
+%     ShortcutPanel.java 
+%     UserInputPanel.java 
+%   com.izforge.izpack.util 
+%     SpecHelper.java 
+% \subsection{XMLBuilderFactory}
+% 12 utilisations
+%   com.izforge.izpack 
+%     LocaleDatabase.java 
+%   com.izforge.izpack.compiler 
+%     CompilerConfig.java 
+%   com.izforge.izpack.installer 
+%     AutomatedInstaller.java 
+%     CompileWorker.java 
+%     InstallerFrame.java 
+%     ProcessPanelWorker.java 
+%   com.izforge.izpack.panels 
+%     ShortcutPanel.java 
+%     UserInputPanel.java 
+%   com.izforge.izpack.util 
+%     SpecHelper.java 
+% 
+% \subsection{XMLElement}
+% 499 utilisations
+% \subsection{XMLException}
+%   com.izforge.izpack.compiler 
+%     CompilerConfig.java 
+% \subsection{XMLParserFactory}
+% 3 utilisations
+% Found usages 
+%   com.izforge.izpack.compiler 
+%     CompilerConfig.java 
+%   com.izforge.izpack.installer 
+%     WebRepositoryAccessor.java 
+% \subsection{XMLWriter}
+% 8 utilisations
+%   com.izforge.izpack.compiler 
+%     CompilerConfig.java 
+%     Packager.java 
+%   com.izforge.izpack.installer 
+%     InstallerFrame.java 
