@@ -1,4 +1,4 @@
-\documentclass[a4paper,13pt]{report}
+\documentclass[a4paper,12pt]{report}
 \usepackage[utf-8]{inputenc}
 \usepackage{graphicx}
 \usepackage{latexsym,a4,epsfig,times}
@@ -14,6 +14,7 @@
 \usepackage{fancyhdr}
 \usepackage{pdfpages}
 \usepackage{bibtopic}
+\usepackage{lscape} 
 
 \definecolor{colKeys}{rgb}{0,0,1}
 \definecolor{colIdentifier}{rgb}{0,0,0}
@@ -133,6 +134,8 @@ pdfpagemode= UseOutlines,
 \appendix
 \input{titlepage2}
 \pagenumbering{Roman}
+\chapter*{Annexes}
+\setcounter{page}{1}
 \addcontentsline{toc}{chapter}{Annexe}
 \input{annexes}
 \end{document}
