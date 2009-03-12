@@ -131,9 +131,33 @@ DOM possède néanmoins une interface dérivant de \verb|Node| : \verb|Element|,
 NanoXml propose une méthode pour récupérer le contenu textuel d'un noeud : \verb|getContent()|.
 DOM propose une méthode semblant équivalente : \verb|getNodeValue()|.
 Cependant, le comportement de ces deux méthodes est complètement différent.
-% TODO : exemple de code et differences
+Prenons par exemple le code XML suivant :
+\begin{lstlisting}[language=xml]
+<testElement>
+	foobar
+</testElement>
+\end{lstlisting}
+Placé sur l'élément \verb|testElement|, \verb|getContent()| renvoie le texte (avec des retours à la ligne) ``foobar'' tandis que \verb|getNodeValue()| renvoie \verb|null| (il faut utiliser cette méthode sur le fils, le texte, pour avoir exactement le même résultat).
+Malheureusement, le comportement de NanoXml devient erratique avec les éléments CDATA et le texte :
+\begin{lstlisting}[language=xml]
+<testElement>
+	<![CDATA[ be <bold> ]]>
+</testElement>
+\end{lstlisting}
+NanoXml renverra le résultat suivant, sans retour à la ligne :
+\begin{verbatim}
+' be <bold> '
+\end{verbatim}
+La concaténation des valeurs des fils donne, avec DOM :
+\begin{verbatim}
+'
+         be <bold> 
+'
+\end{verbatim}
+On voit ici un comportement peu cohérent (NanoXml ignore dans certains cas les caractères blancs), qu'il faudra gérer.
+
 \subsection{Solutions possibles}
-Pour remplacer NanoXml, plusieurs approches étaient possibles. 
+Pour remplacer NanoXml, plusieurs approches étaient possibles.
 
 \subsubsection{Remplacer les appels individuellement}
 La première solution, bête et méchante, est de remplacer systématiquement les appels à NanoXml par des appels à Jaxp.
@@ -197,14 +221,14 @@ Avec NanoXml, la balise \verb|xinclude| permet d'inclure un fichier xml externe.
 Ainsi, on peut utiliser un xml très succinct (et donc facilement lisible/compréhensible) qui inclut d'autres fichiers xml décrivant uniquement certaines parties de l'installation.
 Cette fonctionnalité, absente de nanoXML, avait été mise en place en modifiant directement le code de son parseur.
 
-Xinclude est présente dans les normes W3C et Jaxp l'intègre dans son implémenetation.
+Xinclude est présente dans les normes W3C et Jaxp l'intègre dans son implémentation.
 Pour que Jaxp prenne en compte les balises Xinclude, il faut que le parser prenne en compte les espaces de nommage (namespaces) XML.
 En effet, le Xinclude appartient au namespace \verb|xi|.
 Il faut donc utiliser la balise \verb|<xi:include/>| au lieu de \verb|<xinclude/>|.
 Le simple fait de rendre le parser namepaceAware permet d'utiliser la fonctionnalité Xinclude.
 \subsection{Implémentation de Xfragment}
 La fonctionnalité Xfragment permet principalement d'ajouter des éléments sans racines avec Xinclude.
-C'est à dire qu'au contenu du xml à ajouter, on va retirer les noeuds <xfragment>. 
+C'est à dire qu'au contenu du xml à ajouter, on va retirer les noeuds \verb|<xfragment>|.
 Par exemple:
 \begin{lstlisting}[language=xml]
 <xfragment>
@@ -235,8 +259,8 @@ Cependant, cette solution, possible sous NanoXml, est difficilement réalisable 
 En effet, les appels du parseur sont transmis vers des classes internes et difficilement manipulables.
 \subsubsection{Troisième solution, transformation XSL}
 La troisième solution a été proposé par Matthew Fudge, la personne ayant rajouté la gestion des Xfragment et Xinclude dans NanoXml pour IzPack.
-Elle consiste a transformer l'arbre xml obtenue après le parse grâce à une transformation XSL(Extensible Stylesheet Language).
-Les transformations XSL permette de définir des règles de modification d'un XML et se présente lui-même sous la forme d'un XML.
+Elle consiste à transformer l'arbre xml obtenu après le parse grâce à une transformation XSL (Extensible Stylesheet Language).
+Les transformations XSL permettent de définir des règles de modification d'un XML et se présente lui-même sous la forme d'un XML.
 Elles permettent de modifier facilement des XML de manière simple.
 Elle convenait parfaitement à notre problème.
 La feuille de style utilisé est la suivante :
@@ -253,11 +277,11 @@ La feuille de style utilisé est la suivante :
     </xsl:template>
 </xsl:stylesheet>
 \end{lstlisting}
-La règle appliquée sur un élément est la plus spécifique. 
+La règle appliquée sur un élément est la plus spécifique.
 Ici, pour tout les éléments, on recopie l'élément.
-Dans le cas du xfragment, on omet la copie. 
+Dans le cas du xfragment, on omet la copie.
 Au final, le xfragment est supprimé du XML ce qui est le but recherché.
-\subsubsection{Numéro de ligne}
+\subsection{Numéro de ligne}
 Une fonctionnalité de nanoXML est la gestion des numéros de lignes. 
 Lors qu'une incohérence est détectée dans un XML lu, IzPack prévient l'utilisateur de l'erreur, et indique le numéro de la ligne responsable dans le xml.
 
@@ -268,12 +292,10 @@ Au contraire, pour SAX, les numéros de lignes sont obtenues facilement.
 Dans ce cas là, il est utile de savoir à quel endroit on se trouve dans le document.
 
 Afin d'obtenir les numéros de ligne dans un arbre DOM, les deux points de vue ont été utilisés grâce à un \verb|Transformer|.
-On crée une source SAX, à laquelle on ajoute un filtre pour écouter les évènements (et stocker les numéros de lignes en cas de début de balise).
-En parallèle, on crée un résultat DOM, qui contiendra le résultat du parse (l'arbre DOM).
-On utilise ensuite un Transformer : il va utiliser la source SAX (les numéros de lignes sont stockées à ce moment par le filtre) et remplir le résultat DOM.
-Enfin, il suffit de parcourir l'arbre DOM pour ajouter a chaque élément son numéro de ligne.
+Cet objet permet (entre autre) d'utiliser un parser SAX pour remplir un arbre DOM.
+Lors du parse SAX on retient les numéros de lignes, qui seront ajoutés aux bons éléments du DOM.
 Ce nombre est stocké dans les ``user data'', ajoutés dans la version 3  de DOM pour stocker diverses informations supplémentaires dans un noeud.
-% TODO : schéma
+
 \section{Application et tests}
 Une fois la solution réalisée, nous l'avons soumis à un certain nombre de tests afin de la vérifier.
 \subsection{Tests}
@@ -392,15 +414,15 @@ Izpack possède une fonction de création d'installeurs Web.
 Cette fonctionnalité permet de générer des modules d'installations qui pourront être déposés sur un serveur web avec un installeur léger contenant uniquement le noyau dur.
 Les modules additionnels seront alors téléchargés s'ils sont sélectionnés.
 
-Cette fonctionnalité présentait des lacunes dans la documentation et un bug de fonctionnalité.
+Cette fonctionnalité présentait des lacunes dans la documentation et n'était pas fonctionnelle.
 De plus, un refactoring des classes concernés est en cours de traitement.
 \subsubsection{UserInputPanels}
 Le panel UserInputPanels doit permettre de décider de l'alignement des éléments.
 C'est a dire qu'il est possible de les placer à gauche, à droite ou au centre. Actuellement, tout les éléments sont alignés à gauche.
 Le travail est en cours de réalisation mais les modifications entrent en concurrence avec le refactoring de Dennis Reil, un autre contributeur.
 
-% TODO What the *** ???
-% \subsection{Améliorations}
-% Outre les corrections de bugs, la qualité du code a été également amélioré. Par exemple, une correction de bug a trouvé sa correction dans un refactoring de certaines classes, rendant le code plus lisible et améliorant sa qualité.
-% 
-% De même, certaines méthodes inutilisées (prévues pour des vieilles versions de java) ont pu être supprimer.
+\subsection{Améliorations}
+Outre les corrections de bugs, la qualité du code a été également amélioré.
+Par exemple, le code de l'installeur automatique a été refactoré avec d'autres classes, rendant le code plus lisible et améliorant sa qualité.
+
+De même, certaines méthodes inutilisées (prévues pour des vieilles versions de java) ont pu être supprimées.
