@@ -317,6 +317,33 @@ La génération et l'installation de glassfish s'est déroulé sans problème.
 Après la phase d'implémentation et de test, nous avons pu commencer une phase d'optimisation.
 En utilisant YourKit, nous avons essayé de détecter les méthodes chronophages lors d'une installation et les modifier éventuellement.
 
+Pour profiler l'application avec yourkit, il faut placer la librairie de yourkit dans le PATH. 
+Une fois cette opération réalisée, il suffit de lancer l'application à profiler avec l'option \verb|-agentlib:yjpagent|.
+Il est alors possible de connecter le profiler à l'application et lancer le profiling.
+
+Le profiling lancé, nous utilisons l'application normalement. 
+A la fin de l'exécution, une image de l'exécution(snapshot) est enregistrée qui peut être analysée après.
+Cette image comporte toutes les informations du profiling comme la trace des appels, le temps passés dans chaque méthodes, le nombre d'appels aux méthodes, l'utilisation de la mémoire et du garbage collector à chaque moment de l'exécution...
+Nous avons profilé deux version de l'installeur de Glassfish; l'un a été généré avec la version 4.2.1 de IzPack et l'autre avec la dernière version construite à partir du dépôt et comportant nos modifications.
+
+Par exemple, on peut rechercher tout les appels à l'objet XmlElementImpl de notre adaptateur pour voir les différentes méthodes utilisées. Sur la figure~\ref{fig:yourkitXmlElement}, on peut voir que la méthode getAttribute() est utilisée majoritairement.
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=1\textwidth]{../image/yourkitXmlElement.png}
+	\caption{Trace des appels au XmlElement}
+	\label{fig:yourkitXmlElement}
+\end{figure}
+
+On peut également comparer deux snapshots et obtenir la différence dans les temps d'exécution et les appels.
+Sur la figure~\ref{fig:yourkitComparaison}, nous comparons les deux installeurs et filtrons les appels aux xmlElement.
+On voit apparaître le XMLElement de NanoXml pour la version 4.2.1 et le XMLElementImpl de notre adaptateur.
+On voit que les performances entre les deux sont sensiblement les mêmes, les gains possibles sont relativement faibles et peu d'optimisation ont été faites. 
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=1\textwidth]{../image/yourkitComparaison.png}
+	\caption{Comparaison entre deux snapshots}
+	\label{fig:yourkitComparaison}
+\end{figure}
 \section{Résultats}
 Le principal but de notre projet a été de pouvoir abandonner NanoXml ce qui est chose faite.
 De plus, l'intégration de notre solution a apporté un certain nombres d'avantages.
