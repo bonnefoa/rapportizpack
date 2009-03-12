@@ -6,19 +6,16 @@ Le projet étant open-source et actif, il évolue sans cesse. La partie sur laqu
 % -> -> NanoXml : Base sur les tags (elements)
 \section{Etude de Nanoxml}
 Comme nous avons pu le voir, IzPack utilise intensément des fichiers XML pour la génération d'installations.
-En effet, les fichiers XML présentent l'avantage d'être lisible, écrivable a la main et traitables.
+En effet, les fichiers XML présentent l'avantage d'être lisible, écrivable à la main et traitables.
 Pour traiter ces fichiers, une librairie a été utilisée, il s'agit de NanoXml.
 \subsection{Le projet NanoXml}
 NanoXml est une librairie java open-source de gestion de Xml.
-Elle présente la particularité d'être légère (108Ko). 
-Il est possible, grâce a cette librairie, d'écrire ou de parser des fichiers Xml.
+Elle présente la particularité d'être légère (108Ko).
+Il est possible, grâce à cette librairie, d'écrire ou de parser des fichiers Xml.
 Une fois le fichier parsé, on récupère en mémoire la structure de l'arbre Xml qui peut alors être exploité.
-Le choix de cette librairie a été faite au commencement de Izpack a cause de sa taille.
-En effet, il est important que le la partie installeur ne surcharge pas excessivement sur le logiciel à installer.
+Le choix de cette librairie a été fait au commencement de Izpack à cause de sa taille.
+En effet, il est important que la partie installeur ne surcharge pas excessivement sur le logiciel à installer.
 
-Cependant ce projet n'est plus mis à jour depuis 7 ans, et des bugs ont été découverts.
-Entre temps, java a ajouté a sa JRE (depuis la version 1.4) tout ce qu'il faut pour gérer le xml.
-Il devenait intéressant de remplacer NanoXml par Jaxp (Java API for XML Processing), la librairie fournie par la machine virtuelle.
 \subsection{Les différents composants de NanoXml}
 On trouve différents éléments dans NanoXml.
 \subsubsection{StdXMLParser}
@@ -107,12 +104,12 @@ La manipulation des éléments du xml se fait grâce aux nodes.
 Il est possible de récupérer le voisin d'une node, d'enlever ou d'ajouter un enfant et de récupérer ou de modifier le contenu.
 %--------------------------------------------------------------------------
 \section{Élaboration de la solution}
-Notre travail a été de chercher une solution pour permettre de remplacer de NanoXml et de l'appliquer au projet.
+Notre travail a été de chercher une solution pour permettre de remplacer de NanoXml par Jaxp et de l'appliquer au projet.
 Cependant, ils y avaient plusieurs problèmes à cela.
 \subsection{Les différences entre Jaxp et NanoXml}
 Comme nous avons vu précédemment, les deux API ne proposent pas la même approche pour le traitement des fichiers xml.
 Nous avons choisi d'utiliser l'interface DOM vu que les avantages de SAX ne sont pas nécessaires et qu'il était peu concevable de traiter les XML avec SAX dans IzPack.
-De plus, NanoXml et DOM ont une représentation similaire du xml.
+De plus, NanoXml et DOM ont une représentation similaire du xml (un arbre).
 Nous allons donc comparer l'interface DOM et NanoXml pour déterminer la meilleure approche a prendre.
 \subsubsection{Manipulation du XML}
 La principale différence vient de l'élément atomique : le noeud de DOM ne représente pas la même notion que l'élément de nanoXML.
@@ -134,14 +131,20 @@ Cependant, le comportement de ces deux méthodes est complètement différent.
 Prenons par exemple le code XML suivant :
 \begin{lstlisting}[language=xml]
 <testElement>
-	foobar
+         foobar
 </testElement>
 \end{lstlisting}
-Placé sur l'élément \verb|testElement|, \verb|getContent()| renvoie le texte (avec des retours à la ligne) ``foobar'' tandis que \verb|getNodeValue()| renvoie \verb|null| (il faut utiliser cette méthode sur le fils, le texte, pour avoir exactement le même résultat).
-Malheureusement, le comportement de NanoXml devient erratique avec les éléments CDATA et le texte :
+Placé sur l'élément \verb|testElement|, \verb|getContent()| renvoie le résultat suivant :
+\begin{verbatim}
+'
+         foobar
+'
+\end{verbatim}
+La méthode \verb|getNodeValue()| renvoie \verb|null|, mais il suffit d'utiliser cette méthode sur le fils (le texte) pour avoir exactement le même résultat.
+Malheureusement, le comportement de NanoXml devient erratique par exemple avec les éléments CDATA et le texte :
 \begin{lstlisting}[language=xml]
 <testElement>
-	<![CDATA[ be <bold> ]]>
+         <![CDATA[ be <bold> ]]>
 </testElement>
 \end{lstlisting}
 NanoXml renverra le résultat suivant, sans retour à la ligne :
@@ -151,7 +154,7 @@ NanoXml renverra le résultat suivant, sans retour à la ligne :
 La concaténation des valeurs des fils donne, avec DOM :
 \begin{verbatim}
 '
-         be <bold> 
+         be <bold>
 '
 \end{verbatim}
 On voit ici un comportement peu cohérent (NanoXml ignore dans certains cas les caractères blancs), qu'il faudra gérer.
@@ -164,15 +167,15 @@ La première solution, bête et méchante, est de remplacer systématiquement le
 Cependant, cette solution a des inconvénients évidents :
 \begin{description}
 \item[La duplication de la logique] Tout le code nécessaire à l'utilisation du parseur ou du Node est réparti et dupliqué dans tout le programme.
-C'est d'abord une infraction au principe DRY (don't repeat yourself) et rend le code difficile a maintenir.
-Les bugs sont plus difficiles à cibler et la correction doit se faire sur toutes les replications.
+C'est d'abord une infraction au principe DRY (\textit{don't repeat yourself}) et rend le code difficile à maintenir.
+Les bugs sont plus difficiles à cibler et la correction doit se faire sur toutes les réplications.
 \item[Les difficultés de tester la solution] Un autre problème et le test de cette solution.
 Il faut en théorie passer par toutes les utilisations des appels pour tester correctement la solution. Cette contrainte est difficilement réalisable.
 \item[La pénibilite de la tâche] Remplacer chacun des nombreux appels à NanoXml par un appel Jaxp est très laborieux.
 \end{description}
 \subsubsection{Centraliser la logique de modification}
 L'autre solution possible est de centraliser toute la logique de traduction dans des classes dédiées.
-Ces classes vont copier les interfaces de NanoXml mais vont générer en réalité des appels à Jaxp. 
+Ces classes vont copier les interfaces de NanoXml mais vont générer en réalité des appels à Jaxp.
 C'est le principe du design pattern adaptateur.
 
 Cela présente plusieurs avantages.
@@ -395,6 +398,8 @@ Cette synchronisation se passait généralement sans encombre grâce à Git, exc
 Cette synchronisation régulière était en vue de préparer le merge vers sur la branche principale.
 Ainsi, une fois notre solution achevée et testée, Julien Ponge a extrait un patch qui a été soumis à la communauté des développeurs d'Izpack.
 Après quoi, les modifications ont été portées sur la branche principale et seront disponibles pour la prochaines version d'Izpack, la 4.3.
+
+% -------------------------------------------------------------------------
 \section{Au delà du sujet}
 Une fois l'objectif du projet atteint, nous avons décidé d'accepter l'offre de Julien Ponge en devenant contributeurs officiels du projet.
 \subsection{Le projet Izpack}
@@ -442,7 +447,7 @@ Nous avons également corrigé plusieurs bugs.
 Un panel, le TreePacksPanels, ne respectait pas la configuration enregistrée lors de l'installation normale.
 Le problème provenait d'un problème de packaging, la classe devant faire le travail automatique n'était pas présente lors de l'installation.
 
-Un bug caché dans l'installation automatique pouvait la faire quitter silencieusement.
+Un autre bug corrigé faisait quitter silencieusement (sans message d'erreur) l'installation automatique.
 \subsubsection{Web installers}
 Izpack possède une fonction de création d'installeurs Web.
 Cette fonctionnalité permet de générer des modules d'installations qui pourront être déposés sur un serveur web avec un installeur léger contenant uniquement le noyau dur.

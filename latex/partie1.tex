@@ -69,33 +69,35 @@ Izpack est utilisé dans de grand projets comme Jboss, Xwiki, Glassfish... Des e
 \end{figure}
  %---------------------------------------------------------
 \section{Architecture}
-\subsection{Architecture globale}
 Globalement, Izpack possède 2 composants, le compilateur qui va gérer la création de l'installeur et l'installeur lui-même.
+
 \subsection{Compilateur}
 Le compilateur se charge de packager l'ensemble des fichiers nécessaires dans un seul fichier jar.
-Ces fichiers comprennent l'application en elle-même et les fichiers nécessaires lors de l'installation. 
-Selon la description de l'installation, il va incorporer les panels nécessaires à celle-ci.
+Ces fichiers comprennent l'application en elle-même et les fichiers nécessaires (les panels décrits dans le XML, etc) à l'installation.
 Cette partie est utilisée par le développeur qui souhaite créer un installeur.
+
 \subsection{Installeur}
 La partie installation concerne toute la logique et la présentation du processus d'installation. Cette partie sera exécuter par un utilisateur souhaitant installer le logiciel.
-\subsection{Processus d'installation}
-Dans un premier temps, le compilateur va compiler l'application.
+\subsection{Utilisation}
+Dans un premier temps, le compilateur va créer l'installeur de l'application.
+Il prend la partie installation d'IzPack, la modifie pour correspondre à l'installation décrite dans le fchier xml, et la package avec l'application à installer.
+A noter qu'aucun IzPack n'a été blessé lors de la compilation.
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=\textwidth]{../image/partie_compil.png}
 	\caption{Phase de compilation}
 \end{figure}
-L'installateur généré comprend l'application en elle-même et toute la partie installation nécessaire et adaptée aux besoins de l'application.
+
 Cette application est alors prête à être déployée sur une autre machine.
+Le processus d'installation est géré par la partie installeur de Izpack. Cette phase va permettre de déployer l'application sur toutes les machines nécessaires.
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=\textwidth]{../image/partie_install.png}
 	\caption{Phase d'installation}
 \end{figure}
-Le processus d'installation est géré par la partie installeur de Izpack. Cette phase va permettre de déployer l'application sur toutes les machines nécessaires.
 
 %---------------------------------------------------------
-\section{Exemples d'installation}
+\section{Exemple d'installation}
 Des exemples complets existent, par exemple l'installeur de IzPack, de Glassfish, de PerfSonar... 
 Pour illustrer simplement l'utilisation de IzPack, utilisons plutôt le petit exemple fourni avec le code de l'application.
 \subsection{Description du xml}
@@ -182,7 +184,7 @@ Il suffit désormais de lancer le jar pour installer notre application.
 	\caption{Exemple d'installation avec IzPack}
 \end{figure}
 \subsection{Installation automatique}
-En lançant l'installeur avec un script d'installation automatisée en paramètre, l'installation est rejouée a l'identique automatiquement.
+En lançant l'installeur avec un script d'installation automatisée en paramètre, l'installation est rejouée à l'identique automatiquement.
 \begin{verbatim}
 $ java -jar install.jar automated.xml
 [ Starting automated installation ]
@@ -203,10 +205,11 @@ Izpack a débuté en 2001.
 A cette époque, la Jdk en était à la version 1.3. Il y avait donc des fonctionnalités absentes comme la généricité.
 On trouve ainsi, encore maintenant, du code utilisant de vieilles structures de données (des tableaux d'objets ou des Vectors) ou des styles de programmation abandonnés.
 \subsection{Nanoxml}
-%TODO Supprimer les redites de la partie 3
 Une amélioration possible concerne la gestion des fichiers XML, qui ont une grande importance dans IzPack.
 L'absence de processeur XML intégré à la JRE 1.3 a forcé l'utilisation d'une librairie externe pour traiter les XML.
 IzPack se base donc sur une librairie externe : nanoXML.
 Cette librairie n'est malheureusement plus mise à jour (la dernière mise à jour date de 2003) et possède encore quelques bugs.
 De plus, les versions récentes de l'environnement java (JRE) possèdent de base tout ce qu'il faut pour gérer le xml.
 Se débarrasser de la dépendance à nanoXML et se reposer uniquement sur la JRE permettrait donc non seulement de rendre la gestion des XML plus sûre et robuste, mais également de diminuer la taille des installeurs générés.
+
+Maintenant que le projet IZPack a été présenté, étudions l'environnement de développement.
