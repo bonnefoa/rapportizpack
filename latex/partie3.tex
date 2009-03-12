@@ -4,7 +4,7 @@ Le projet étant open-source et actif, il évolue sans cesse. La partie sur laqu
 % -> Philosophie de nanoXml et de DOM differente
 % -> -> DOM : Tout est noeud
 % -> -> NanoXml : Base sur les tags (elements)
-\section{Nanoxml}
+\section{Etude de Nanoxml}
 Comme nous avons pu le voir, IzPack utilise intensément des fichiers XML pour la génération d'installations.
 En effet, les fichiers XML présentent l'avantage d'être lisible, écrivable a la main et traitables.
 Pour traiter ces fichiers, une librairie a été utilisée, il s'agit de NanoXml.
@@ -86,7 +86,7 @@ while (iter.hasNext())
 	//...
 }
 \end{lstlisting}
-\section{Jaxp}
+\section{Etude Jaxp}
 Jaxp, le processeur Xml de Sun, respecte les normes W3C.
 Il y a deux manières d'exploiter les XML avec Jaxp, soit en utilisant le parseur SAX, soit en utilisant le parseur DOM.
 \subsection{SAX}
@@ -265,18 +265,23 @@ Elles permettent de modifier facilement des XML de manière simple.
 Elle convenait parfaitement à notre problème.
 La feuille de style utilisé est la suivante :
 \begin{lstlisting}[language=xml]
-<xsl:stylesheet xmlns:xsl='http://www.w3.org/1999/XSL/Transform' version='1.0'>
+<xsl:stylesheet 
+	xmlns:xsl='http://www.w3.org/1999/XSL/Transform' version='1.0'>
+    <!-- tous les elements -->
     <xsl:template match="*">
         <xsl:copy>
             <xsl:copy-of select="@*"/>
             <xsl:apply-templates/>
         </xsl:copy>
-    </xsl:template>
+    </xsl:template>a
+
+    <!-- les elements xfragment -->
     <xsl:template match="xfragment">
         <xsl:apply-templates/>
     </xsl:template>
 </xsl:stylesheet>
 \end{lstlisting}
+
 La règle appliquée sur un élément est la plus spécifique.
 Ici, pour tout les éléments, on recopie l'élément.
 Dans le cas du xfragment, on omet la copie.
@@ -292,7 +297,7 @@ Au contraire, pour SAX, les numéros de lignes sont obtenues facilement.
 Dans ce cas là, il est utile de savoir à quel endroit on se trouve dans le document.
 
 Afin d'obtenir les numéros de ligne dans un arbre DOM, les deux points de vue ont été utilisés grâce à un \verb|Transformer|.
-Cet objet permet (entre autre) d'utiliser un parser SAX pour remplir un arbre DOM.
+Cet objet permet (entre autre) d'utiliser un parseur SAX pour remplir un arbre DOM.
 Lors du parse SAX on retient les numéros de lignes, qui seront ajoutés aux bons éléments du DOM.
 Ce nombre est stocké dans les ``user data'', ajoutés dans la version 3  de DOM pour stocker diverses informations supplémentaires dans un noeud.
 
