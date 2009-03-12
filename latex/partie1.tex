@@ -10,10 +10,10 @@ L'intérêt d'Izpack réside dans le fait qu'il propose une solution pour créer
 En effet, à partir d'une application existante, Izpack est capable de générer un installateur pour cette apllication. Cet installateur pourra être utilisé pour déployer l'application sur n'importe quelle machine.
 De plus, tout type de programme peut être packagé, que ce soit une application C++ ou Java. Izpack se chargeant juste de la logique d'installation, il est totalement independant du contenu qu'il installe.
 \subsection{Open-source}
-Le projet Izpack est placée sous une licence Open-source. A ce titre, le code source est librement accessible selon les termes de la licence. De plus, une communauté s'est regroupée autour du projet.
+Le projet Izpack est placé sous une licence Open-source. A ce titre, le code source est librement accessible selon les termes de la licence. De plus, une communauté s'est regroupée autour du projet.
 \subsubsection{Licence}
 Izpack est sous licence Apache 2. Cette licence permet l'accès au code source et l'utilisation libre du logiciel.
-Il est tout à fait possible de l'utiliser pour une application commerciale voire même, de modifier les sources pour le faire correspondre à ses besoins.
+Il est tout à fait possible de l'utiliser pour une application commerciale, voire même de modifier les sources pour le faire correspondre à ses besoins.
 
 Une importante communauté s'est regroupée autour de ce projet ce qui a permis son évolution jusqu'à maintenant.
 Si un développeur apporte des modifications utiles, il est encouragé à en faire profiter la communauté, mais ce n'est pas une obligation.
@@ -27,11 +27,21 @@ Izpack est un système modulaire, il possède de nombreuses fonctionnalités pou
 \subsubsection{Multi-plateforme}
 L'installeur généré par Izpack est un jar (java archive).
 Il suffit donc que la machine ait un machine virtuelle pour pouvoir lancer l'installation, indépendamment de la plateforme ou du système d'exploitation.
-Il est néanmoins possible de faire des traitements spécifiques à certaines plateformes ou de convertir l'installeur pour être spécifique a une plateforme.
+Il est néanmoins possible de faire des traitements spécifiques à certaines plateformes ou de convertir l'installeur pour être spécifique à une plateforme.
 \subsubsection{Personnalisation}
 Chaque écran que verra l'utilisateur est décrit par un panel.
 Izpack propose un ensemble de panels qui vont constituer l'installateur graphique.
 Chaque panels remplit une fonction spécifique. L'aspect global de l'installeur et celui des panels est personnalisable par l'utilisateur via le descripteur XML.
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.3\textwidth]{../dia/included/install/02.png}
+	\includegraphics[width=0.3\textwidth]{../dia/included/install/05.png}
+	\includegraphics[width=0.3\textwidth]{../dia/included/install/06.png}
+	\caption{Exemple de panels disponibles avec IzPack}
+\end{figure}
+Il existe de nombreux types de panels : des panel pour accueillir l'utilisateur et lui afficher des informations (HelloPanel et HTMLInfoPanel), d'autres pour demander à l'utilisateur des informations (UserInputPanel), etc...
+Il existe aussi des panels plus spécialisés. Ainsi, CompilePanel permet de compiler du code java et ProcessPanel permet de lancer des programmes après l'installation.
+
 \subsubsection{Internationalisation}
 Izpack supporte la création d'installeur multilangues. Pour la localisation, tout repose sur des fichiers XML.
 Si une langue n'existe pas, il suffit de traduire le dictionnaire correspondant dans un fichier xml et de l'utiliser lors de la création de l'installeur.
@@ -72,23 +82,18 @@ Dans un premier temps, le compilateur va compiler l'application.
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=0.8\textwidth]{../image/partie_compil.png}
+	\includegraphics[width=\textwidth]{../image/partie_compil.png}
 	\caption{Phase de compilation}
 \end{figure}
 L'installateur généré comprend l'application en elle-même et toute la partie installation nécessaire et adaptée aux besoins de l'application.
 Cette application est alors prête à être déployée sur une autre machine.
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=0.8\textwidth]{../image/partie_install.png}
+	\includegraphics[width=\textwidth]{../image/partie_install.png}
 	\caption{Phase d'installation}
 \end{figure}
 Le processus d'installation est géré par la partie installeur de Izpack. Cette phase va permettre de déployer l'application sur toutes les machines nécessaires.
 
-\subsubsection{Exemples de panels}
-Il existe de nombreux types de panels : des panel pour accueillir l'utilisateur et lui afficher des informations (HelloPanel et HTMLInfoPanel), d'autres pour demander à l'utilisateur des informations (UserInputPanel), etc...
-Il existe aussi des panels plus spécialisés. Ainsi, CompilePanel permet de compiler du code java et ProcessPanel permet de lancer des programmes après l'installation.
-
-% screenshot de panels si on a du temps / de la place
 %---------------------------------------------------------
 \section{Exemples d'installation}
 Des exemples complets existent, par exemple l'installeur de IzPack, de Glassfish, de PerfSonar... 
@@ -195,13 +200,13 @@ $ java -jar install.jar automated.xml
 IzPack possède, comme tout logiciel, des bugs potentiels ou des améliorations à effectuer.
 \subsection{Code obsolète}
 Izpack a débuté en 2001.
-A cette époque, la Jdk en était à la version 1.3. Il y avait donc des fonctionnalités absentes comme la genericité.
+A cette époque, la Jdk en était à la version 1.3. Il y avait donc des fonctionnalités absentes comme la généricité.
 On trouve ainsi, encore maintenant, du code utilisant de vieilles structures de données (des tableaux d'objets ou des Vectors) ou des styles de programmation abandonnés.
 \subsection{Nanoxml}
 %TODO Supprimer les redites de la partie 3
 Une amélioration possible concerne la gestion des fichiers XML, qui ont une grande importance dans IzPack.
 L'absence de processeur XML intégré à la JRE 1.3 a forcé l'utilisation d'une librairie externe pour traiter les XML.
-IzPack se base donc sur une librqirie externe; nanoXML.
+IzPack se base donc sur une librairie externe : nanoXML.
 Cette librairie n'est malheureusement plus mise à jour (la dernière mise à jour date de 2003) et possède encore quelques bugs.
 De plus, les versions récentes de l'environnement java (JRE) possèdent de base tout ce qu'il faut pour gérer le xml.
 Se débarrasser de la dépendance à nanoXML et se reposer uniquement sur la JRE permettrait donc non seulement de rendre la gestion des XML plus sûre et robuste, mais également de diminuer la taille des installeurs générés.

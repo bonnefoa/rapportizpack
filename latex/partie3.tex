@@ -4,7 +4,7 @@ Le projet étant open-source et actif, il évolue sans cesse. La partie sur laqu
 % -> Philosophie de nanoXml et de DOM differente
 % -> -> DOM : Tout est noeud
 % -> -> NanoXml : Base sur les tags (elements)
-\section{Nanoxml}
+\section{Etude de Nanoxml}
 Comme nous avons pu le voir, IzPack utilise intensément des fichiers XML pour la génération d'installations.
 En effet, les fichiers XML présentent l'avantage d'être lisible, écrivable a la main et traitables.
 Pour traiter ces fichiers, une librairie a été utilisée, il s'agit de NanoXml.
@@ -86,7 +86,7 @@ while (iter.hasNext())
 	//...
 }
 \end{lstlisting}
-\section{Jaxp}
+\section{Etude Jaxp}
 Jaxp, le processeur Xml de Sun, respecte les normes W3C.
 Il y a deux manières d'exploiter les XML avec Jaxp, soit en utilisant le parseur SAX, soit en utilisant le parseur DOM.
 \subsection{SAX}
@@ -265,18 +265,23 @@ Elles permettent de modifier facilement des XML de manière simple.
 Elle convenait parfaitement à notre problème.
 La feuille de style utilisé est la suivante :
 \begin{lstlisting}[language=xml]
-<xsl:stylesheet xmlns:xsl='http://www.w3.org/1999/XSL/Transform' version='1.0'>
+<xsl:stylesheet 
+	xmlns:xsl='http://www.w3.org/1999/XSL/Transform' version='1.0'>
+    <!-- tous les elements -->
     <xsl:template match="*">
         <xsl:copy>
             <xsl:copy-of select="@*"/>
             <xsl:apply-templates/>
         </xsl:copy>
-    </xsl:template>
+    </xsl:template>a
+
+    <!-- les elements xfragment -->
     <xsl:template match="xfragment">
         <xsl:apply-templates/>
     </xsl:template>
 </xsl:stylesheet>
 \end{lstlisting}
+
 La règle appliquée sur un élément est la plus spécifique.
 Ici, pour tout les éléments, on recopie l'élément.
 Dans le cas du xfragment, on omet la copie.
@@ -292,7 +297,7 @@ Au contraire, pour SAX, les numéros de lignes sont obtenues facilement.
 Dans ce cas là, il est utile de savoir à quel endroit on se trouve dans le document.
 
 Afin d'obtenir les numéros de ligne dans un arbre DOM, les deux points de vue ont été utilisés grâce à un \verb|Transformer|.
-Cet objet permet (entre autre) d'utiliser un parser SAX pour remplir un arbre DOM.
+Cet objet permet (entre autre) d'utiliser un parseur SAX pour remplir un arbre DOM.
 Lors du parse SAX on retient les numéros de lignes, qui seront ajoutés aux bons éléments du DOM.
 Ce nombre est stocké dans les ``user data'', ajoutés dans la version 3  de DOM pour stocker diverses informations supplémentaires dans un noeud.
 
@@ -311,18 +316,18 @@ Prenons l'exemple de la méthode \verb|getName()|. Le même fichier Xml est pars
 Un parcours récursif de l'arbre XML est effectué sur les 2 arbres en mémoire.
 Pour chaque élément, on compare le résultat de la méthode \verb|getName()| sur l'élément courant : les retours doivent être toujours égaux.
 
-Comme les méthodes de XMLElement sont souvent des récupérations d'informations de la même nature que getName(), nous avons généralisé ce test à ces méthodes.
+Comme les méthodes de XMLElement sont souvent des récupérations d'informations de la même nature que \verb|getName()|, nous avons généralisé ce test à ces méthodes.
 Pour cela, une méthode se charge de parcourir de manière récursive l'arbre et d'invoquer la méthode à tester en comparant leurs résultats.
 Ceci nous a permis de nous assurer du comportement de l'adaptateur et de déceler des anomalies sur NanoXml.
 
 En couvrant la quasi totalité des méthodes utilisées dans IzPack avec de nombreux cas d'utilisation, nous avons pu nous assurer du respect du comportement de notre adaptateur.
 \subsubsection{Les tests unitaires sur Xinclude et Xfragment}
-Avec l'ajout des fonctionnalités XInclude et XFragment à NanoXml, une batterie de test unitaires a été fournies.
+Avec l'ajout des fonctionnalités XInclude et XFragment à NanoXml, une batterie de test unitaires a été fournie.
 Nous avons donc repris ces tests et nous les avons intégrés aux tests de l'adaptateur.
 \subsubsection{Les tests unitaires classiques}
 Nous avons créé une batterie de tests unitaires classiques pour notre adaptateur.
 Ils s'assurent entre autre que le parse, l'exploitation de l'arbre en mémoire et l'écriture du Xml se font correctement.
-\subsection{Intégration a IzPack}
+\subsection{Intégration à IzPack}
 L'intégration à IzPack de notre travail fut relativement aisée : les objets de NanoXml ont été remplacés par ceux de notre adapteur.
 Les appels n'ont quasiment pas été changés, les méthodes exposées dans les deux cas étant les mêmes.
 Cette intégration effectuée, nous avons pu commencer les tests sur application.
@@ -343,12 +348,12 @@ Pour profiler l'application avec yourkit, il faut placer la librairie de yourkit
 Une fois cette opération réalisée, il suffit de lancer l'application à profiler avec l'option \verb|-agentlib:yjpagent|.
 Il est alors possible de connecter le profiler à l'application et lancer le profiling.
 
-Le profiling lancé, nous utilisons l'application normalement. 
-A la fin de l'exécution, une image de l'exécution(snapshot) est enregistrée qui peut être analysée après.
-Cette image comporte toutes les informations du profiling comme la trace des appels, le temps passés dans chaque méthodes, le nombre d'appels aux méthodes, l'utilisation de la mémoire et du garbage collector à chaque moment de l'exécution...
-Nous avons profilé deux version de l'installeur de Glassfish; l'un a été généré avec la version 4.2.1 de IzPack et l'autre avec la dernière version construite à partir du dépôt et comportant nos modifications.
+Le profiling lancé, nous utilisons l'application normalement.
+A la fin de l'exécution, une image de l'exécution (snapshot) est enregistrée et peut être analysée après.
+Cette image comporte toutes les informations du profiling comme la trace des appels, le temps passé dans chaque méthode, le nombre d'appels aux méthodes, l'utilisation de la mémoire et du garbage collector à chaque moment de l'exécution...
+Nous avons profilé deux version de l'installeur de Glassfish ; l'un a été généré avec la version 4.2.1 de IzPack et l'autre avec la dernière version construite à partir du dépôt et comportant nos modifications.
 
-Par exemple, on peut rechercher tout les appels à l'objet XmlElementImpl de notre adaptateur pour voir les différentes méthodes utilisées. Sur la figure~\ref{fig:yourkitXmlElement}, on peut voir que la méthode getAttribute() est utilisée majoritairement.
+Par exemple, on peut rechercher tout les appels à l'objet XmlElementImpl de notre adaptateur pour voir les différentes méthodes utilisées. Sur la figure~\ref{fig:yourkitXmlElement}, on peut voir que la méthode \verb|getAttribute()| est utilisée majoritairement.
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=1\textwidth]{../image/yourkitXmlElement.png}
@@ -357,15 +362,17 @@ Par exemple, on peut rechercher tout les appels à l'objet XmlElementImpl de not
 \end{figure}
 
 On peut également comparer deux snapshots et obtenir la différence dans les temps d'exécution et les appels.
-Sur la figure~\ref{fig:yourkitComparaison}, nous comparons les deux installeurs et filtrons les appels aux xmlElement.
+Sur la figure~\ref{fig:yourkitComparaison}, nous comparons les deux installeurs et filtrons les appels aux XMLElement.
 On voit apparaître le XMLElement de NanoXml pour la version 4.2.1 et le XMLElementImpl de notre adaptateur.
-On voit que les performances entre les deux sont sensiblement les mêmes, les gains possibles sont relativement faibles et peu d'optimisation ont été faites. 
+On voit que les performances entre les deux sont sensiblement les mêmes, les gains possibles sont relativement faibles et peu d'optimisation ont été réalisées.
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=1\textwidth]{../image/yourkitComparaison.png}
 	\caption{Comparaison entre deux snapshots}
 	\label{fig:yourkitComparaison}
 \end{figure}
+
+%-------------------------------------------------------
 \section{Résultats}
 Le principal but de notre projet a été de pouvoir abandonner NanoXml ce qui est chose faite.
 De plus, l'intégration de notre solution a apporté un certain nombres d'avantages.
@@ -402,7 +409,7 @@ Par exemple, Atlassian fournit pour les projets leur système de suivie de bug, 
 Les projets sous CodeHaus sont des méritocraties. 
 Un despote supervise un projet.
 Les développeurs désirant rejoindre un projet doivent apporter une contribution, montrer leur motivation et être approuvés par le despote.
-En général, les décisions se prennent de manière démocratiques pour tout ce qui concernent le projet.
+En général, les décisions se prennent de manière démocratique pour tout ce qui concerne le projet.
 
 Une mailing-list pour les développeurs permet de communiquer les informations et prendre les décisions d'un commun accord.
 Pour éviter tout blocage dans les décisions, le despote a toujours le dernier mot.
@@ -432,7 +439,7 @@ Or le comportement attendu, plus naturel, est de résoudre le chemin d'inclusion
 \subsection{Correction de bugs}
 Nous avons également corrigé plusieurs bugs.
 \subsubsection{Problème lors de l'installation automatique}
-Un panel, le TreePacksPanels, ne respectait pas la configuration enregistrée lors de l'installation normale. 
+Un panel, le TreePacksPanels, ne respectait pas la configuration enregistrée lors de l'installation normale.
 Le problème provenait d'un problème de packaging, la classe devant faire le travail automatique n'était pas présente lors de l'installation.
 
 Un bug caché dans l'installation automatique pouvait la faire quitter silencieusement.
