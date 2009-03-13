@@ -1,9 +1,30 @@
-Dans le cadre de notre troisième année d'étude à l'Institut Supérieur d'Informatique, de Modélisation et de leurs Applications, nous avons effectué un projet d'une durée de 240 heures entre novembre 2008 et mars 2009 sous la tutelle de Julien Ponge.
+Dans le cadre de notre troisième année d'étude à l'Institut Supérieur d'Informatique, de Modélisation et de leurs Applications, nous avons effectué un projet d'une durée de 240 heures entre novembre 2008 et mars 2009 sous la tutelle de Julien Ponge portant sur IzPack.
 
-Améliorer un logiciel ne se résume pas à ajouter des fonctionnalités ou corriger de bugs.
-Faire du refactoring permet de rendre le code plus maintenable, lisible : le vieil adage ``ça fonctionne, alors on n'y touche pas'' a mené plus d'un projet dans l'impasse du code in-maintenable.
-Les résultats ne sont pas visibles, car d'un point de vue extérieur rien n'a changé. Pourtant pour un développeur cela signifie un développement présent et futur plus rapide et plus aisé.
-La suppression/remplacement d'une librairie obsolète entre dans ce cas.
+Le développement de logiciel prend de l'ampleur et nécessite de plus en plus de temps pour développer.
+Il devient alors intéressant d'utiliser des outils permettant de diminuer ce temps de développement.
+% déporter des pans de la logique à d'autres logiciels.
+Izpack rentre dans cette catégorie, en effet, il se charge de générer la partie installation de l'application.
 
-IzPack, un générateur d'installeur open-source possède justement une dépendance de ce type avec NanoXml. Dans le cadre de notre projet de troisième année a l'ISIMA, nous avons été chargé du refactoring de cette partie.
+Cependant, IzPack est un logiciel à part entière et nécessite un investissement.
+Il rencontre, comme tout les logiciels, les problèmes incontournable de ces logiciels : bugs, librairies obsolètes, problème de design.
+De même, des nouvelles pratiques apparaissent ou les anciennes pratiques atteignent leurs limites.
+Pour résoudre ces problèmes, une pratique courante consiste à faire du refactoring sur l'application.
+Le refactoring retouche le code, étapes par étapes, afin d'améliorer le design, la qualité et la maintenabilité du code.
+
+Le refactoring est peut-être considéré comme une perte de temps d'un point de vue extérieur car aucune nouvelles fonctionnalités et aucun travail visible par le client n'est réalisé.
+Cependant, cette pratique est indispensable pour assurer la pérennité de l'application. 
+En effet, l'ajout de fonctionnalité se fait souvent au détriment de la lisibilité et il est possible de trouver un meilleur design après un temps de réfléxion.
+Le refactoring permet de corriger la première implémentation réalisée et de produire du code plus mature et plus stable.
+
+Toutefois, cette pratique n'est pas appliquée due à l'abscence d'intérêt à court terme.
+IzPack présente aujourd'hui des améliorations possible réalisables grâce au refactoring, notament dans l'utilisation de la librairie permettant de traiter NanoXml.
+Cette librairie entraîne un certain nombre de problèmes de part sa vestuté et utiliser les librairies natives à java régleraient ces problèmes.
+
+% Améliorer un logiciel ne se résume pas à ajouter des fonctionnalités ou corriger de bugs.
+% Faire du refactoring permet de rendre le code plus maintenable, lisible : le vieil adage ``ça fonctionne, alors on n'y touche pas'' a mené plus d'un projet dans l'impasse du code in-maintenable.
+% Les résultats ne sont pas visibles, car d'un point de vue extérieur rien n'a changé. Pourtant pour un développeur cela signifie un développement présent et futur plus rapide et plus aisé.
+% La suppression/remplacement d'une librairie obsolète entre dans ce cas.
+% IzPack, un générateur d'installeur open-source possède justement une dépendance de ce type avec NanoXml. 
+Dans le cadre de notre projet de troisième année a l'ISIMA, nous avons été chargé du refactoring de IzPack. 
+Nous verrons d'abord le fonctionnement d'IzPack, puis le cadre de travail du projet et enfin le travail réalisé et ses résultats.
 % inspiration en baisse, ecriture suspendue
