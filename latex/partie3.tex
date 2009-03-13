@@ -11,7 +11,7 @@ Pour traiter ces fichiers, une librairie a été utilisée, il s'agit de NanoXml
 \subsection{Le projet NanoXml}
 NanoXml est une librairie java open-source de gestion de Xml.
 Elle présente la particularité d'être légère (108Ko).
-Il est possible, grâce à cette librairie, d'écrire ou de parser des fichiers Xml.
+Il est possible, grâce à cette librairie, d'écrire ou de parser des fichiers XML.
 Une fois le fichier parsé, on récupère en mémoire la structure de l'arbre Xml qui peut alors être exploité.
 Le choix de cette librairie a été fait au commencement de Izpack à cause de sa taille.
 En effet, il est important que la partie installeur ne surcharge pas excessivement sur le logiciel à installer.
@@ -91,7 +91,7 @@ SAX (Simple API for Xml) est une API pour parser les XML.
 Cette API possède la particularité de procéder par évènement.
 C'est à dire que le parser va lire le fichier ligne par ligne et envoyer un évènement pour chaque élément particulier qu'il rencontre.
 
-Des évènements sont lancés des que le parse rencontre des commentaires, du texte, des éléments...
+Des évènements sont lancés dès que le parse rencontre des commentaires, du texte, des éléments...
 L'avantages de cette API est l'utilisation mémoire faible, puisque le xml n'est pas mis en mémoire mais lu et traité au fur et à mesure, il permet de traiter sans problème les fichiers importants.
 En contrepartie, le traitement et la manipulation du xml est plus difficile.
 \subsection{DOM}
@@ -105,12 +105,12 @@ Il est possible de récupérer le voisin d'une node, d'enlever ou d'ajouter un e
 %--------------------------------------------------------------------------
 \section{Élaboration de la solution}
 Notre travail a été de chercher une solution pour permettre de remplacer de NanoXml par Jaxp et de l'appliquer au projet.
-Cependant, ils y avaient plusieurs problèmes à cela.
+Cependant, il y avait plusieurs problèmes à cela.
 \subsection{Les différences entre Jaxp et NanoXml}
 Comme nous avons vu précédemment, les deux API ne proposent pas la même approche pour le traitement des fichiers xml.
 Nous avons choisi d'utiliser l'interface DOM vu que les avantages de SAX ne sont pas nécessaires et qu'il était peu concevable de traiter les XML avec SAX dans IzPack.
 De plus, NanoXml et DOM ont une représentation similaire du xml (un arbre).
-Nous allons donc comparer l'interface DOM et NanoXml pour déterminer la meilleure approche a prendre.
+Nous allons donc comparer l'interface DOM et NanoXml pour déterminer la meilleure approche à prendre.
 \subsubsection{Manipulation du XML}
 La principale différence vient de l'élément atomique : le noeud de DOM ne représente pas la même notion que l'élément de nanoXML.
 Dès lors, la manipulation des voisins, enfants, etc doit être adapté.
@@ -171,20 +171,22 @@ C'est d'abord une infraction au principe DRY (\textit{don't repeat yourself}) et
 Les bugs sont plus difficiles à cibler et la correction doit se faire sur toutes les réplications.
 \item[Les difficultés de tester la solution] Un autre problème et le test de cette solution.
 Il faut en théorie passer par toutes les utilisations des appels pour tester correctement la solution. Cette contrainte est difficilement réalisable.
-\item[La pénibilite de la tâche] Remplacer chacun des nombreux appels à NanoXml par un appel Jaxp est très laborieux.
+\item[La pénibilité de la tâche] Remplacer chacun des nombreux appels à NanoXml par un appel Jaxp est très laborieux.
 \end{description}
 \subsubsection{Centraliser la logique de modification}
 L'autre solution possible est de centraliser toute la logique de traduction dans des classes dédiées.
 Ces classes vont copier les interfaces de NanoXml mais vont générer en réalité des appels à Jaxp.
 C'est le principe du design pattern adaptateur.
 
-Cela présente plusieurs avantages.
+Cela présente plusieurs avantages :
 \begin{description}
 \item[Centralisation de la logique] Toute la logique de traduction est centralisée en un endroit. Il est facile de corriger les éventuelles erreurs.
-\item[Rapidité de déploiement] L'adaptateur présente l'avantage de ne pas changer la logique d'utilisation. Les changements d'appels se résument a changer le nom de la classe et les imports.
+\item[Rapidité de déploiement] L'adaptateur présente l'avantage de ne pas changer la logique d'utilisation. Les changements d'appels se résument à changer le nom de la classe et les imports.
 \end{description}
+
 \subsection{Création de l'adaptateur}
 Nous avons donc choisi la solution de l'adaptateur pour notre problème. Pour cela, nous avons procéder en plusieurs étapes.
+
 \subsection{Repérer les utilisations des classes de NanoXml}
 Dans un premier temps, nous avons repérer les classes utilisées par Izpack et les méthodes utilisées de ces classes.
 Nous avons réduits l'utilisation de NanoXml à 3 classes : \verb|StdXMLParser|, \verb|StdXMLWriter| et \verb|XMLElement|.
@@ -199,11 +201,11 @@ Ce ne sont pas des adaptateurs de NanoXml étant donnés qu'elles ne recopient p
 Cependant, elles permettent de simplifier l'utilisation de Jaxp et de factoriser le code sur un endroit.
 \subsubsection{XMLElement}
 \verb|XMLElement| ne présente pas d'interface et est utilisé systématiquement quand il y a du XML à traiter.
-Il était donc impensable de traiter et remplacer toutes les utilisations de XMLElement par des appels à Jaxp étant donné son nombre d'utilisation (499 utilisations).
+Il était donc impensable de traiter et remplacer toutes les utilisations de XMLElement par des appels à Jaxp étant donné son nombre d'utilisation.
 Nous avons donc concentré nos efforts sur cette classe et appliquer le pattern adaptateur dessus.
-Nous avons pour cela procédé en plusieurs étapes.
+Pour cela, nous avons procédé en plusieurs étapes.
 
-Dans un premier temps, nous avons extrait l'interface de \verb|XMLElement| avec toutes les méthodes utilisées par Izpack.
+Dans un premier temps, nous avons extrait l'interface de \verb|XMLElement| avec toutes les méthodes utilisées par IzPack.
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.15\textwidth]{../image/sol_casInitial.png}
@@ -225,10 +227,10 @@ Ainsi, on peut utiliser un xml très succinct (et donc facilement lisible/compr�
 Cette fonctionnalité, absente de nanoXML, avait été mise en place en modifiant directement le code de son parseur.
 
 Xinclude est présente dans les normes W3C et Jaxp l'intègre dans son implémentation.
-Pour que Jaxp prenne en compte les balises Xinclude, il faut que le parser prenne en compte les espaces de nommage (namespaces) XML.
+Pour que Jaxp prenne en compte les balises Xinclude, il faut que le parseur prenne en compte les espaces de nommage (namespaces) XML.
 En effet, le Xinclude appartient au namespace \verb|xi|.
 Il faut donc utiliser la balise \verb|<xi:include/>| au lieu de \verb|<xinclude/>|.
-Le simple fait de rendre le parser namepaceAware permet d'utiliser la fonctionnalité Xinclude.
+Le simple fait de rendre le parser ``namepaceAware'' permet d'utiliser la fonctionnalité Xinclude.
 \subsection{Implémentation de Xfragment}
 La fonctionnalité Xfragment permet principalement d'ajouter des éléments sans racines avec Xinclude.
 C'est à dire qu'au contenu du xml à ajouter, on va retirer les noeuds \verb|<xfragment>|.
@@ -250,16 +252,19 @@ Le Xfragment agit ici comme conteneur temporaire d'éléments.
 Cette fonctionnalité a été rajouté a NanoXml et il était nécessaire de la conserver.
 Cependant, elle ne fait pas partie des spécifications W3C et le parseur n'offre pas de base cette fonctionnalité.
 Il a fallut trouver une solution pour implémenter cette fonctionnalité.
+
 \subsubsection{Première solution, manipulation du DOM}
 Une première solution est de modifier le DOM obtenu après le parse du XML. 
-Il faudrait chercher les noeuds nommer Xfragment et les supprimer.
+Il faudrait chercher les noeuds nommés Xfragment et les supprimer.
 Cependant, la suppression d'un noeud en DOM entraîne la suppression de tout les éléments qu'il contient.
 Il faudrait donc au préalable sauvegarder le contenu, supprimer l'élément et restaurer le contenu sauvegardé.
+
 \subsubsection{Deuxième solution, surcharge du parseur}
 Une autre solution est de procéder de la même manière que pour ce qui a été fait pour NanoXml.
 C'est à dire de modifier le parseur pour traiter les xfragment de manière spécifique.
-Cependant, cette solution, possible sous NanoXml, est difficilement réalisable sur Jaxp. 
+Cependant, cette solution, possible sous NanoXml (librairie incluse à IzPack), est difficilement réalisable sur Jaxp (fourni par la JRE).
 En effet, les appels du parseur sont transmis vers des classes internes et difficilement manipulables.
+
 \subsubsection{Troisième solution, transformation XSL}
 La troisième solution a été proposé par Matthew Fudge, la personne ayant rajouté la gestion des Xfragment et Xinclude dans NanoXml pour IzPack.
 Elle consiste à transformer l'arbre xml obtenu après le parse grâce à une transformation XSL (Extensible Stylesheet Language).

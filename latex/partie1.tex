@@ -1,13 +1,13 @@
 %---------------------------------------------------------
 \section{Description}
-IzPack est un projet open-source crée en 2001 par Julien Ponge. C'est un générateur d'installeur et il présente à ce titre de nombreuses fonctionnalités.
+IzPack est un projet open-source créé en 2001 par Julien Ponge. C'est un générateur d'installeur et il présente à ce titre de nombreuses fonctionnalités.
 \subsection{Générateur d'installeur}
 Une application, une fois réalisée, nécessite un certain nombre d'opérations sur la machine pour être opérationnelle.
 Ces opérations vont de la décompression de l'archive dans un répertoire au lancement de scripts de configuration en passant par la validation de la licence et la création de raccourcis.
 Créer un installeur pour une application est souvent laborieux et n'apporte que peu de plus-value au programme par rapport aux fonctionnalités du programme.
 
 L'intérêt d'Izpack réside dans le fait qu'il propose une solution pour créer cet installeur de manière simple et universelle.
-En effet, à partir d'une application existante, Izpack est capable de générer un installateur pour cette apllication. 
+En effet, à partir d'une application existante, Izpack est capable de générer un installateur pour cette application.
 Cet installateur pourra être utilisé pour déployer l'application sur n'importe quelle machine.
 De plus, tout type de programme peut être packagé, que ce soit une application C++ ou Java. Izpack se chargeant juste de la logique d'installation, il est totalement independant du contenu qu'il installe.
 \subsection{Open-source}
@@ -20,11 +20,11 @@ Une importante communauté s'est regroupée autour de ce projet ce qui a permis 
 Si un développeur apporte des modifications utiles, il est encouragé à en faire profiter la communauté, mais ce n'est pas une obligation.
 \subsubsection{La communauté Izpack}
 Cette communauté open-source fait vivre et évoluer le projet. Les personnes rejoignant le projet sont des personnes aux motivations diverses.
-Ces personnes peuvent être des passionnés interessés par le projet ou des salariés utilisant Izpack et apportant leurs contributions.
+Ces personnes peuvent être des passionnés interessés par le projet ou des salariés utilisant IzPack et apportant leurs contributions.
 Ces formes de contributions sont variées.
 Elles peuvent prendre la forme d'aide aux utilisateurs, de rédaction de documentation, de correction de bugs ou d'ajouts de fonctionnalités.
 \subsection{Fonctionnalités}
-Izpack est un système modulaire, il possède de nombreuses fonctionnalités pour créer un installeur adapté à chacun.
+IzPack est un système modulaire, il possède de nombreuses fonctionnalités pour créer un installeur adapté à chacun.
 \subsubsection{Multi-plateforme}
 L'installeur généré par Izpack est un jar (java archive).
 Il suffit donc que la machine ait un machine virtuelle pour pouvoir lancer l'installation, indépendamment de la plateforme ou du système d'exploitation.
@@ -211,5 +211,3 @@ IzPack se base donc sur une librairie externe : nanoXML.
 Cette librairie n'est malheureusement plus mise à jour (la dernière mise à jour date de 2003) et possède encore quelques bugs.
 De plus, les versions récentes de l'environnement java (JRE) possèdent de base tout ce qu'il faut pour gérer le xml.
 Se débarrasser de la dépendance à nanoXML et se reposer uniquement sur la JRE permettrait donc non seulement de rendre la gestion des XML plus sûre et robuste, mais également de diminuer la taille des installeurs générés.
-
-Maintenant que le projet IZPack a été présenté, étudions l'environnement de développement.
