@@ -12,7 +12,7 @@ Pour traiter ces fichiers, une librairie a été utilisée, il s'agit de NanoXml
 NanoXml est une librairie java open-source de gestion de Xml.
 Elle présente la particularité d'être légère (108Ko).
 Il est possible, grâce à cette librairie, d'écrire ou de parser des fichiers XML.
-Une fois le fichier parsé, on récupère en mémoire la structure de l'arbre Xml qui peut alors être exploité.
+Une fois le fichier parsé, on récupère en mémoire l'arbre Xml qui peut alors être exploité.
 Le choix de cette librairie a été fait au commencement de IzPack à cause de sa taille.
 En effet, il est important que la partie installateur ne surcharge pas excessivement sur le logiciel à installer.
 
@@ -40,6 +40,7 @@ L'arborescence du XML est donc réalisé par un ensemble de XMLElement.
 L'interface de XMLElement permet de récupérer la liste des enfants, le contenu, rechercher un enfant par son nom, retirer un enfant, ajouter un enfant ou modifier le contenu.
 Il s'agit de loin de la classe la plus utilisée de la librairie NanoXml dans IzPack.
 En effet, on ne comptait pas moins de 499 utilisations au commencement de ce projet.
+
 \subsection{Utilisation typique dans IzPack}
 \subsubsection{Parse de fichier}
 Le parse du fichier est exécuté pour récupérer le XML.
@@ -92,7 +93,7 @@ Cette API possède la particularité de procéder par évènement.
 C'est à dire que le parseur va lire le fichier ligne par ligne et envoyer un évènement pour chaque élément particulier qu'il rencontre.
 
 Des évènements sont lancés dès que le parse rencontre des commentaires, du texte, des éléments...
-L'avantages de cette API est l'utilisation mémoire faible, puisque le xml n'est pas mis en mémoire mais lu et traité au fur et à mesure, il permet de traiter sans problème les fichiers importants.
+L'avantage de cette API est l'utilisation mémoire faible, puisque le xml n'est pas mis en mémoire mais lu et traité au fur et à mesure, il permet de traiter sans problème les fichiers importants.
 En contrepartie, le traitement et la manipulation du xml est plus difficile.
 \subsection{DOM}
 L'interface DOM (Document Object Model) de Jaxp propose de mettre en mémoire le xml et offre une interaction basée sur des noeuds (node en anglais).
@@ -113,7 +114,7 @@ De plus, NanoXml et DOM ont une représentation similaire du xml (un arbre).
 Nous allons donc comparer l'interface DOM et NanoXml pour déterminer la meilleure approche à prendre.
 \subsubsection{Manipulation du XML}
 La principale différence vient de l'élément atomique : le noeud de DOM ne représente pas la même notion que l'élément de nanoXML.
-Dès lors, la manipulation des voisins, enfants, etc doit être adapté.
+Dès lors, la manipulation des voisins, enfants, etc doit être adaptée.
 \begin{lstlisting}[language=xml]
 <!-- commentaire -->
 <root>
@@ -197,7 +198,7 @@ Modifier l'interface pour ces deux classes n'étaient pas un problème.
 Ces deux classes ont donc été remplacées par 2 nouvelles classes réalisant les mêmes fonctionnalités avec des prototypes différents.
 
 Nous avons créé les interfaces \verb|IXmlParser| et \verb|IXmlWriter| ainsi que leurs implémentations.
-Ce ne sont pas des adaptateurs de NanoXml étant donnés qu'elles ne recopient pas l'interface de NanoXml et elles ne sont pas indispensables.
+Ce ne sont pas des adaptateurs de NanoXml étant donné qu'elles ne recopient pas l'interface de NanoXml et elles ne sont pas indispensables.
 Cependant, elles permettent de simplifier l'utilisation de Jaxp et de factoriser le code sur un endroit.
 \subsubsection{XMLElement}
 \verb|XMLElement| ne présente pas d'interface et est utilisé systématiquement quand il y a du XML à traiter.
@@ -214,13 +215,13 @@ Dans un premier temps, nous avons extrait l'interface de \verb|XMLElement| avec 
 	\caption{Extraction de l'interface}
 \end{figure}
 Nous avons ensuite créé l'implémentation de l'adaptateur respectant l'interface.
-IzPack utilise alors la même interface mais notre implémentation était utilisé.
+IzPack utilise alors la même interface mais notre implémentation était utilisée.
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.4\textwidth]{../image/sol_implementation.png}
 	\caption{Implémentation de l'adaptateur}
 \end{figure}
-Il suffit alors de supprimer NanoXml, ses utilisations ayant été remplacés par notre implémentation.
+Il suffit alors de supprimer NanoXml, ses utilisations ayant été remplacées par notre implémentation.
 \subsection{Implémentation de Xinclude}
 Avec NanoXml, la balise \verb|xinclude| permet d'inclure un fichier xml externe.
 Ainsi, on peut utiliser un xml très succinct (et donc facilement lisible/compréhensible) qui inclut d'autres fichiers xml décrivant uniquement certaines parties de l'installation.
@@ -271,7 +272,7 @@ Elle consiste à transformer l'arbre xml obtenu après le parse grâce à une tr
 Les transformations XSL permettent de définir des règles de modification d'un XML et se présente lui-même sous la forme d'un XML.
 Elles permettent de modifier facilement des XML de manière simple.
 Elle convenait parfaitement à notre problème.
-La feuille de style utilisé est la suivante :
+La feuille de style utilisée est la suivante :
 \begin{lstlisting}[language=xml]
 <xsl:stylesheet 
 	xmlns:xsl='http://www.w3.org/1999/XSL/Transform' version='1.0'>
@@ -295,10 +296,10 @@ Ici, pour tout les éléments, on recopie l'élément.
 Dans le cas du xfragment, on omet la copie.
 Au final, le xfragment est supprimé du XML ce qui est le but recherché.
 \subsection{Numéro de ligne}
-Une fonctionnalité de nanoXML est la gestion des numéros de lignes. 
+Une fonctionnalité de nanoXML est la gestion des numéros de lignes.
 Lors qu'une incohérence est détectée dans un XML lu, IzPack prévient l'utilisateur de l'erreur, et indique le numéro de la ligne responsable dans le xml.
 
-Du point de vue de DOM, les numéros de lignes n'ont pas de signification : une fois le fichier XML parsé, seul l'arbre DOM construit en mémoire importe. 
+Du point de vue de DOM, les numéros de lignes n'ont pas de signification : une fois le fichier XML parsé, seul l'arbre DOM construit en mémoire importe.
 Cet arbre, réécrit dans un fichier ne correspondra pas forcément (pour les numéros de lignes, l'indentation, etc) au fichier de départ, sans parler des ajouts/suppressions/modifications de noeuds.
 
 Au contraire, pour SAX, les numéros de lignes sont obtenues facilement.
@@ -315,7 +316,7 @@ Une fois la solution réalisée, nous l'avons soumis à un certain nombre de tes
 Afin d'avoir un comportement le plus fidèle possible à celui de NanoXML et assurer la fiabilité de la solution, de nombreux tests unitaires ont été écrits.
 \subsubsection{Test unitaires de comparaison}
 La solution a d'abord été élaborée de manière isolée.
-Un projet indépendant contenant NanoXml à été créé. 
+Un projet indépendant contenant NanoXml à été créé.
 C'est sur ce projet que nous avons travaillé et développer notre adaptateur.
 Nous avons alors réalisé une batterie de tests couvrant toutes les méthodes de l'interface extraites et de très nombreux cas.
 Ces tests unitaires effectuent des actions identiques avec notre adaptateur et NanoXML, et comparent les résultats.
@@ -329,12 +330,15 @@ Pour cela, une méthode se charge de parcourir de manière récursive l'arbre et
 Ceci nous a permis de nous assurer du comportement de l'adaptateur et de déceler des anomalies sur NanoXml.
 
 En couvrant la quasi totalité des méthodes utilisées dans IzPack avec de nombreux cas d'utilisation, nous avons pu nous assurer du respect du comportement de notre adaptateur.
+
 \subsubsection{Les tests unitaires sur Xinclude et Xfragment}
 Avec l'ajout des fonctionnalités XInclude et XFragment à NanoXml, une batterie de test unitaires a été fournie.
 Nous avons donc repris ces tests et nous les avons intégrés aux tests de l'adaptateur.
+
 \subsubsection{Les tests unitaires classiques}
 Nous avons créé une batterie de tests unitaires classiques pour notre adaptateur.
 Ils s'assurent entre autre que le parse, l'exploitation de l'arbre en mémoire et l'écriture du Xml se font correctement.
+
 \subsection{Intégration à IzPack}
 L'intégration à IzPack de notre travail fut relativement aisée : les objets de NanoXml ont été remplacés par ceux de notre adaptateur.
 Les appels n'ont quasiment pas été changés, les méthodes exposées dans les deux cas étant les mêmes.
@@ -342,7 +346,7 @@ Cette intégration effectuée, nous avons pu commencer les tests sur application
 \subsubsection{Test fonctionnels}
 Une phase de test fonctionnels a été réalisée pour tester l'intégrité de l'application après l'intégration de notre solution.
 Ces tests sont des tests manuels sur les installations générés par IzPack.
-Nous avons donc testé dans un premier temps l'application d'exemple fourni par IzPack.
+Nous avons donc testé dans un premier temps l'application d'exemple fournie par IzPack.
 Ces tests ont permis de faire ressortir quelques problèmes que nous avons pu régler rapidement.
 
 Suite à cela, nous avons essayé de générer et lancer un installateur plus conséquent.
@@ -352,14 +356,14 @@ La génération et l'installation de glassfish s'est déroulé sans problème.
 Après la phase d'implémentation et de test, nous avons pu commencer une phase d'optimisation.
 En utilisant YourKit, nous avons essayé de détecter les méthodes chronophages lors d'une installation et les modifier éventuellement.
 
-Pour profiler l'application avec yourkit, il faut placer la librairie de yourkit dans le PATH. 
+Pour profiler l'application avec yourkit, il faut placer la librairie de yourkit dans le PATH.
 Une fois cette opération réalisée, il suffit de lancer l'application à profiler avec l'option \verb|-agentlib:yjpagent|.
 Il est alors possible de connecter le profiler à l'application et lancer le profiling.
 
 Le profiling lancé, nous utilisons l'application normalement.
 A la fin de l'exécution, une image de l'exécution (snapshot) est enregistrée et peut être analysée après.
 Cette image comporte toutes les informations du profiling comme la trace des appels, le temps passé dans chaque méthode, le nombre d'appels aux méthodes, l'utilisation de la mémoire et du garbage collector à chaque moment de l'exécution...
-Nous avons profilé deux version de l'installateur de Glassfish ; l'un a été généré avec la version 4.2.1 de IzPack et l'autre avec la dernière version construite à partir du dépôt et comportant nos modifications.
+Nous avons profilé deux versions de l'installateur de Glassfish ; l'un a été généré avec la version 4.2.1 de IzPack et l'autre avec la dernière version construite à partir du dépôt et comportant nos modifications.
 
 Par exemple, on peut rechercher tout les appels à l'objet XmlElementImpl de notre adaptateur pour voir les différentes méthodes utilisées. Sur la figure~\ref{fig:yourkitXmlElement}, on peut voir que la méthode \verb|getAttribute()| est utilisée majoritairement.
 \begin{figure}[H]
@@ -408,15 +412,15 @@ Après quoi, les modifications ont été portées sur la branche principale et s
 \section{Au delà du sujet}
 Une fois l'objectif du projet atteint, nous avons décidé d'accepter l'offre de Julien Ponge en devenant contributeurs officiels du projet.
 \subsection{Le projet IzPack}
-IzPack est une communauté Open-Source, sa structure et son fonctionnement sont particuliers. 
-Le projet est récemment passé sous CodeHaus. 
-Des outils et des moyens de communications sont dédiées au projet.
+IzPack est une communauté Open-Source, sa structure et son fonctionnement sont particuliers.
+Le projet est récemment passé sous CodeHaus.
+Des outils et des moyens de communication sont dédiées au projet.
 \subsubsection{Codehaus}
 CodeHaus est une fondation dédiée au développement de projets open-source.
-A ce titre, elle propose une plateforme pour aider au développement de ces projets avec un certains nombre d'outils fournis par des sponsors.
+A ce titre, elle propose une plateforme pour aider au développement de ces projets avec un certain nombre d'outils fournis par des sponsors.
 Par exemple, Atlassian fournit pour les projets leur système de suivie de bug, JIRA, JetBrain fournit une licence IntelliJ, etc...
 \subsubsection{Structure de la communauté}
-Les projets sous CodeHaus sont des méritocraties. 
+Les projets sous CodeHaus sont des méritocraties.
 Un despote supervise un projet.
 Les développeurs désirant rejoindre un projet doivent apporter une contribution, montrer leur motivation et être approuvés par le despote.
 En général, les décisions se prennent de manière démocratique pour tout ce qui concerne le projet.

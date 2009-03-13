@@ -45,24 +45,26 @@ Il existe de nombreux types de panels : des panel pour accueillir l'utilisateur 
 Sur la figure~\ref{fig:panelGlass}, on peut voir un HTMLInfoPanel, un UserInputPanel et un InstallPanel pour l'installation de Glassfish.
 Il existe aussi des panels plus spécialisés comme CompilePanel permet de compiler du code java et ProcessPanel permet de lancer des programmes après l'installation.
 \subsubsection{Internationalisation}
-IzPack supporte la création d'installateurs multilangues.
+IzPack supporte la création d'installateurs multilangues (voir figure \ref{fig:LangChoice}).
 Pour la localisation, tout repose sur des fichiers XML.
 Si une langue n'existe pas, il suffit de traduire le dictionnaire correspondant dans un fichier xml et de l'utiliser lors de la création de l'installateur.
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=5cm]{../image/LangChoice.png}
 	\caption{Exemple de choix de langue avec IzPack}
+	\label{fig:LangChoice}
 \end{figure}
 \subsubsection{Installation automatique}
-A la fin de l'installation, il est possible de générer un script d'installation automatique.
+A la fin de l'installation, il est possible de générer un script d'installation automatique comme montré figure \ref{fig:SaveInstallXML}.
 Ce script permet de reproduire l'installation qui vient d'être réalisée sur d'autres machines.
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=12cm]{../image/SaveInstallXML.png}
 	\caption{Fin d'installation, enregistrement du script d'installation automatisée}
+	\label{fig:SaveInstallXML}
 \end{figure}
 \subsection{Popularité du projet}
-IzPack est utilisé dans de grand projets comme Jboss, Xwiki, Glassfish... Des entreprises également l'utilisent pour leurs propres applications. A l'heure actuelle, les téléchargements mensuels vont jusqu'à 25.000.
+IzPack est utilisé dans de grand projets comme Jboss, Xwiki, Glassfish... Des entreprises également l'utilisent pour leurs propres applications. A l'heure actuelle, les téléchargements mensuels s'élèvent à 25.000.
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.6\textwidth]{../image/telechargements.png}
@@ -78,23 +80,26 @@ Ces fichiers comprennent l'application en elle-même et les fichiers nécessaire
 Cette partie est utilisée par le développeur qui souhaite créer un installateur.
 
 \subsection{Installateur}
-La partie installation concerne toute la logique et la présentation du processus d'installation. Cette partie sera exécuter par un utilisateur souhaitant installer le logiciel.
+La partie installation concerne toute la logique et la présentation du processus d'installation. Cette partie sera exécutée par un utilisateur souhaitant installer le logiciel.
 \subsection{Utilisation}
 Dans un premier temps, le compilateur va créer l'installateur de l'application.
-Il prend la partie installation d'IzPack, la modifie pour correspondre à l'installation décrite dans le fichier xml, et la package avec l'application à installer.
+Il prend la partie installation d'IzPack, la modifie pour correspondre à l'installation décrite dans le fichier xml, et la package avec l'application à installer. Cette phase est illustrée par la figure \ref{fig:partie_compil}
 A noter qu'aucun IzPack n'a été blessé lors de la compilation.
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=\textwidth]{../image/partie_compil.png}
 	\caption{Phase de compilation}
+	\label{fig:partie_compil}
 \end{figure}
 
 Cette application est alors prête à être déployée sur une autre machine.
-Le processus d'installation est géré par la partie installateur de IzPack. Cette phase va permettre de déployer l'application sur toutes les machines nécessaires.
+Le processus d'installation est géré par la partie installateur de IzPack.
+Cette phase, illustrée par la figure \ref{fig:partie_install}, va permettre de déployer l'application sur toutes les machines nécessaires.
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=\textwidth]{../image/partie_install.png}
 	\caption{Phase d'installation}
+	\label{fig:partie_install}
 \end{figure}
 
 %---------------------------------------------------------
@@ -103,7 +108,7 @@ Des exemples complets existent, par exemple l'installateur de IzPack, de Glassfi
 Pour illustrer simplement l'utilisation de IzPack, utilisons plutôt le petit exemple fourni avec le code de l'application.
 \subsection{Description du xml}
 Ce xml (install.xml) décrit complètement l'installation.
-Une balise \verb|info| permet de définir les informations concernant l'application : 
+Une balise \verb|info| permet de définir les informations concernant l'application :
 \begin{lstlisting}[language=xml]
 <info>
 	<appname>Sample Installation</appname>
@@ -208,7 +213,7 @@ On trouve ainsi, encore maintenant, du code utilisant de vieilles structures de 
 \subsection{Nanoxml}
 Une amélioration possible concerne la gestion des fichiers XML, qui ont une grande importance dans IzPack.
 L'absence de processeur XML intégré à la JRE 1.3 a forcé l'utilisation d'une librairie externe pour traiter les XML.
-IzPack se base donc sur une librairie externe : nanoXML.
+IzPack se base donc sur une telle librairie : nanoXML.
 Cette librairie n'est malheureusement plus mise à jour (la dernière mise à jour date de 2003) et possède encore quelques bugs.
 De plus, les versions récentes de l'environnement java (JRE) possèdent de base tout ce qu'il faut pour gérer le xml.
 Se débarrasser de la dépendance à nanoXML et se reposer uniquement sur la JRE permettrait donc non seulement de rendre la gestion des XML plus sûre et robuste, mais également de diminuer la taille des installateurs générés.
