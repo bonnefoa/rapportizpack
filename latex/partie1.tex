@@ -1,38 +1,38 @@
 %---------------------------------------------------------
 \section{Description}
-IzPack est un projet open-source créé en 2001 par Julien Ponge. C'est un générateur d'installeur et il présente à ce titre de nombreuses fonctionnalités.
-\subsection{Générateur d'installeur}
+IzPack est un projet open-source créé en 2001 par Julien Ponge. C'est un générateur d'installateur et il présente à ce titre de nombreuses fonctionnalités.
+\subsection{Générateur d'installateur}
 Une application, une fois réalisée, nécessite un certain nombre d'opérations sur la machine pour être opérationnelle.
 Ces opérations vont de la décompression de l'archive dans un répertoire au lancement de scripts de configuration en passant par la validation de la licence et la création de raccourcis.
-Créer un installeur pour une application est souvent laborieux et n'apporte que peu de plus-value au programme par rapport aux fonctionnalités du programme.
+Créer un installateur pour une application est souvent laborieux et n'apporte que peu de plus-value par rapport aux fonctionnalités du programme.
 
-L'intérêt d'Izpack réside dans le fait qu'il propose une solution pour créer cet installeur de manière simple et universelle.
-En effet, à partir d'une application existante, Izpack est capable de générer un installateur pour cette application.
-Cet installateur pourra être utilisé pour déployer l'application sur n'importe quelle machine.
-De plus, tout type de programme peut être packagé, que ce soit une application C++ ou Java. Izpack se chargeant juste de la logique d'installation, il est totalement independant du contenu qu'il installe.
+L'intérêt d'IzPack réside dans le fait qu'il propose une solution pour créer cet installateur de manière simple et universelle.
+En effet, à partir d'une application existante, IzPack est capable de générer un installateur pour cette application.
+Ce dernier pourra être utilisé pour déployer l'application sur n'importe quelle machine.
+De plus, tout type de programme peut être packagé, que ce soit une application C++ ou Java. IzPack se chargeant juste de la logique d'installation, il est totalement independant du contenu qu'il installe.
 \subsection{Open-source}
-Le projet Izpack est placé sous une licence Open-source. A ce titre, le code source est librement accessible selon les termes de la licence. De plus, une communauté s'est regroupée autour du projet.
+Le projet IzPack est placé sous une licence Open-source. A ce titre, le code source est librement accessible selon les termes de la licence. De plus, une communauté s'est regroupée autour du projet.
 \subsubsection{Licence Apache 2}
-Izpack est sous licence Apache 2. Cette licence permet l'accès au code source et l'utilisation libre du logiciel.
+IzPack est sous licence Apache 2. Cette licence permet l'accès au code source et l'utilisation libre du logiciel.
 Il est tout à fait possible de l'utiliser pour une application commerciale, voire même de modifier les sources pour le faire correspondre à ses besoins.
 
 Une importante communauté s'est regroupée autour de ce projet ce qui a permis son évolution jusqu'à maintenant.
 Si un développeur apporte des modifications utiles, il est encouragé à en faire profiter la communauté, mais ce n'est pas une obligation.
-\subsubsection{La communauté Izpack}
+\subsubsection{La communauté IzPack}
 Cette communauté open-source fait vivre et évoluer le projet. Les personnes rejoignant le projet sont des personnes aux motivations diverses.
-Ces personnes peuvent être des passionnés interessés par le projet ou des salariés utilisant IzPack et apportant leurs contributions.
+Ces personnes peuvent être des passionnés intéressés par le projet ou des salariés utilisant IzPack et apportant leurs contributions.
 Ces formes de contributions sont variées.
 Elles peuvent prendre la forme d'aide aux utilisateurs, de rédaction de documentation, de correction de bugs ou d'ajouts de fonctionnalités.
 \subsection{Fonctionnalités}
-IzPack est un système modulaire, il possède de nombreuses fonctionnalités pour créer un installeur adapté à chacun.
+IzPack est un système modulaire, il possède de nombreuses fonctionnalités pour créer un installateur adapté à chacun.
 \subsubsection{Multi-plateforme}
-L'installeur généré par Izpack est un jar (java archive).
+L'installateur généré par IzPack est un jar (java archive).
 Il suffit donc que la machine ait un machine virtuelle pour pouvoir lancer l'installation, indépendamment de la plateforme ou du système d'exploitation.
-Il est néanmoins possible de faire des traitements spécifiques à certaines plateformes ou de convertir l'installeur pour être spécifique à une plateforme.
+Il est néanmoins possible de faire des traitements spécifiques à certaines plateformes ou de convertir l'installateur pour être spécifique à une plateforme.
 \subsubsection{Personnalisation}
 Chaque écran que verra l'utilisateur est décrit par un panel.
 Un ensemble de panels composent l'installateur graphique et chaque panels remplit une fonction spécifique.
-L'aspect global de l'installeur et celui des panels est personnalisable par l'utilisateur via le descripteur XML.
+L'aspect global de l'installateur et celui des panels est personnalisable par l'utilisateur via le descripteur XML.
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.3\textwidth]{../dia/included/install/02.png}
@@ -45,23 +45,24 @@ Il existe de nombreux types de panels : des panel pour accueillir l'utilisateur 
 Sur la figure~\ref{fig:panelGlass}, on peut voir un HTMLInfoPanel, un UserInputPanel et un InstallPanel pour l'installation de Glassfish.
 Il existe aussi des panels plus spécialisés comme CompilePanel permet de compiler du code java et ProcessPanel permet de lancer des programmes après l'installation.
 \subsubsection{Internationalisation}
-Izpack supporte la création d'installeur multilangues. 
+IzPack supporte la création d'installateurs multilangues.
 Pour la localisation, tout repose sur des fichiers XML.
-Si une langue n'existe pas, il suffit de traduire le dictionnaire correspondant dans un fichier xml et de l'utiliser lors de la création de l'installeur.
+Si une langue n'existe pas, il suffit de traduire le dictionnaire correspondant dans un fichier xml et de l'utiliser lors de la création de l'installateur.
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=5cm]{../image/LangChoice.png}
 	\caption{Exemple de choix de langue avec IzPack}
 \end{figure}
 \subsubsection{Installation automatique}
-A la fin de l'installation, il est possible de générer un script d'installation automatique. Ce script permet de reproduire l'installation qui vient d'être réalisée sur d'autres machines.
+A la fin de l'installation, il est possible de générer un script d'installation automatique.
+Ce script permet de reproduire l'installation qui vient d'être réalisée sur d'autres machines.
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=12cm]{../image/SaveInstallXML.png}
 	\caption{Fin d'installation, enregistrement du script d'installation automatisée}
 \end{figure}
 \subsection{Popularité du projet}
-Izpack est utilisé dans de grand projets comme Jboss, Xwiki, Glassfish... Des entreprises également l'utilisent pour leurs propres applications. A l'heure actuelle, les téléchargements mensuels vont jusqu'à 25.000.
+IzPack est utilisé dans de grand projets comme Jboss, Xwiki, Glassfish... Des entreprises également l'utilisent pour leurs propres applications. A l'heure actuelle, les téléchargements mensuels vont jusqu'à 25.000.
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.6\textwidth]{../image/telechargements.png}
@@ -69,18 +70,18 @@ Izpack est utilisé dans de grand projets comme Jboss, Xwiki, Glassfish... Des e
 \end{figure}
  %---------------------------------------------------------
 \section{Architecture}
-Globalement, Izpack possède 2 composants, le compilateur qui va gérer la création de l'installeur et l'installeur lui-même.
+Globalement, IzPack possède 2 composants, le compilateur qui va gérer la création de l'installateur et l'installateur lui-même.
 
 \subsection{Compilateur}
 Le compilateur se charge de packager l'ensemble des fichiers nécessaires dans un seul fichier jar.
 Ces fichiers comprennent l'application en elle-même et les fichiers nécessaires (les panels décrits dans le XML, etc) à l'installation.
-Cette partie est utilisée par le développeur qui souhaite créer un installeur.
+Cette partie est utilisée par le développeur qui souhaite créer un installateur.
 
-\subsection{Installeur}
+\subsection{Installateur}
 La partie installation concerne toute la logique et la présentation du processus d'installation. Cette partie sera exécuter par un utilisateur souhaitant installer le logiciel.
 \subsection{Utilisation}
-Dans un premier temps, le compilateur va créer l'installeur de l'application.
-Il prend la partie installation d'IzPack, la modifie pour correspondre à l'installation décrite dans le fchier xml, et la package avec l'application à installer.
+Dans un premier temps, le compilateur va créer l'installateur de l'application.
+Il prend la partie installation d'IzPack, la modifie pour correspondre à l'installation décrite dans le fichier xml, et la package avec l'application à installer.
 A noter qu'aucun IzPack n'a été blessé lors de la compilation.
 \begin{figure}[H]
 	\centering
@@ -89,7 +90,7 @@ A noter qu'aucun IzPack n'a été blessé lors de la compilation.
 \end{figure}
 
 Cette application est alors prête à être déployée sur une autre machine.
-Le processus d'installation est géré par la partie installeur de Izpack. Cette phase va permettre de déployer l'application sur toutes les machines nécessaires.
+Le processus d'installation est géré par la partie installateur de IzPack. Cette phase va permettre de déployer l'application sur toutes les machines nécessaires.
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=\textwidth]{../image/partie_install.png}
@@ -98,7 +99,7 @@ Le processus d'installation est géré par la partie installeur de Izpack. Cette
 
 %---------------------------------------------------------
 \section{Exemple d'installation}
-Des exemples complets existent, par exemple l'installeur de IzPack, de Glassfish, de PerfSonar... 
+Des exemples complets existent, par exemple l'installateur de IzPack, de Glassfish, de PerfSonar... 
 Pour illustrer simplement l'utilisation de IzPack, utilisons plutôt le petit exemple fourni avec le code de l'application.
 \subsection{Description du xml}
 Ce xml (install.xml) décrit complètement l'installation.
@@ -110,7 +111,7 @@ Une balise \verb|info| permet de définir les informations concernant l'applicat
 	...
 </info>
 \end{lstlisting}
-Une autre balise, \verb|guipref| permet de définir quelques propriétés de la fenêtre de l'installeur :
+Une autre balise, \verb|guipref| permet de définir quelques propriétés de la fenêtre de l'installateur :
 \begin{lstlisting}[language=xml]
 <guiprefs width="640" height="480" resizable="yes"/>
 \end{lstlisting}
@@ -149,10 +150,10 @@ Enfin la balise \verb|packs| contient la description des packs (les différentes
 	...
 </packs>
 \end{lstlisting}
-Bien sûr d'autres options existent, mais celles présentées ici suffisent à créer notre installeur.
+Bien sûr d'autres options existent, mais celles présentées ici suffisent à créer notre installateur.
 Les fichiers référencés doivent être présents dans le chemin indiqué par le xml lors de la compilation.
 \subsection{Génération du jar}
-Pour générer notre installeur, il suffit de lancer la commande suivante : (l'exécutable \verb|compile| provient de IzPack)
+Pour générer notre installateur, il suffit de lancer la commande suivante : (l'exécutable \verb|compile| provient de IzPack)
 \begin{verbatim}
 $ compile install.xml
 .::  IzPack - Version 4.1.0 ::.
@@ -175,7 +176,7 @@ $ compile install.xml
 
 Build time: Tue Mar 10 16:50:27 CET 2009
 \end{verbatim}
-Cette exécution va produire un fichier install.jar : notre installeur.
+Cette exécution va produire un fichier install.jar : notre installateur.
 \subsection{Installation}
 Il suffit désormais de lancer le jar pour installer notre application.
 \begin{figure}[H]
@@ -184,7 +185,7 @@ Il suffit désormais de lancer le jar pour installer notre application.
 	\caption{Exemple d'installation avec IzPack}
 \end{figure}
 \subsection{Installation automatique}
-En lançant l'installeur avec un script d'installation automatisée en paramètre, l'installation est rejouée à l'identique automatiquement.
+En lançant l'installateur avec un script d'installation automatisée en paramètre, l'installation est rejouée à l'identique automatiquement.
 \begin{verbatim}
 $ java -jar install.jar automated.xml
 [ Starting automated installation ]
@@ -201,7 +202,7 @@ $ java -jar install.jar automated.xml
 \section{Problèmes actuels}
 IzPack possède, comme tout logiciel, des bugs potentiels ou des améliorations à effectuer.
 \subsection{Code obsolète}
-Izpack a débuté en 2001.
+IzPack a débuté en 2001.
 A cette époque, la Jdk en était à la version 1.3. Il y avait donc des fonctionnalités absentes comme la généricité.
 On trouve ainsi, encore maintenant, du code utilisant de vieilles structures de données (des tableaux d'objets ou des Vectors) ou des styles de programmation abandonnés.
 \subsection{Nanoxml}
@@ -210,4 +211,4 @@ L'absence de processeur XML intégré à la JRE 1.3 a forcé l'utilisation d'une
 IzPack se base donc sur une librairie externe : nanoXML.
 Cette librairie n'est malheureusement plus mise à jour (la dernière mise à jour date de 2003) et possède encore quelques bugs.
 De plus, les versions récentes de l'environnement java (JRE) possèdent de base tout ce qu'il faut pour gérer le xml.
-Se débarrasser de la dépendance à nanoXML et se reposer uniquement sur la JRE permettrait donc non seulement de rendre la gestion des XML plus sûre et robuste, mais également de diminuer la taille des installeurs générés.
+Se débarrasser de la dépendance à nanoXML et se reposer uniquement sur la JRE permettrait donc non seulement de rendre la gestion des XML plus sûre et robuste, mais également de diminuer la taille des installateurs générés.

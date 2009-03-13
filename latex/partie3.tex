@@ -4,7 +4,7 @@ Le projet étant open-source et actif, il évolue sans cesse. La partie sur laqu
 % -> Philosophie de nanoXml et de DOM differente
 % -> -> DOM : Tout est noeud
 % -> -> NanoXml : Base sur les tags (elements)
-\section{Etude de Nanoxml}
+\section{Étude de Nanoxml}
 Comme nous avons pu le voir, IzPack utilise intensément des fichiers XML pour la génération d'installations.
 En effet, les fichiers XML présentent l'avantage d'être lisible, écrivable à la main et traitables.
 Pour traiter ces fichiers, une librairie a été utilisée, il s'agit de NanoXml.
@@ -13,13 +13,13 @@ NanoXml est une librairie java open-source de gestion de Xml.
 Elle présente la particularité d'être légère (108Ko).
 Il est possible, grâce à cette librairie, d'écrire ou de parser des fichiers XML.
 Une fois le fichier parsé, on récupère en mémoire la structure de l'arbre Xml qui peut alors être exploité.
-Le choix de cette librairie a été fait au commencement de Izpack à cause de sa taille.
-En effet, il est important que la partie installeur ne surcharge pas excessivement sur le logiciel à installer.
+Le choix de cette librairie a été fait au commencement de IzPack à cause de sa taille.
+En effet, il est important que la partie installateur ne surcharge pas excessivement sur le logiciel à installer.
 
 \subsection{Les différents composants de NanoXml}
 On trouve différents éléments dans NanoXml.
 \subsubsection{StdXMLParser}
-Le parser permet de créer un arbre logique représentant le fichier xml qui lui a été passé.
+Le parseur permet de créer un arbre logique représentant le fichier xml qui lui a été passé.
 Il est systématiquement utilisé au moment de la lecture du fichier afin de récupérer l'arbre.
 \subsubsection{StdXMLWriter}
 Le XMLWriter permet d'écrire des fichiers XML.
@@ -38,9 +38,9 @@ En parsant un fichier contenant ce Xml, on obtient un XMLElement nommé root qui
 
 L'arborescence du XML est donc réalisé par un ensemble de XMLElement.
 L'interface de XMLElement permet de récupérer la liste des enfants, le contenu, rechercher un enfant par son nom, retirer un enfant, ajouter un enfant ou modifier le contenu.
-Il s'agit de loin de la classe la plus utilisée de la librairie NanoXml dans Izpack.
+Il s'agit de loin de la classe la plus utilisée de la librairie NanoXml dans IzPack.
 En effet, on ne comptait pas moins de 499 utilisations au commencement de ce projet.
-\subsection{Utilisation typique dans Izpack}
+\subsection{Utilisation typique dans IzPack}
 \subsubsection{Parse de fichier}
 Le parse du fichier est exécuté pour récupérer le XML.
 \begin{lstlisting}
@@ -58,7 +58,7 @@ XMLWriter writer = new XMLWriter(out);
 ...
 writer.write(xmlElement);
 \end{lstlisting}
-Le XMLWriter prend un OutputStream à sa contruction.
+Le XMLWriter prend un OutputStream à sa construction.
 On peut donc écrire un Xml dans tout type de flux de sortie. 
 Une fois le XMLWriter instancié, il suffit de lui passer le \verb|xmlElement| représentant la racine de l'arborescence que l'on veut écrire.
 \subsubsection{Utilisation de XMLElement}
@@ -83,13 +83,13 @@ while (iter.hasNext())
 	//...
 }
 \end{lstlisting}
-\section{Etude Jaxp}
+\section{Étude Jaxp}
 Jaxp, le processeur Xml de Sun, respecte les normes W3C.
 Il y a deux manières d'exploiter les XML avec Jaxp, soit en utilisant le parseur SAX, soit en utilisant le parseur DOM.
 \subsection{SAX}
 SAX (Simple API for Xml) est une API pour parser les XML.
 Cette API possède la particularité de procéder par évènement.
-C'est à dire que le parser va lire le fichier ligne par ligne et envoyer un évènement pour chaque élément particulier qu'il rencontre.
+C'est à dire que le parseur va lire le fichier ligne par ligne et envoyer un évènement pour chaque élément particulier qu'il rencontre.
 
 Des évènements sont lancés dès que le parse rencontre des commentaires, du texte, des éléments...
 L'avantages de cette API est l'utilisation mémoire faible, puisque le xml n'est pas mis en mémoire mais lu et traité au fur et à mesure, il permet de traiter sans problème les fichiers importants.
@@ -188,7 +188,7 @@ Cela présente plusieurs avantages :
 Nous avons donc choisi la solution de l'adaptateur pour notre problème. Pour cela, nous avons procéder en plusieurs étapes.
 
 \subsection{Repérer les utilisations des classes de NanoXml}
-Dans un premier temps, nous avons repérer les classes utilisées par Izpack et les méthodes utilisées de ces classes.
+Dans un premier temps, nous avons repérer les classes utilisées par IzPack et les méthodes utilisées de ces classes.
 Nous avons réduits l'utilisation de NanoXml à 3 classes : \verb|StdXMLParser|, \verb|StdXMLWriter| et \verb|XMLElement|.
 \subsubsection{StdXMLParser et StdXMLWriter}
 Les classes \verb|StdXMLParser| et \verb|StdXMLWriter| sont utilisées avec parcimonie.
@@ -214,7 +214,7 @@ Dans un premier temps, nous avons extrait l'interface de \verb|XMLElement| avec 
 	\caption{Extraction de l'interface}
 \end{figure}
 Nous avons ensuite créé l'implémentation de l'adaptateur respectant l'interface.
-Izpack utilise alors la même interface mais notre implémentation était utilisé.
+IzPack utilise alors la même interface mais notre implémentation était utilisé.
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.4\textwidth]{../image/sol_implementation.png}
@@ -230,7 +230,7 @@ Xinclude est présente dans les normes W3C et Jaxp l'intègre dans son implémen
 Pour que Jaxp prenne en compte les balises Xinclude, il faut que le parseur prenne en compte les espaces de nommage (namespaces) XML.
 En effet, le Xinclude appartient au namespace \verb|xi|.
 Il faut donc utiliser la balise \verb|<xi:include/>| au lieu de \verb|<xinclude/>|.
-Le simple fait de rendre le parser ``namepaceAware'' permet d'utiliser la fonctionnalité Xinclude.
+Le simple fait de rendre le parseur ``namepaceAware'' permet d'utiliser la fonctionnalité Xinclude.
 \subsection{Implémentation de Xfragment}
 La fonctionnalité Xfragment permet principalement d'ajouter des éléments sans racines avec Xinclude.
 C'est à dire qu'au contenu du xml à ajouter, on va retirer les noeuds \verb|<xfragment>|.
@@ -299,7 +299,7 @@ Une fonctionnalité de nanoXML est la gestion des numéros de lignes.
 Lors qu'une incohérence est détectée dans un XML lu, IzPack prévient l'utilisateur de l'erreur, et indique le numéro de la ligne responsable dans le xml.
 
 Du point de vue de DOM, les numéros de lignes n'ont pas de signification : une fois le fichier XML parsé, seul l'arbre DOM construit en mémoire importe. 
-Cet arbre, réécrit dans un fichier ne correspondra pas forcèment (pour les numéros de lignes, l'indentation, etc) au fichier de départ, sans parler des ajouts/suppressions/modifications de noeuds.
+Cet arbre, réécrit dans un fichier ne correspondra pas forcément (pour les numéros de lignes, l'indentation, etc) au fichier de départ, sans parler des ajouts/suppressions/modifications de noeuds.
 
 Au contraire, pour SAX, les numéros de lignes sont obtenues facilement.
 Dans ce cas là, il est utile de savoir à quel endroit on se trouve dans le document.
@@ -336,17 +336,17 @@ Nous avons donc repris ces tests et nous les avons intégrés aux tests de l'ada
 Nous avons créé une batterie de tests unitaires classiques pour notre adaptateur.
 Ils s'assurent entre autre que le parse, l'exploitation de l'arbre en mémoire et l'écriture du Xml se font correctement.
 \subsection{Intégration à IzPack}
-L'intégration à IzPack de notre travail fut relativement aisée : les objets de NanoXml ont été remplacés par ceux de notre adapteur.
+L'intégration à IzPack de notre travail fut relativement aisée : les objets de NanoXml ont été remplacés par ceux de notre adaptateur.
 Les appels n'ont quasiment pas été changés, les méthodes exposées dans les deux cas étant les mêmes.
 Cette intégration effectuée, nous avons pu commencer les tests sur application.
 \subsubsection{Test fonctionnels}
 Une phase de test fonctionnels a été réalisée pour tester l'intégrité de l'application après l'intégration de notre solution.
-Ces tests sont des tests manuels sur les installations générés par Izpack.
-Nous avons donc testé dans un premier temps l'application d'exemple fourni par Izpack.
+Ces tests sont des tests manuels sur les installations générés par IzPack.
+Nous avons donc testé dans un premier temps l'application d'exemple fourni par IzPack.
 Ces tests ont permis de faire ressortir quelques problèmes que nous avons pu régler rapidement.
 
-Suite à cela, nous avons essayé de générer et lancer un installeur plus conséquent.
-Nous avons pour cela utilisé l'installeur de Glassfish.
+Suite à cela, nous avons essayé de générer et lancer un installateur plus conséquent.
+Nous avons pour cela utilisé l'installateur de Glassfish.
 La génération et l'installation de glassfish s'est déroulé sans problème.
 \subsubsection{Profiling}
 Après la phase d'implémentation et de test, nous avons pu commencer une phase d'optimisation.
@@ -359,7 +359,7 @@ Il est alors possible de connecter le profiler à l'application et lancer le pro
 Le profiling lancé, nous utilisons l'application normalement.
 A la fin de l'exécution, une image de l'exécution (snapshot) est enregistrée et peut être analysée après.
 Cette image comporte toutes les informations du profiling comme la trace des appels, le temps passé dans chaque méthode, le nombre d'appels aux méthodes, l'utilisation de la mémoire et du garbage collector à chaque moment de l'exécution...
-Nous avons profilé deux version de l'installeur de Glassfish ; l'un a été généré avec la version 4.2.1 de IzPack et l'autre avec la dernière version construite à partir du dépôt et comportant nos modifications.
+Nous avons profilé deux version de l'installateur de Glassfish ; l'un a été généré avec la version 4.2.1 de IzPack et l'autre avec la dernière version construite à partir du dépôt et comportant nos modifications.
 
 Par exemple, on peut rechercher tout les appels à l'objet XmlElementImpl de notre adaptateur pour voir les différentes méthodes utilisées. Sur la figure~\ref{fig:yourkitXmlElement}, on peut voir que la méthode \verb|getAttribute()| est utilisée majoritairement.
 \begin{figure}[H]
@@ -370,7 +370,7 @@ Par exemple, on peut rechercher tout les appels à l'objet XmlElementImpl de not
 \end{figure}
 
 On peut également comparer deux snapshots et obtenir la différence dans les temps d'exécution et les appels.
-Sur la figure~\ref{fig:yourkitComparaison}, nous comparons les deux installeurs et filtrons les appels aux XMLElement.
+Sur la figure~\ref{fig:yourkitComparaison}, nous comparons les deux installateurs et filtrons les appels aux XMLElement.
 On voit apparaître le XMLElement de NanoXml pour la version 4.2.1 et le XMLElementImpl de notre adaptateur.
 On voit que les performances entre les deux sont sensiblement les mêmes, les gains possibles sont relativement faibles et peu d'optimisation ont été réalisées.
 \begin{figure}[H]
@@ -384,12 +384,12 @@ On voit que les performances entre les deux sont sensiblement les mêmes, les ga
 \section{Résultats}
 Le principal but de notre projet a été de pouvoir abandonner NanoXml ce qui est chose faite.
 De plus, l'intégration de notre solution a apporté un certain nombres d'avantages.
-\subsection{Diminution de la taille des installeurs}
-Tout d'abord, l'abandon de NanoXml diminue la taille de IzPack et des installeurs générés car cette librairie n'a plus besoin d'être présente dans les installeurs.
+\subsection{Diminution de la taille des installateurs}
+Tout d'abord, l'abandon de NanoXml diminue la taille de IzPack et des installateurs générés car cette librairie n'a plus besoin d'être présente dans les installateurs.
 NanoXml pèse, une fois compilé, 116Ko.
 Notre adaptateur pèse 44Ko.
-Chaque installeur généré par Izpack perdra donc 72Ko.
-Ce chiffre peut paraître faible mais si l'installeur est téléchargé 25000 fois sur le site officiel, presque 1800 Mo de bande passante sont économisés.
+Chaque installateur généré par IzPack perdra donc 72Ko.
+Ce chiffre peut paraître faible mais si l'installateur est téléchargé 25000 fois sur le site officiel, presque 1800 Mo de bande passante sont économisés.
 \subsection{Support de fonctionnalités XML}
 Outre le fait d'avoir un parseur plus fiable et récent, un certain nombre de nouveautés ont été apportées.
 \subsubsection{Support de la DTD}
@@ -397,18 +397,18 @@ Désormais les DTD (document de validation d'un xml) sont pris en charge.
 \subsubsection{Support natif de Xinclude}
 De plus, l'inclusion de fichiers xml dans d'autres est supporté nativement, sans avoir à modifier le code du parseur.
 \subsection{Intégration dans la branche principale}
-Régulièrement, nous synchronisions notre dépôt avec la branche principale pour prendre en compte les modifications qui ont été réalisées sur Izpack.
+Régulièrement, nous synchronisions notre dépôt avec la branche principale pour prendre en compte les modifications qui ont été réalisées sur IzPack.
 Cette synchronisation se passait généralement sans encombre grâce à Git, excepté quand les modifications concernaient la manipulation de XML et que les fichiers étaient conséquents (>3000 lignes).
 
 Cette synchronisation régulière était en vue de préparer le merge vers sur la branche principale.
-Ainsi, une fois notre solution achevée et testée, Julien Ponge a extrait un patch qui a été soumis à la communauté des développeurs d'Izpack.
-Après quoi, les modifications ont été portées sur la branche principale et seront disponibles pour la prochaines version d'Izpack, la 4.3.
+Ainsi, une fois notre solution achevée et testée, Julien Ponge a extrait un patch qui a été soumis à la communauté des développeurs d'IzPack.
+Après quoi, les modifications ont été portées sur la branche principale et seront disponibles pour la prochaines version d'IzPack, la 4.3.
 
 % -------------------------------------------------------------------------
 \section{Au delà du sujet}
 Une fois l'objectif du projet atteint, nous avons décidé d'accepter l'offre de Julien Ponge en devenant contributeurs officiels du projet.
-\subsection{Le projet Izpack}
-Izpack est une communauté Open-Source, sa structure et son fonctionnement sont particuliers. 
+\subsection{Le projet IzPack}
+IzPack est une communauté Open-Source, sa structure et son fonctionnement sont particuliers. 
 Le projet est récemment passé sous CodeHaus. 
 Des outils et des moyens de communications sont dédiées au projet.
 \subsubsection{Codehaus}
@@ -424,7 +424,7 @@ En général, les décisions se prennent de manière démocratique pour tout ce 
 Une mailing-list pour les développeurs permet de communiquer les informations et prendre les décisions d'un commun accord.
 Pour éviter tout blocage dans les décisions, le despote a toujours le dernier mot.
 
-Dans le cas de Izpack, le despote est Julien Ponge.
+Dans le cas de IzPack, le despote est Julien Ponge.
 \subsubsection{Système de suivi de bugs, Jira}
 L'évolution du projet peut être suivie via Jira.
 Les anomalies, lacunes et améliorations possibles font l'objet d'un ticket.
@@ -454,8 +454,8 @@ Le problème provenait d'un problème de packaging, la classe devant faire le tr
 
 Un autre bug corrigé faisait quitter silencieusement (sans message d'erreur) l'installation automatique.
 \subsubsection{Web installers}
-Izpack possède une fonction de création d'installeurs Web.
-Cette fonctionnalité permet de générer des modules d'installations qui pourront être déposés sur un serveur web avec un installeur léger contenant uniquement le noyau dur.
+IzPack possède une fonction de création d'installateurs Web.
+Cette fonctionnalité permet de générer des modules d'installations qui pourront être déposés sur un serveur web avec un installateur léger contenant uniquement le noyau dur.
 Les modules additionnels seront alors téléchargés s'ils sont sélectionnés.
 
 Cette fonctionnalité présentait des lacunes dans la documentation et n'était pas fonctionnelle.
@@ -467,6 +467,6 @@ Le travail est en cours de réalisation mais les modifications entrent en concur
 
 \subsection{Améliorations}
 Outre les corrections de bugs, la qualité du code a été également amélioré.
-Par exemple, le code de l'installeur automatique a été refactoré avec d'autres classes, rendant le code plus lisible et améliorant sa qualité.
+Par exemple, le code de l'installateur automatique a été refactoré avec d'autres classes, rendant le code plus lisible et améliorant sa qualité.
 
 De même, certaines méthodes inutilisées (prévues pour des vieilles versions de java) ont pu être supprimées.
