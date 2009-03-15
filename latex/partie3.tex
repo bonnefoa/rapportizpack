@@ -14,19 +14,19 @@ Elle présente la particularité d'être légère (108Ko).
 Il est possible, grâce à cette librairie, d'écrire ou d'analyser des fichiers XML.
 Une fois le fichier parsé, on récupère en mémoire l'arbre XML qui peut alors être exploité.
 Le choix de cette librairie a été fait au commencement de IzPack à cause de sa taille.
-En effet, il est important que la partie installateur ne surcharge pas excessivement sur le logiciel à installer.
+En effet, il est important que la partie installateur ne surcharge pas excessivement le logiciel à installer.
 
 \subsection{Les différents composants de NanoXML}
 On trouve différents éléments dans NanoXML.
 \subsubsection{StdXMLParser}
-L'analyseur permet de créer un arbre logique représentant le fichier XML qui lui a été passé.
+Cette classe est l'implémentation de l'interface \verb|XMLParser| qui est un analyseur qui permet de créer un arbre logique représentant le fichier XML qui lui a été passé.
 Il est systématiquement utilisé au moment de la lecture du fichier afin de récupérer l'arbre.
 \subsubsection{StdXMLWriter}
-Le XMLWriter permet d'écrire des fichiers XML.
-Il reproduit, à partir d'un XMLElement, le fichier XML correspondant.
+Cette classe est l'implémentation de l'interface \verb|XMLWriter| qui permet d'écrire des fichiers XML.
+Il reproduit, à partir d'un \verb|XMLElement|, le fichier XML correspondant.
 Il n'est utilisé que pour générer un XML temporaire lors de la compilation ou pour écrire le XML d'installation automatique.
 \subsubsection{XMLElement}
-Le XMLElement représente un élément logique du XML en mémoire. Par exemple :
+Le \verb|XMLElement| représente un élément logique du XML en mémoire. Par exemple :
 \begin{lstlisting}[language=XML]
 <root>
 	<child>
@@ -34,10 +34,10 @@ Le XMLElement représente un élément logique du XML en mémoire. Par exemple :
 	</child>
 </root>
 \end{lstlisting}
-En parsant un fichier contenant ce XML, on obtient un XMLElement nommé root qui possède 1 enfant, \verb|child|. Son enfant est un XMLElement dont le contenu est ``content''.
+En analysant un fichier contenant ce XML, on obtient un XMLElement nommé root qui possède 1 enfant, \verb|child|. Son enfant est un \verb|XMLElement| dont le contenu est ``content''.
 
-L'arborescence du XML est donc réalisé par un ensemble de XMLElement.
-L'interface de XMLElement permet de récupérer la liste des enfants, le contenu, rechercher un enfant par son nom, retirer un enfant, ajouter un enfant ou modifier le contenu.
+L'arborescence du XML est donc réalisé par un ensemble de \verb|XMLElement|.
+L'interface de \verb|XMLElement| permet de récupérer la liste des enfants, le contenu, rechercher un enfant par son nom, retirer un enfant, ajouter un enfant ou modifier le contenu.
 Il s'agit de loin de la classe la plus utilisée de la librairie NanoXML dans IzPack.
 En effet, on ne comptait pas moins de 499 utilisations au commencement de ce projet.
 
@@ -59,11 +59,11 @@ XMLWriter writer = new XMLWriter(out);
 ...
 writer.write(XMLElement);
 \end{lstlisting}
-Le XMLWriter prend un OutputStream à sa construction.
+Le \verb|XMLWriter| prend un OutputStream à sa construction.
 On peut donc écrire un XML dans tout type de flux de sortie. 
-Une fois le XMLWriter instancié, il suffit de lui passer le \verb|XMLElement| représentant la racine de l'arborescence que l'on veut écrire.
+Une fois le \verb|XMLWriter| instancié, il suffit de lui passer le \verb|XMLElement| représentant la racine de l'arborescence que l'on veut écrire.
 \subsubsection{Utilisation de XMLElement}
-La manipulation d'un XMLElement se fait avec ses méthodes :
+La manipulation d'un \verb|XMLElement| se fait avec ses méthodes :
 \begin{itemize}
 	\item get/setAttribute pour gérer les attributs du noeud
 	\item get/setContent pour gérer le contenu
@@ -97,12 +97,12 @@ L'avantage de cette API est l'utilisation mémoire faible, puisque le XML n'est 
 En contrepartie, le traitement et la manipulation du XML est plus difficile.
 \subsection{DOM}
 L'interface DOM (Document Object Model) de JAXP propose de mettre en mémoire le XML et offre une interaction basée sur des noeuds (node en anglais).
-En DOM tout est noeud, les commentaires, le texte ou les éléments sont représentés par des noeuds.
-Le XML est est représenté par une arborescence de noeuds.
-Des sous-classes spécialisent ces noeuds comme \verb|Comment|, \verb|Element| ou \verb|Text|.
+En DOM tout est noeud; les commentaires, le texte ou les éléments sont représentés par des noeuds.
+Le XML est représenté par une arborescence de noeuds.
+Des interfaces spécialisent ces noeuds comme \verb|Comment|, \verb|Element| ou \verb|Text|.
 
 La manipulation des éléments du XML se fait grâce aux nodes.
-Il est possible de récupérer le voisin d'une node, d'enlever ou d'ajouter un enfant et de récupérer ou de modifier le contenu.
+Il est possible de récupérer le voisin d'un node, d'enlever ou d'ajouter un enfant et de récupérer ou de modifier le contenu.
 %--------------------------------------------------------------------------
 \section{Élaboration de la solution}
 Notre travail a été de chercher une solution pour permettre de remplacer de NanoXML par JAXP et de l'appliquer au projet.
@@ -113,7 +113,7 @@ Nous avons choisi d'utiliser l'interface DOM vu que les avantages de SAX ne sont
 De plus, NanoXML et DOM ont une représentation similaire du XML (un arbre).
 Nous allons donc comparer l'interface DOM et NanoXML pour déterminer la meilleure approche à prendre.
 \subsubsection{Manipulation du XML}
-La principale différence vient de l'élément atomique : le noeud de DOM ne représente pas la même notion que l'élément de nanoXML.
+La principale différence vient de l'élément atomique : le noeud de DOM ne représente pas la même notion que l'élément de NanoXML.
 Dès lors, la manipulation des voisins, enfants, etc doit être adaptée.
 \begin{lstlisting}[language=XML]
 <!-- commentaire -->
@@ -121,10 +121,10 @@ Dès lors, la manipulation des voisins, enfants, etc doit être adaptée.
 	<noeud1>text</noeud1>
 </root>
 \end{lstlisting}
-Dans ce morceau de XML, nanoXML comptera 1 enfant à l'élément \verb|root| : \verb|noeud1|.
+Dans ce morceau de XML, NanoXML comptera 1 enfant pour l'élément \verb|root| : \verb|noeud1|.
 DOM comptera 3 noeuds : du texte (le retour à la ligne et la tabulation), \verb|noeud1| et à nouveau du texte (un retour à la ligne).
 
-DOM possède néanmoins une interface dérivant de \verb|Node| : \verb|Element|, qui est très similaire à la classe \verb|XMLElement| de nanoXML.
+DOM possède néanmoins une interface dérivant de \verb|Node| : \verb|Element|, qui est très similaire à la classe \verb|XMLElement| de NanoXML.
 \subsubsection{Contenu textuel du noeud}
 NanoXML propose une méthode pour récupérer le contenu textuel d'un noeud : \verb|getContent()|.
 DOM propose une méthode semblant équivalente : \verb|getNodeValue()|.
@@ -186,7 +186,7 @@ Cela présente plusieurs avantages :
 \end{description}
 
 \subsection{Création de l'adaptateur}
-Nous avons donc choisi la solution de l'adaptateur pour notre problème. Pour cela, nous avons procéder en plusieurs étapes.
+Nous avons donc choisi la solution de l'adaptateur pour notre problème. Pour cela, nous avons procédé en plusieurs étapes.
 
 \subsection{Repérer les utilisations des classes de NanoXML}
 Dans un premier temps, nous avons repérer les classes utilisées par IzPack et les méthodes utilisées de ces classes.
@@ -195,16 +195,14 @@ Nous avons réduits l'utilisation de NanoXML à 3 classes : \verb|StdXMLParser|,
 Les classes \verb|StdXMLParser| et \verb|StdXMLWriter| sont utilisées avec parcimonie.
 On compte une trentaine d'utilisations pour \verb|StdXMLParser| et 8 utilisations pour \verb|StdXMLWriter|.
 Modifier l'interface pour ces deux classes n'étaient pas un problème.
-Ces deux classes ont donc été remplacées par 2 nouvelles classes réalisant les mêmes fonctionnalités avec des prototypes différents.
-
-Nous avons créé les interfaces \verb|IXmlParser| et \verb|IXmlWriter| ainsi que leurs implémentations.
-Ce ne sont pas des adaptateurs de NanoXML étant donné qu'elles ne recopient pas l'interface de NanoXML et elles ne sont pas indispensables.
+Nous avons créé les interfaces \verb|IXmlParser| et \verb|IXmlWriter| ainsi que leurs implémentations, réalisant les mêmes fonctionnalités avec des prototypes différents.
+Ce ne sont pas des adaptateurs de NanoXML étant donné qu'elles ne recopient pas l'interface de NanoXML.
 Cependant, elles permettent de simplifier l'utilisation de JAXP et de factoriser le code sur un endroit.
 \subsubsection{XMLElement}
-\verb|XMLElement| ne présente pas d'interface et est utilisé systématiquement quand il y a du XML à traiter.
+\verb|XMLElement| ne présente pas d'interface et est utilisé systématiquement quand il y a des XML à traiter.
 Il était donc impensable de traiter et remplacer toutes les utilisations de XMLElement par des appels à JAXP étant donné son nombre d'utilisation.
 Nous avons donc concentré nos efforts sur cette classe et appliquer le pattern adaptateur dessus.
-Pour cela, nous avons procédé en plusieurs étapes.
+Pour cela, nous avons suivi le procédé suivant.
 
 Dans un premier temps, nous avons extrait l'interface de \verb|XMLElement| avec toutes les méthodes utilisées par IzPack.
 \begin{figure}[H]
@@ -225,7 +223,7 @@ Il suffit alors de supprimer NanoXML, ses utilisations ayant été remplacées p
 \subsection{Implémentation de Xinclude}
 Avec NanoXML, la balise \verb|xinclude| permet d'inclure un fichier XML externe.
 Ainsi, on peut utiliser un XML très succinct (et donc facilement lisible/compréhensible) qui inclut d'autres fichiers XML décrivant uniquement certaines parties de l'installation.
-Cette fonctionnalité, absente de nanoXML, avait été mise en place en modifiant directement le code de son analyseur.
+Cette fonctionnalité, absente de NanoXML, avait été mise en place en modifiant directement le code de son analyseur.
 
 Xinclude est présente dans les normes W3C et JAXP l'intègre dans son implémentation.
 Pour que JAXP prenne en compte les balises Xinclude, il faut que l'analyseur prenne en compte les espaces de nommage (namespaces) XML.
@@ -264,12 +262,11 @@ Il faudrait donc au préalable sauvegarder le contenu, supprimer l'élément et 
 Une autre solution est de procéder de la même manière que pour ce qui a été fait pour NanoXML.
 C'est à dire de modifier l'analyseur pour traiter les xfragment de manière spécifique.
 Cependant, cette solution, possible sous NanoXML (librairie incluse à IzPack), est difficilement réalisable sur JAXP (fourni par la JRE).
-En effet, les appels de l'analyseur sont transmis vers des classes internes et difficilement manipulables.
-
+En effet, les appels de l'analyseur sont transmis vers les classes internes du JDK qui est difficilement manipulables.
 \subsubsection{Troisième solution, transformation XSL}
 La troisième solution a été proposé par Matthew Fudge, la personne ayant rajouté la gestion des Xfragment et Xinclude dans NanoXML pour IzPack.
 Elle consiste à transformer l'arbre XML obtenu après l'analyse grâce à une transformation XSL (Extensible Stylesheet Language).
-Les transformations XSL permettent de définir des règles de modification d'un XML et se présente lui-même sous la forme d'un XML.
+Les transformations XSL permettent de définir des règles de modification d'un XML et se présente elles-même sous la forme d'un XML.
 Elles permettent de modifier facilement des XML de manière simple.
 Elle convenait parfaitement à notre problème.
 La feuille de style utilisée est la suivante :
@@ -296,7 +293,7 @@ Ici, pour tout les éléments, on recopie l'élément.
 Dans le cas du xfragment, on omet la copie.
 Au final, le xfragment est supprimé du XML ce qui est le but recherché.
 \subsection{Numéro de ligne}
-Une fonctionnalité de nanoXML est la gestion des numéros de lignes.
+Une fonctionnalité de NanoXML est la gestion des numéros de lignes.
 Lors qu'une incohérence est détectée dans un XML lu, IzPack prévient l'utilisateur de l'erreur, et indique le numéro de la ligne responsable dans le XML.
 
 Du point de vue de DOM, les numéros de lignes n'ont pas de signification : une fois le fichier XML parsé, seul l'arbre DOM construit en mémoire importe.
@@ -317,7 +314,7 @@ Afin d'avoir un comportement le plus fidèle possible à celui de NanoXML et ass
 \subsubsection{Test unitaires de comparaison}
 La solution a d'abord été élaborée de manière isolée.
 Un projet indépendant contenant NanoXML à été créé.
-C'est sur ce projet que nous avons travaillé et développer notre adaptateur.
+C'est sur ce projet que nous avons travaillé et développé notre adaptateur.
 Nous avons alors réalisé une batterie de tests couvrant toutes les méthodes de l'interface extraites et de très nombreux cas.
 Ces tests unitaires effectuent des actions identiques avec notre adaptateur et NanoXML, et comparent les résultats.
 
@@ -332,8 +329,8 @@ Ceci nous a permis de nous assurer du comportement de l'adaptateur et de décele
 En couvrant la quasi totalité des méthodes utilisées dans IzPack avec de nombreux cas d'utilisation, nous avons pu nous assurer du respect du comportement de notre adaptateur.
 
 \subsubsection{Les tests unitaires sur Xinclude et Xfragment}
-Avec l'ajout des fonctionnalités XInclude et XFragment à NanoXML, une batterie de test unitaires a été fournie.
-Nous avons donc repris ces tests et nous les avons intégrés aux tests de l'adaptateur.
+Avec l'ajout des fonctionnalités XInclude et XFragment à NanoXML, une batterie de tests unitaires a été fournie.
+Nous avons donc repris ces tests et nous les avons intégrés aux tests de notre adaptateur.
 
 \subsubsection{Les tests unitaires classiques}
 Nous avons créé une batterie de tests unitaires classiques pour notre adaptateur.
@@ -341,11 +338,11 @@ Ils s'assurent entre autre que l'analyse, l'exploitation de l'arbre en mémoire 
 
 \subsection{Intégration à IzPack}
 L'intégration à IzPack de notre travail fut relativement aisée : les objets de NanoXML ont été remplacés par ceux de notre adaptateur.
-Les appels n'ont quasiment pas été changés, les méthodes exposées dans les deux cas étant les mêmes.
+Les appels n'ont quasiment pas été changés, les méthodes exposées dans les deux cas étant les mêmes grâce à l'adaptateur.
 Cette intégration effectuée, nous avons pu commencer les tests sur application.
 \subsubsection{Test fonctionnels}
 Une phase de test fonctionnels a été réalisée pour tester l'intégrité de l'application après l'intégration de notre solution.
-Ces tests sont des tests manuels sur les installations générés par IzPack.
+Ces tests sont des tests manuels sur les installateurs générés par IzPack.
 Nous avons donc testé dans un premier temps l'application d'exemple fournie par IzPack.
 Ces tests ont permis de faire ressortir quelques problèmes que nous avons pu régler rapidement.
 
@@ -404,13 +401,17 @@ De plus, l'inclusion de fichiers XML dans d'autres est supporté nativement, san
 Régulièrement, nous synchronisions notre dépôt avec la branche principale pour prendre en compte les modifications qui ont été réalisées sur IzPack.
 Cette synchronisation se passait généralement sans encombre grâce à Git, excepté quand les modifications concernaient la manipulation de XML et que les fichiers étaient conséquents (>3000 lignes).
 
-Cette synchronisation régulière était en vue de préparer le merge vers sur la branche principale.
+Cette synchronisation régulière était en vue de préparer la fusion avec la branche principale.
 Ainsi, une fois notre solution achevée et testée, Julien Ponge a extrait un patch qui a été soumis à la communauté des développeurs d'IzPack.
 Après quoi, les modifications ont été portées sur la branche principale et seront disponibles pour la prochaines version d'IzPack, la 4.3.
 
 % -------------------------------------------------------------------------
 \section{Au delà du sujet}
 Une fois l'objectif du projet atteint, nous avons décidé d'accepter l'offre de Julien Ponge en devenant contributeurs officiels du projet.
+Grâce à ce titre, nous bénéficions d'accés privilégiés pour le projet, notament un accés développeur sur le dépôt subversion et un compte sur Codehaus.
+\subsection{Suivi de nos apports}
+Notre solution étant intégrée, il est possible que des bugs subsistent dans notre implémentation ou qu'une mauvaise interprétation de notre part mène à un comportement inattendu.
+Le statut de développeur nous permet de suivre et corriger les problèmes rencontrés par la communauté de IzPack.
 \subsubsection{Système de suivi de bugs, Jira}
 L'évolution du projet peut être suivie via Jira.
 Les anomalies, lacunes et améliorations possibles font l'objet d'un ticket.
@@ -420,23 +421,21 @@ Jira permet alors de suivre et de modifier les tickets avec un workflow similair
 	\includegraphics[width=0.8\textwidth]{../image/jira.png}
 	\caption{Dashboard Jira}
 \end{figure}
-\subsection{Suivi de nos apports}
-Notre solution étant intégrée, il est possible que des bugs subsistent dans notre implémentation ou qu'une mauvaise interprétation de notre part mène à un comportement inattendu.
-Le statut de développeur nous permet de suivre et corriger les problèmes rencontrés par la communauté de IzPack.
 \subsubsection{Tests corrigés}
-Nous avons par exemple corrigé des tests unitaires sur les numéros de ligne échouant et sur les conditionsTest.
+Nous avons par exemple corrigé des tests unitaires sur les numéros de ligne échouant.
+Les tests de la classe conditionsTest échouaient également à cause de l'utilisation incorrecte de notre adaptateur.
 \subsubsection{Rectification sur une interprétation}
 Un problème est apparu lors de l'utilisation du Xinclude.
 Ce problème a été notifié par un développeur utilisant la version de développement et donc ayant récupéré nos modifications.
 
-Par défaut, JAXP résout le chemin de manière relative au répertoire d'exécution et c'est ce qui a été réalisée dans notre implementation.
+Par défaut, JAXP résout le chemin de manière relative au répertoire d'exécution et c'est ce qui a été réalisée dans notre implémentation.
 Or le comportement attendu, plus naturel, est de résoudre le chemin d'inclusion relativement au document incluant le XML.
 
 \subsection{Correction de bugs}
-Nous avons également corrigé plusieurs bugs.
+Nous avons également corrigé plusieurs bugs recensés dans Jira.
 \subsubsection{Problème lors de l'installation automatique}
 Un panel, le TreePacksPanels, ne respectait pas la configuration enregistrée lors de l'installation normale.
-Le problème provenait d'un problème de packaging, la classe devant faire le travail automatique n'était pas présente lors de l'installation.
+Le problème provenait d'un oubli dans la compilation, la classe devant faire le travail automatique n'était pas présente lors de l'installation.
 
 Un autre bug corrigé faisait quitter silencieusement (sans message d'erreur) l'installation automatique.
 \subsubsection{Web installers}
