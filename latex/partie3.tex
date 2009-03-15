@@ -84,9 +84,9 @@ while (iter.hasNext())
 	//...
 }
 \end{lstlisting}
-\section{Étude Jaxp}
-Jaxp, le processeur Xml de Sun, respecte les normes W3C.
-Il y a deux manières d'exploiter les XML avec Jaxp, soit en utilisant le parseur SAX, soit en utilisant le parseur DOM.
+\section{Étude JAXP}
+JAXP, le processeur Xml de Sun, respecte les normes W3C.
+Il y a deux manières d'exploiter les XML avec JAXP, soit en utilisant le parseur SAX, soit en utilisant le parseur DOM.
 \subsection{SAX}
 SAX (Simple API for Xml) est une API pour parser les XML.
 Cette API possède la particularité de procéder par évènement.
@@ -96,7 +96,7 @@ Des évènements sont lancés dès que le parse rencontre des commentaires, du t
 L'avantage de cette API est l'utilisation mémoire faible, puisque le xml n'est pas mis en mémoire mais lu et traité au fur et à mesure, il permet de traiter sans problème les fichiers importants.
 En contrepartie, le traitement et la manipulation du xml est plus difficile.
 \subsection{DOM}
-L'interface DOM (Document Object Model) de Jaxp propose de mettre en mémoire le xml et offre une interaction basée sur des noeuds (node en anglais).
+L'interface DOM (Document Object Model) de JAXP propose de mettre en mémoire le xml et offre une interaction basée sur des noeuds (node en anglais).
 En DOM tout est noeud, les commentaires, le texte ou les éléments sont représentés par des noeuds.
 Le xml est est représenté par une arborescence de noeuds.
 Des sous-classes spécialisent ces noeuds comme \verb|Comment|, \verb|Element| ou \verb|Text|.
@@ -105,9 +105,9 @@ La manipulation des éléments du xml se fait grâce aux nodes.
 Il est possible de récupérer le voisin d'une node, d'enlever ou d'ajouter un enfant et de récupérer ou de modifier le contenu.
 %--------------------------------------------------------------------------
 \section{Élaboration de la solution}
-Notre travail a été de chercher une solution pour permettre de remplacer de NanoXml par Jaxp et de l'appliquer au projet.
+Notre travail a été de chercher une solution pour permettre de remplacer de NanoXml par JAXP et de l'appliquer au projet.
 Cependant, il y avait plusieurs problèmes à cela.
-\subsection{Les différences entre Jaxp et NanoXml}
+\subsection{Les différences entre JAXP et NanoXml}
 Comme nous avons vu précédemment, les deux API ne proposent pas la même approche pour le traitement des fichiers xml.
 Nous avons choisi d'utiliser l'interface DOM vu que les avantages de SAX ne sont pas nécessaires et qu'il était peu concevable de traiter les XML avec SAX dans IzPack.
 De plus, NanoXml et DOM ont une représentation similaire du xml (un arbre).
@@ -164,7 +164,7 @@ On voit ici un comportement peu cohérent (NanoXml ignore dans certains cas les 
 Pour remplacer NanoXml, plusieurs approches étaient possibles.
 
 \subsubsection{Remplacer les appels individuellement}
-La première solution, bête et méchante, est de remplacer systématiquement les appels à NanoXml par des appels à Jaxp.
+La première solution, bête et méchante, est de remplacer systématiquement les appels à NanoXml par des appels à JAXP.
 Cependant, cette solution a des inconvénients évidents :
 \begin{description}
 \item[La duplication de la logique] Tout le code nécessaire à l'utilisation du parseur ou du Node est réparti et dupliqué dans tout le programme.
@@ -172,11 +172,11 @@ C'est d'abord une infraction au principe DRY (\textit{don't repeat yourself}) et
 Les bugs sont plus difficiles à cibler et la correction doit se faire sur toutes les réplications.
 \item[Les difficultés de tester la solution] Un autre problème et le test de cette solution.
 Il faut en théorie passer par toutes les utilisations des appels pour tester correctement la solution. Cette contrainte est difficilement réalisable.
-\item[La pénibilité de la tâche] Remplacer chacun des nombreux appels à NanoXml par un appel Jaxp est très laborieux.
+\item[La pénibilité de la tâche] Remplacer chacun des nombreux appels à NanoXml par un appel JAXP est très laborieux.
 \end{description}
 \subsubsection{Centraliser la logique de modification}
 L'autre solution possible est de centraliser toute la logique de traduction dans des classes dédiées.
-Ces classes vont copier les interfaces de NanoXml mais vont générer en réalité des appels à Jaxp.
+Ces classes vont copier les interfaces de NanoXml mais vont générer en réalité des appels à JAXP.
 C'est le principe du design pattern adaptateur.
 
 Cela présente plusieurs avantages :
@@ -199,10 +199,10 @@ Ces deux classes ont donc été remplacées par 2 nouvelles classes réalisant l
 
 Nous avons créé les interfaces \verb|IXmlParser| et \verb|IXmlWriter| ainsi que leurs implémentations.
 Ce ne sont pas des adaptateurs de NanoXml étant donné qu'elles ne recopient pas l'interface de NanoXml et elles ne sont pas indispensables.
-Cependant, elles permettent de simplifier l'utilisation de Jaxp et de factoriser le code sur un endroit.
+Cependant, elles permettent de simplifier l'utilisation de JAXP et de factoriser le code sur un endroit.
 \subsubsection{XMLElement}
 \verb|XMLElement| ne présente pas d'interface et est utilisé systématiquement quand il y a du XML à traiter.
-Il était donc impensable de traiter et remplacer toutes les utilisations de XMLElement par des appels à Jaxp étant donné son nombre d'utilisation.
+Il était donc impensable de traiter et remplacer toutes les utilisations de XMLElement par des appels à JAXP étant donné son nombre d'utilisation.
 Nous avons donc concentré nos efforts sur cette classe et appliquer le pattern adaptateur dessus.
 Pour cela, nous avons procédé en plusieurs étapes.
 
@@ -227,8 +227,8 @@ Avec NanoXml, la balise \verb|xinclude| permet d'inclure un fichier xml externe.
 Ainsi, on peut utiliser un xml très succinct (et donc facilement lisible/compréhensible) qui inclut d'autres fichiers xml décrivant uniquement certaines parties de l'installation.
 Cette fonctionnalité, absente de nanoXML, avait été mise en place en modifiant directement le code de son parseur.
 
-Xinclude est présente dans les normes W3C et Jaxp l'intègre dans son implémentation.
-Pour que Jaxp prenne en compte les balises Xinclude, il faut que le parseur prenne en compte les espaces de nommage (namespaces) XML.
+Xinclude est présente dans les normes W3C et JAXP l'intègre dans son implémentation.
+Pour que JAXP prenne en compte les balises Xinclude, il faut que le parseur prenne en compte les espaces de nommage (namespaces) XML.
 En effet, le Xinclude appartient au namespace \verb|xi|.
 Il faut donc utiliser la balise \verb|<xi:include/>| au lieu de \verb|<xinclude/>|.
 Le simple fait de rendre le parseur ``namepaceAware'' permet d'utiliser la fonctionnalité Xinclude.
@@ -263,7 +263,7 @@ Il faudrait donc au préalable sauvegarder le contenu, supprimer l'élément et 
 \subsubsection{Deuxième solution, surcharge du parseur}
 Une autre solution est de procéder de la même manière que pour ce qui a été fait pour NanoXml.
 C'est à dire de modifier le parseur pour traiter les xfragment de manière spécifique.
-Cependant, cette solution, possible sous NanoXml (librairie incluse à IzPack), est difficilement réalisable sur Jaxp (fourni par la JRE).
+Cependant, cette solution, possible sous NanoXml (librairie incluse à IzPack), est difficilement réalisable sur JAXP (fourni par la JRE).
 En effet, les appels du parseur sont transmis vers des classes internes et difficilement manipulables.
 
 \subsubsection{Troisième solution, transformation XSL}
@@ -447,7 +447,7 @@ Nous avons par exemple corrigé des tests unitaires sur les numéros de ligne é
 Un problème est apparu lors de l'utilisation du Xinclude.
 Ce problème a été notifié par un développeur utilisant la version de développement et donc ayant récupéré nos modifications.
 
-Par défaut, Jaxp résout le chemin de manière relative au répertoire d'exécution et c'est ce qui a été réalisée dans notre implementation.
+Par défaut, JAXP résout le chemin de manière relative au répertoire d'exécution et c'est ce qui a été réalisée dans notre implementation.
 Or le comportement attendu, plus naturel, est de résoudre le chemin d'inclusion relativement au document incluant le xml.
 
 \subsection{Correction de bugs}
