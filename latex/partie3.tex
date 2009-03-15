@@ -1,4 +1,4 @@
-Le projet étant open-source et actif, il évolue sans cesse. La partie sur laquelle nous avons travaillé est relativement stable mais son utilisation peut varier dans le code. Nous allons voir la portée de l'utilisation de nanoXml, comment il est utilisé et enfin la solution apportée.
+Le projet étant open-source et actif, il évolue sans cesse. La partie sur laquelle nous avons travaillé est relativement stable mais son utilisation peut varier dans le code. Nous allons voir la portée de l'utilisation de NanoXML, comment il est utilisé et enfin la solution apportée.
 
 % -> Utilisation intensive de XML
 % -> Philosophie de nanoXml et de DOM differente
@@ -7,17 +7,17 @@ Le projet étant open-source et actif, il évolue sans cesse. La partie sur laqu
 \section{Étude de NanoXML}
 Comme nous avons pu le voir, IzPack utilise intensément des fichiers XML pour la génération d'installations.
 En effet, les fichiers XML présentent l'avantage d'être lisible, écrivable à la main et traitables.
-Pour traiter ces fichiers, une librairie a été utilisée, il s'agit de NanoXml.
-\subsection{Le projet NanoXml}
-NanoXml est une librairie java open-source de gestion de Xml.
+Pour traiter ces fichiers, une librairie a été utilisée, il s'agit de NanoXML.
+\subsection{Le projet NanoXML}
+NanoXML est une librairie java open-source de gestion de XML.
 Elle présente la particularité d'être légère (108Ko).
 Il est possible, grâce à cette librairie, d'écrire ou d'analyser des fichiers XML.
-Une fois le fichier parsé, on récupère en mémoire l'arbre Xml qui peut alors être exploité.
+Une fois le fichier parsé, on récupère en mémoire l'arbre XML qui peut alors être exploité.
 Le choix de cette librairie a été fait au commencement de IzPack à cause de sa taille.
 En effet, il est important que la partie installateur ne surcharge pas excessivement sur le logiciel à installer.
 
-\subsection{Les différents composants de NanoXml}
-On trouve différents éléments dans NanoXml.
+\subsection{Les différents composants de NanoXML}
+On trouve différents éléments dans NanoXML.
 \subsubsection{StdXMLParser}
 L'analyseur permet de créer un arbre logique représentant le fichier XML qui lui a été passé.
 Il est systématiquement utilisé au moment de la lecture du fichier afin de récupérer l'arbre.
@@ -34,11 +34,11 @@ Le XMLElement représente un élément logique du XML en mémoire. Par exemple :
 	</child>
 </root>
 \end{lstlisting}
-En parsant un fichier contenant ce Xml, on obtient un XMLElement nommé root qui possède 1 enfant, \verb|child|. Son enfant est un XMLElement dont le contenu est ``content''.
+En parsant un fichier contenant ce XML, on obtient un XMLElement nommé root qui possède 1 enfant, \verb|child|. Son enfant est un XMLElement dont le contenu est ``content''.
 
 L'arborescence du XML est donc réalisé par un ensemble de XMLElement.
 L'interface de XMLElement permet de récupérer la liste des enfants, le contenu, rechercher un enfant par son nom, retirer un enfant, ajouter un enfant ou modifier le contenu.
-Il s'agit de loin de la classe la plus utilisée de la librairie NanoXml dans IzPack.
+Il s'agit de loin de la classe la plus utilisée de la librairie NanoXML dans IzPack.
 En effet, on ne comptait pas moins de 499 utilisations au commencement de ce projet.
 
 \subsection{Utilisation typique dans IzPack}
@@ -60,7 +60,7 @@ XMLWriter writer = new XMLWriter(out);
 writer.write(XMLElement);
 \end{lstlisting}
 Le XMLWriter prend un OutputStream à sa construction.
-On peut donc écrire un Xml dans tout type de flux de sortie. 
+On peut donc écrire un XML dans tout type de flux de sortie. 
 Une fois le XMLWriter instancié, il suffit de lui passer le \verb|XMLElement| représentant la racine de l'arborescence que l'on veut écrire.
 \subsubsection{Utilisation de XMLElement}
 La manipulation d'un XMLElement se fait avec ses méthodes :
@@ -85,10 +85,10 @@ while (iter.hasNext())
 }
 \end{lstlisting}
 \section{Étude JAXP}
-JAXP, le processeur Xml de Sun, respecte les normes W3C.
+JAXP, le processeur XML de Sun, respecte les normes W3C.
 Il y a deux manières d'exploiter les XML avec JAXP, soit en utilisant l'analyseur SAX, soit en utilisant l'analyseur DOM.
 \subsection{SAX}
-SAX (Simple API for Xml) est une API pour analyser les XML.
+SAX (Simple API for XML) est une API pour analyser les XML.
 Cette API possède la particularité de procéder par évènement.
 C'est à dire que l'analyseur va lire le fichier ligne par ligne et envoyer un évènement pour chaque élément particulier qu'il rencontre.
 
@@ -105,13 +105,13 @@ La manipulation des éléments du XML se fait grâce aux nodes.
 Il est possible de récupérer le voisin d'une node, d'enlever ou d'ajouter un enfant et de récupérer ou de modifier le contenu.
 %--------------------------------------------------------------------------
 \section{Élaboration de la solution}
-Notre travail a été de chercher une solution pour permettre de remplacer de NanoXml par JAXP et de l'appliquer au projet.
+Notre travail a été de chercher une solution pour permettre de remplacer de NanoXML par JAXP et de l'appliquer au projet.
 Cependant, il y avait plusieurs problèmes à cela.
-\subsection{Les différences entre JAXP et NanoXml}
+\subsection{Les différences entre JAXP et NanoXML}
 Comme nous avons vu précédemment, les deux API ne proposent pas la même approche pour le traitement des fichiers XML.
 Nous avons choisi d'utiliser l'interface DOM vu que les avantages de SAX ne sont pas nécessaires et qu'il était peu concevable de traiter les XML avec SAX dans IzPack.
-De plus, NanoXml et DOM ont une représentation similaire du XML (un arbre).
-Nous allons donc comparer l'interface DOM et NanoXml pour déterminer la meilleure approche à prendre.
+De plus, NanoXML et DOM ont une représentation similaire du XML (un arbre).
+Nous allons donc comparer l'interface DOM et NanoXML pour déterminer la meilleure approche à prendre.
 \subsubsection{Manipulation du XML}
 La principale différence vient de l'élément atomique : le noeud de DOM ne représente pas la même notion que l'élément de nanoXML.
 Dès lors, la manipulation des voisins, enfants, etc doit être adaptée.
@@ -126,7 +126,7 @@ DOM comptera 3 noeuds : du texte (le retour à la ligne et la tabulation), \verb
 
 DOM possède néanmoins une interface dérivant de \verb|Node| : \verb|Element|, qui est très similaire à la classe \verb|XMLElement| de nanoXML.
 \subsubsection{Contenu textuel du noeud}
-NanoXml propose une méthode pour récupérer le contenu textuel d'un noeud : \verb|getContent()|.
+NanoXML propose une méthode pour récupérer le contenu textuel d'un noeud : \verb|getContent()|.
 DOM propose une méthode semblant équivalente : \verb|getNodeValue()|.
 Cependant, le comportement de ces deux méthodes est complètement différent.
 Prenons par exemple le code XML suivant :
@@ -142,13 +142,13 @@ Placé sur l'élément \verb|testElement|, \verb|getContent()| renvoie le résul
 '
 \end{verbatim}
 La méthode \verb|getNodeValue()| renvoie \verb|null|, mais il suffit d'utiliser cette méthode sur le fils (le texte) pour avoir exactement le même résultat.
-Malheureusement, le comportement de NanoXml devient erratique par exemple avec les éléments CDATA et le texte :
+Malheureusement, le comportement de NanoXML devient erratique par exemple avec les éléments CDATA et le texte :
 \begin{lstlisting}[language=XML]
 <testElement>
          <![CDATA[ be <bold> ]]>
 </testElement>
 \end{lstlisting}
-NanoXml renverra le résultat suivant, sans retour à la ligne :
+NanoXML renverra le résultat suivant, sans retour à la ligne :
 \begin{verbatim}
 ' be <bold> '
 \end{verbatim}
@@ -158,13 +158,13 @@ La concaténation des valeurs des fils donne, avec DOM :
          be <bold>
 '
 \end{verbatim}
-On voit ici un comportement peu cohérent (NanoXml ignore dans certains cas les caractères blancs), qu'il faudra gérer.
+On voit ici un comportement peu cohérent (NanoXML ignore dans certains cas les caractères blancs), qu'il faudra gérer.
 
 \subsection{Solutions possibles}
-Pour remplacer NanoXml, plusieurs approches étaient possibles.
+Pour remplacer NanoXML, plusieurs approches étaient possibles.
 
 \subsubsection{Remplacer les appels individuellement}
-La première solution, bête et méchante, est de remplacer systématiquement les appels à NanoXml par des appels à JAXP.
+La première solution, bête et méchante, est de remplacer systématiquement les appels à NanoXML par des appels à JAXP.
 Cependant, cette solution a des inconvénients évidents :
 \begin{description}
 \item[La duplication de la logique] Tout le code nécessaire à l'utilisation de l'analyseur ou du Node est réparti et dupliqué dans tout le programme.
@@ -172,11 +172,11 @@ C'est d'abord une infraction au principe DRY (\textit{don't repeat yourself}) et
 Les bugs sont plus difficiles à cibler et la correction doit se faire sur toutes les réplications.
 \item[Les difficultés de tester la solution] Un autre problème et le test de cette solution.
 Il faut en théorie passer par toutes les utilisations des appels pour tester correctement la solution. Cette contrainte est difficilement réalisable.
-\item[La pénibilité de la tâche] Remplacer chacun des nombreux appels à NanoXml par un appel JAXP est très laborieux.
+\item[La pénibilité de la tâche] Remplacer chacun des nombreux appels à NanoXML par un appel JAXP est très laborieux.
 \end{description}
 \subsubsection{Centraliser la logique de modification}
 L'autre solution possible est de centraliser toute la logique de traduction dans des classes dédiées.
-Ces classes vont copier les interfaces de NanoXml mais vont générer en réalité des appels à JAXP.
+Ces classes vont copier les interfaces de NanoXML mais vont générer en réalité des appels à JAXP.
 C'est le principe du design pattern adaptateur.
 
 Cela présente plusieurs avantages :
@@ -188,9 +188,9 @@ Cela présente plusieurs avantages :
 \subsection{Création de l'adaptateur}
 Nous avons donc choisi la solution de l'adaptateur pour notre problème. Pour cela, nous avons procéder en plusieurs étapes.
 
-\subsection{Repérer les utilisations des classes de NanoXml}
+\subsection{Repérer les utilisations des classes de NanoXML}
 Dans un premier temps, nous avons repérer les classes utilisées par IzPack et les méthodes utilisées de ces classes.
-Nous avons réduits l'utilisation de NanoXml à 3 classes : \verb|StdXMLParser|, \verb|StdXMLWriter| et \verb|XMLElement|.
+Nous avons réduits l'utilisation de NanoXML à 3 classes : \verb|StdXMLParser|, \verb|StdXMLWriter| et \verb|XMLElement|.
 \subsubsection{StdXMLParser et StdXMLWriter}
 Les classes \verb|StdXMLParser| et \verb|StdXMLWriter| sont utilisées avec parcimonie.
 On compte une trentaine d'utilisations pour \verb|StdXMLParser| et 8 utilisations pour \verb|StdXMLWriter|.
@@ -198,7 +198,7 @@ Modifier l'interface pour ces deux classes n'étaient pas un problème.
 Ces deux classes ont donc été remplacées par 2 nouvelles classes réalisant les mêmes fonctionnalités avec des prototypes différents.
 
 Nous avons créé les interfaces \verb|IXmlParser| et \verb|IXmlWriter| ainsi que leurs implémentations.
-Ce ne sont pas des adaptateurs de NanoXml étant donné qu'elles ne recopient pas l'interface de NanoXml et elles ne sont pas indispensables.
+Ce ne sont pas des adaptateurs de NanoXML étant donné qu'elles ne recopient pas l'interface de NanoXML et elles ne sont pas indispensables.
 Cependant, elles permettent de simplifier l'utilisation de JAXP et de factoriser le code sur un endroit.
 \subsubsection{XMLElement}
 \verb|XMLElement| ne présente pas d'interface et est utilisé systématiquement quand il y a du XML à traiter.
@@ -221,9 +221,9 @@ IzPack utilise alors la même interface mais notre implémentation était utilis
 	\includegraphics[width=0.4\textwidth]{../image/sol_implementation.png}
 	\caption{Implémentation de l'adaptateur}
 \end{figure}
-Il suffit alors de supprimer NanoXml, ses utilisations ayant été remplacées par notre implémentation.
+Il suffit alors de supprimer NanoXML, ses utilisations ayant été remplacées par notre implémentation.
 \subsection{Implémentation de Xinclude}
-Avec NanoXml, la balise \verb|xinclude| permet d'inclure un fichier XML externe.
+Avec NanoXML, la balise \verb|xinclude| permet d'inclure un fichier XML externe.
 Ainsi, on peut utiliser un XML très succinct (et donc facilement lisible/compréhensible) qui inclut d'autres fichiers XML décrivant uniquement certaines parties de l'installation.
 Cette fonctionnalité, absente de nanoXML, avait été mise en place en modifiant directement le code de son analyseur.
 
@@ -247,10 +247,10 @@ Par exemple:
 </xfragment>
 \end{lstlisting}
 Si ce XML est inclus, 2 éléments, \verb|<root1>| et \verb|<root2>| seront ajouté à l'emplacement du Xinclude.
-Sans le xfragment, le Xml ne serait pas valide (plusieurs éléments racine) et il y aurait erreur au moment de l'analyse.
+Sans le xfragment, le XML ne serait pas valide (plusieurs éléments racine) et il y aurait erreur au moment de l'analyse.
 Le Xfragment agit ici comme conteneur temporaire d'éléments.
 
-Cette fonctionnalité a été rajouté a NanoXml et il était nécessaire de la conserver.
+Cette fonctionnalité a été rajouté a NanoXML et il était nécessaire de la conserver.
 Cependant, elle ne fait pas partie des spécifications W3C et l'analyseur n'offre pas de base cette fonctionnalité.
 Il a fallut trouver une solution pour implémenter cette fonctionnalité.
 
@@ -261,13 +261,13 @@ Cependant, la suppression d'un noeud en DOM entraîne la suppression de tout les
 Il faudrait donc au préalable sauvegarder le contenu, supprimer l'élément et restaurer le contenu sauvegardé.
 
 \subsubsection{Deuxième solution, surcharge de l'analyseur}
-Une autre solution est de procéder de la même manière que pour ce qui a été fait pour NanoXml.
+Une autre solution est de procéder de la même manière que pour ce qui a été fait pour NanoXML.
 C'est à dire de modifier l'analyseur pour traiter les xfragment de manière spécifique.
-Cependant, cette solution, possible sous NanoXml (librairie incluse à IzPack), est difficilement réalisable sur JAXP (fourni par la JRE).
+Cependant, cette solution, possible sous NanoXML (librairie incluse à IzPack), est difficilement réalisable sur JAXP (fourni par la JRE).
 En effet, les appels de l'analyseur sont transmis vers des classes internes et difficilement manipulables.
 
 \subsubsection{Troisième solution, transformation XSL}
-La troisième solution a été proposé par Matthew Fudge, la personne ayant rajouté la gestion des Xfragment et Xinclude dans NanoXml pour IzPack.
+La troisième solution a été proposé par Matthew Fudge, la personne ayant rajouté la gestion des Xfragment et Xinclude dans NanoXML pour IzPack.
 Elle consiste à transformer l'arbre XML obtenu après l'analyse grâce à une transformation XSL (Extensible Stylesheet Language).
 Les transformations XSL permettent de définir des règles de modification d'un XML et se présente lui-même sous la forme d'un XML.
 Elles permettent de modifier facilement des XML de manière simple.
@@ -316,31 +316,31 @@ Une fois la solution réalisée, nous l'avons soumis à un certain nombre de tes
 Afin d'avoir un comportement le plus fidèle possible à celui de NanoXML et assurer la fiabilité de la solution, de nombreux tests unitaires ont été écrits.
 \subsubsection{Test unitaires de comparaison}
 La solution a d'abord été élaborée de manière isolée.
-Un projet indépendant contenant NanoXml à été créé.
+Un projet indépendant contenant NanoXML à été créé.
 C'est sur ce projet que nous avons travaillé et développer notre adaptateur.
 Nous avons alors réalisé une batterie de tests couvrant toutes les méthodes de l'interface extraites et de très nombreux cas.
 Ces tests unitaires effectuent des actions identiques avec notre adaptateur et NanoXML, et comparent les résultats.
 
-Prenons l'exemple de la méthode \verb|getName()|. Le même fichier Xml est parsé par les 2 librairies.
+Prenons l'exemple de la méthode \verb|getName()|. Le même fichier XML est parsé par les 2 librairies.
 Un parcours récursif de l'arbre XML est effectué sur les 2 arbres en mémoire.
 Pour chaque élément, on compare le résultat de la méthode \verb|getName()| sur l'élément courant : les retours doivent être toujours égaux.
 
 Comme les méthodes de XMLElement sont souvent des récupérations d'informations de la même nature que \verb|getName()|, nous avons généralisé ce test à ces méthodes.
 Pour cela, une méthode se charge de parcourir de manière récursive l'arbre et d'invoquer la méthode à tester en comparant leurs résultats.
-Ceci nous a permis de nous assurer du comportement de l'adaptateur et de déceler des anomalies sur NanoXml.
+Ceci nous a permis de nous assurer du comportement de l'adaptateur et de déceler des anomalies sur NanoXML.
 
 En couvrant la quasi totalité des méthodes utilisées dans IzPack avec de nombreux cas d'utilisation, nous avons pu nous assurer du respect du comportement de notre adaptateur.
 
 \subsubsection{Les tests unitaires sur Xinclude et Xfragment}
-Avec l'ajout des fonctionnalités XInclude et XFragment à NanoXml, une batterie de test unitaires a été fournie.
+Avec l'ajout des fonctionnalités XInclude et XFragment à NanoXML, une batterie de test unitaires a été fournie.
 Nous avons donc repris ces tests et nous les avons intégrés aux tests de l'adaptateur.
 
 \subsubsection{Les tests unitaires classiques}
 Nous avons créé une batterie de tests unitaires classiques pour notre adaptateur.
-Ils s'assurent entre autre que l'analyse, l'exploitation de l'arbre en mémoire et l'écriture du Xml se font correctement.
+Ils s'assurent entre autre que l'analyse, l'exploitation de l'arbre en mémoire et l'écriture du XML se font correctement.
 
 \subsection{Intégration à IzPack}
-L'intégration à IzPack de notre travail fut relativement aisée : les objets de NanoXml ont été remplacés par ceux de notre adaptateur.
+L'intégration à IzPack de notre travail fut relativement aisée : les objets de NanoXML ont été remplacés par ceux de notre adaptateur.
 Les appels n'ont quasiment pas été changés, les méthodes exposées dans les deux cas étant les mêmes.
 Cette intégration effectuée, nous avons pu commencer les tests sur application.
 \subsubsection{Test fonctionnels}
@@ -365,7 +365,7 @@ A la fin de l'exécution, une image de l'exécution (snapshot) est enregistrée 
 Cette image comporte toutes les informations du profiling comme la trace des appels, le temps passé dans chaque méthode, le nombre d'appels aux méthodes, l'utilisation de la mémoire et du garbage collector à chaque moment de l'exécution...
 Nous avons profilé deux versions de l'installateur de Glassfish ; l'un a été généré avec la version 4.2.1 de IzPack et l'autre avec la dernière version construite à partir du dépôt et comportant nos modifications.
 
-Par exemple, on peut rechercher tout les appels à l'objet XmlElementImpl de notre adaptateur pour voir les différentes méthodes utilisées. Sur la figure~\ref{fig:yourkitXmlElement}, on peut voir que la méthode \verb|getAttribute()| est utilisée majoritairement.
+Par exemple, on peut rechercher tout les appels à l'objet XMLElementImpl de notre adaptateur pour voir les différentes méthodes utilisées. Sur la figure~\ref{fig:yourkitXmlElement}, on peut voir que la méthode \verb|getAttribute()| est utilisée majoritairement.
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=1\textwidth]{../image/yourkitXmlElement.png}
@@ -375,7 +375,7 @@ Par exemple, on peut rechercher tout les appels à l'objet XmlElementImpl de not
 
 On peut également comparer deux snapshots et obtenir la différence dans les temps d'exécution et les appels.
 Sur la figure~\ref{fig:yourkitComparaison}, nous comparons les deux installateurs et filtrons les appels aux XMLElement.
-On voit apparaître le XMLElement de NanoXml pour la version 4.2.1 et le XMLElementImpl de notre adaptateur.
+On voit apparaître le XMLElement de NanoXML pour la version 4.2.1 et le XMLElementImpl de notre adaptateur.
 On voit que les performances entre les deux sont sensiblement les mêmes, les gains possibles sont relativement faibles et peu d'optimisation ont été réalisées.
 \begin{figure}[H]
 	\centering
@@ -386,11 +386,11 @@ On voit que les performances entre les deux sont sensiblement les mêmes, les ga
 
 %-------------------------------------------------------
 \section{Résultats}
-Le principal but de notre projet a été de pouvoir abandonner NanoXml ce qui est chose faite.
+Le principal but de notre projet a été de pouvoir abandonner NanoXML ce qui est chose faite.
 De plus, l'intégration de notre solution a apporté un certain nombres d'avantages.
 \subsection{Diminution de la taille des installateurs}
-Tout d'abord, l'abandon de NanoXml diminue la taille de IzPack et des installateurs générés car cette librairie n'a plus besoin d'être présente dans les installateurs.
-NanoXml pèse, une fois compilé, 116Ko.
+Tout d'abord, l'abandon de NanoXML diminue la taille de IzPack et des installateurs générés car cette librairie n'a plus besoin d'être présente dans les installateurs.
+NanoXML pèse, une fois compilé, 116Ko.
 Notre adaptateur pèse 44Ko.
 Chaque installateur généré par IzPack perdra donc 72Ko.
 Ce chiffre peut paraître faible mais si l'installateur est téléchargé 25000 fois sur le site officiel, presque 1800 Mo de bande passante sont économisés.
