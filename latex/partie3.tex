@@ -11,7 +11,7 @@ Pour traiter ces fichiers, une librairie a été utilisée, il s'agit de NanoXml
 \subsection{Le projet NanoXml}
 NanoXml est une librairie java open-source de gestion de Xml.
 Elle présente la particularité d'être légère (108Ko).
-Il est possible, grâce à cette librairie, d'écrire ou de parser des fichiers XML.
+Il est possible, grâce à cette librairie, d'écrire ou d'analyser des fichiers XML.
 Une fois le fichier parsé, on récupère en mémoire l'arbre Xml qui peut alors être exploité.
 Le choix de cette librairie a été fait au commencement de IzPack à cause de sa taille.
 En effet, il est important que la partie installateur ne surcharge pas excessivement sur le logiciel à installer.
@@ -19,7 +19,7 @@ En effet, il est important que la partie installateur ne surcharge pas excessive
 \subsection{Les différents composants de NanoXml}
 On trouve différents éléments dans NanoXml.
 \subsubsection{StdXMLParser}
-Le parseur permet de créer un arbre logique représentant le fichier xml qui lui a été passé.
+L'analyseur permet de créer un arbre logique représentant le fichier xml qui lui a été passé.
 Il est systématiquement utilisé au moment de la lecture du fichier afin de récupérer l'arbre.
 \subsubsection{StdXMLWriter}
 Le XMLWriter permet d'écrire des fichiers XML.
@@ -42,8 +42,8 @@ Il s'agit de loin de la classe la plus utilisée de la librairie NanoXml dans Iz
 En effet, on ne comptait pas moins de 499 utilisations au commencement de ce projet.
 
 \subsection{Utilisation typique dans IzPack}
-\subsubsection{Parse de fichier}
-Le parse du fichier est exécuté pour récupérer le XML.
+\subsubsection{Analyse de fichier}
+L'analyse du fichier est exécuté pour récupérer le XML.
 \begin{lstlisting}
 StdXMLParser parser = new StdXMLParser();
 parser.setBuilder(XMLBuilderFactory.createXMLBuilder());
@@ -52,7 +52,7 @@ parser.setValidator(new NonValidator());
 // We get the data
 XMLElement data = (XMLElement) parser.parse();
 \end{lstlisting}
-Avec cet exemple, on crée les objets nécessaires au parse d'un fichier, et on récupère dans \verb|data| la racine de l'arborescence du xml chargé en mémoire.
+Avec cet exemple, on crée les objets nécessaires à l'analyse d'un fichier, et on récupère dans \verb|data| la racine de l'arborescence du xml chargé en mémoire.
 \subsubsection{Écriture d'un xml}
 \begin{lstlisting}
 XMLWriter writer = new XMLWriter(out);
@@ -86,13 +86,13 @@ while (iter.hasNext())
 \end{lstlisting}
 \section{Étude JAXP}
 JAXP, le processeur Xml de Sun, respecte les normes W3C.
-Il y a deux manières d'exploiter les XML avec JAXP, soit en utilisant le parseur SAX, soit en utilisant le parseur DOM.
+Il y a deux manières d'exploiter les XML avec JAXP, soit en utilisant l'analyseur SAX, soit en utilisant l'analyseur DOM.
 \subsection{SAX}
-SAX (Simple API for Xml) est une API pour parser les XML.
+SAX (Simple API for Xml) est une API pour analyser les XML.
 Cette API possède la particularité de procéder par évènement.
-C'est à dire que le parseur va lire le fichier ligne par ligne et envoyer un évènement pour chaque élément particulier qu'il rencontre.
+C'est à dire que l'analyseur va lire le fichier ligne par ligne et envoyer un évènement pour chaque élément particulier qu'il rencontre.
 
-Des évènements sont lancés dès que le parse rencontre des commentaires, du texte, des éléments...
+Des évènements sont lancés dès que l'analyse rencontre des commentaires, du texte, des éléments...
 L'avantage de cette API est l'utilisation mémoire faible, puisque le xml n'est pas mis en mémoire mais lu et traité au fur et à mesure, il permet de traiter sans problème les fichiers importants.
 En contrepartie, le traitement et la manipulation du xml est plus difficile.
 \subsection{DOM}
@@ -167,7 +167,7 @@ Pour remplacer NanoXml, plusieurs approches étaient possibles.
 La première solution, bête et méchante, est de remplacer systématiquement les appels à NanoXml par des appels à JAXP.
 Cependant, cette solution a des inconvénients évidents :
 \begin{description}
-\item[La duplication de la logique] Tout le code nécessaire à l'utilisation du parseur ou du Node est réparti et dupliqué dans tout le programme.
+\item[La duplication de la logique] Tout le code nécessaire à l'utilisation de l'analyseur ou du Node est réparti et dupliqué dans tout le programme.
 C'est d'abord une infraction au principe DRY (\textit{don't repeat yourself}) et rend le code difficile à maintenir.
 Les bugs sont plus difficiles à cibler et la correction doit se faire sur toutes les réplications.
 \item[Les difficultés de tester la solution] Un autre problème et le test de cette solution.
@@ -225,13 +225,13 @@ Il suffit alors de supprimer NanoXml, ses utilisations ayant été remplacées p
 \subsection{Implémentation de Xinclude}
 Avec NanoXml, la balise \verb|xinclude| permet d'inclure un fichier xml externe.
 Ainsi, on peut utiliser un xml très succinct (et donc facilement lisible/compréhensible) qui inclut d'autres fichiers xml décrivant uniquement certaines parties de l'installation.
-Cette fonctionnalité, absente de nanoXML, avait été mise en place en modifiant directement le code de son parseur.
+Cette fonctionnalité, absente de nanoXML, avait été mise en place en modifiant directement le code de son analyseur.
 
 Xinclude est présente dans les normes W3C et JAXP l'intègre dans son implémentation.
-Pour que JAXP prenne en compte les balises Xinclude, il faut que le parseur prenne en compte les espaces de nommage (namespaces) XML.
+Pour que JAXP prenne en compte les balises Xinclude, il faut que l'analyseur prenne en compte les espaces de nommage (namespaces) XML.
 En effet, le Xinclude appartient au namespace \verb|xi|.
 Il faut donc utiliser la balise \verb|<xi:include/>| au lieu de \verb|<xinclude/>|.
-Le simple fait de rendre le parseur ``namepaceAware'' permet d'utiliser la fonctionnalité Xinclude.
+Le simple fait de rendre l'analyseur ``namepaceAware'' permet d'utiliser la fonctionnalité Xinclude.
 \subsection{Implémentation de Xfragment}
 La fonctionnalité Xfragment permet principalement d'ajouter des éléments sans racines avec Xinclude.
 C'est à dire qu'au contenu du xml à ajouter, on va retirer les noeuds \verb|<xfragment>|.
@@ -247,28 +247,28 @@ Par exemple:
 </xfragment>
 \end{lstlisting}
 Si ce xml est inclus, 2 éléments, \verb|<root1>| et \verb|<root2>| seront ajouté à l'emplacement du Xinclude.
-Sans le xfragment, le Xml ne serait pas valide (plusieurs éléments racine) et il y aurait erreur au moment du parse.
+Sans le xfragment, le Xml ne serait pas valide (plusieurs éléments racine) et il y aurait erreur au moment de l'analyse.
 Le Xfragment agit ici comme conteneur temporaire d'éléments.
 
 Cette fonctionnalité a été rajouté a NanoXml et il était nécessaire de la conserver.
-Cependant, elle ne fait pas partie des spécifications W3C et le parseur n'offre pas de base cette fonctionnalité.
+Cependant, elle ne fait pas partie des spécifications W3C et l'analyseur n'offre pas de base cette fonctionnalité.
 Il a fallut trouver une solution pour implémenter cette fonctionnalité.
 
 \subsubsection{Première solution, manipulation du DOM}
-Une première solution est de modifier le DOM obtenu après le parse du XML. 
+Une première solution est de modifier le DOM obtenu après l'analyse du XML. 
 Il faudrait chercher les noeuds nommés Xfragment et les supprimer.
 Cependant, la suppression d'un noeud en DOM entraîne la suppression de tout les éléments qu'il contient.
 Il faudrait donc au préalable sauvegarder le contenu, supprimer l'élément et restaurer le contenu sauvegardé.
 
-\subsubsection{Deuxième solution, surcharge du parseur}
+\subsubsection{Deuxième solution, surcharge de l'analyseur}
 Une autre solution est de procéder de la même manière que pour ce qui a été fait pour NanoXml.
-C'est à dire de modifier le parseur pour traiter les xfragment de manière spécifique.
+C'est à dire de modifier l'analyseur pour traiter les xfragment de manière spécifique.
 Cependant, cette solution, possible sous NanoXml (librairie incluse à IzPack), est difficilement réalisable sur JAXP (fourni par la JRE).
-En effet, les appels du parseur sont transmis vers des classes internes et difficilement manipulables.
+En effet, les appels de l'analyseur sont transmis vers des classes internes et difficilement manipulables.
 
 \subsubsection{Troisième solution, transformation XSL}
 La troisième solution a été proposé par Matthew Fudge, la personne ayant rajouté la gestion des Xfragment et Xinclude dans NanoXml pour IzPack.
-Elle consiste à transformer l'arbre xml obtenu après le parse grâce à une transformation XSL (Extensible Stylesheet Language).
+Elle consiste à transformer l'arbre xml obtenu après l'analyse grâce à une transformation XSL (Extensible Stylesheet Language).
 Les transformations XSL permettent de définir des règles de modification d'un XML et se présente lui-même sous la forme d'un XML.
 Elles permettent de modifier facilement des XML de manière simple.
 Elle convenait parfaitement à notre problème.
@@ -306,8 +306,8 @@ Au contraire, pour SAX, les numéros de lignes sont obtenues facilement.
 Dans ce cas là, il est utile de savoir à quel endroit on se trouve dans le document.
 
 Afin d'obtenir les numéros de ligne dans un arbre DOM, les deux points de vue ont été utilisés grâce à un \verb|Transformer|.
-Cet objet permet (entre autre) d'utiliser un parseur SAX pour remplir un arbre DOM.
-Lors du parse SAX on retient les numéros de lignes, qui seront ajoutés aux bons éléments du DOM.
+Cet objet permet (entre autre) d'utiliser un analyseur SAX pour remplir un arbre DOM.
+Lors de l'analyse SAX on retient les numéros de lignes, qui seront ajoutés aux bons éléments du DOM.
 Ce nombre est stocké dans les ``user data'', ajoutés dans la version 3  de DOM pour stocker diverses informations supplémentaires dans un noeud.
 
 \section{Application et tests}
@@ -337,7 +337,7 @@ Nous avons donc repris ces tests et nous les avons intégrés aux tests de l'ada
 
 \subsubsection{Les tests unitaires classiques}
 Nous avons créé une batterie de tests unitaires classiques pour notre adaptateur.
-Ils s'assurent entre autre que le parse, l'exploitation de l'arbre en mémoire et l'écriture du Xml se font correctement.
+Ils s'assurent entre autre que l'analyse, l'exploitation de l'arbre en mémoire et l'écriture du Xml se font correctement.
 
 \subsection{Intégration à IzPack}
 L'intégration à IzPack de notre travail fut relativement aisée : les objets de NanoXml ont été remplacés par ceux de notre adaptateur.
@@ -395,11 +395,11 @@ Notre adaptateur pèse 44Ko.
 Chaque installateur généré par IzPack perdra donc 72Ko.
 Ce chiffre peut paraître faible mais si l'installateur est téléchargé 25000 fois sur le site officiel, presque 1800 Mo de bande passante sont économisés.
 \subsection{Support de fonctionnalités XML}
-Outre le fait d'avoir un parseur plus fiable et récent, un certain nombre de nouveautés ont été apportées.
+Outre le fait d'avoir un analyseur plus fiable et récent, un certain nombre de nouveautés ont été apportées.
 \subsubsection{Support de la DTD}
 Désormais les DTD (document de validation d'un xml) sont pris en charge.
 \subsubsection{Support natif de Xinclude}
-De plus, l'inclusion de fichiers xml dans d'autres est supporté nativement, sans avoir à modifier le code du parseur.
+De plus, l'inclusion de fichiers xml dans d'autres est supporté nativement, sans avoir à modifier le code de l'analyseur.
 \subsection{Intégration dans la branche principale}
 Régulièrement, nous synchronisions notre dépôt avec la branche principale pour prendre en compte les modifications qui ont été réalisées sur IzPack.
 Cette synchronisation se passait généralement sans encombre grâce à Git, excepté quand les modifications concernaient la manipulation de XML et que les fichiers étaient conséquents (>3000 lignes).
