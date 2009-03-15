@@ -263,12 +263,15 @@ Une autre solution est de procéder de la même manière que pour ce qui a été
 C'est à dire de modifier l'analyseur pour traiter les xfragment de manière spécifique.
 Cependant, cette solution, possible sous NanoXML (librairie incluse à IzPack), est difficilement réalisable sur JAXP (fourni par la JRE).
 En effet, les appels de l'analyseur sont transmis vers les classes internes du JDK qui est difficilement manipulables.
-\subsubsection{Troisième solution, transformation XSL}
+\subsubsection{Troisième solution, transformation XSLT}
 La troisième solution a été proposé par Matthew Fudge, la personne ayant rajouté la gestion des Xfragment et Xinclude dans NanoXML pour IzPack.
-Elle consiste à transformer l'arbre XML obtenu après l'analyse grâce à une transformation XSL (Extensible Stylesheet Language).
-Les transformations XSL permettent de définir des règles de modification d'un XML et se présente elles-même sous la forme d'un XML.
-Elles permettent de modifier facilement des XML de manière simple.
-Elle convenait parfaitement à notre problème.
+Elle consiste à transformer l'arbre XML obtenu après l'analyse grâce à une transformation XSLT (eXtensible Stylesheet Language Transformation).
+
+Les transformations XSLT permettent de définir des règles de modification d'un XML et se présente elles-même sous la forme d'un XML.
+On peut distinguer la balise \verb|<xsl:template match="x">| qui va rechercher le pattern x dans le XML traité et va appliquer le traitement spécifié dans la balise.
+Parmi les traitements possibles, il est possible de faire des boucles avec \verb|<xsl:for-each>|, du trie avec \verb|<xsl:sort>|, créer des conditions avec \verb|<xsl:if>|, etc...
+
+Elles permettent de modifier facilement des XML de manière simple et conviennent parfaitement à notre problème.
 La feuille de style utilisée est la suivante :
 \begin{lstlisting}[language=XML]
 <xsl:stylesheet 
@@ -279,7 +282,7 @@ La feuille de style utilisée est la suivante :
             <xsl:copy-of select="@*"/>
             <xsl:apply-templates/>
         </xsl:copy>
-    </xsl:template>a
+    </xsl:template>
 
     <!-- les elements xfragment -->
     <xsl:template match="xfragment">
@@ -366,7 +369,7 @@ Par exemple, on peut rechercher tout les appels à l'objet XMLElementImpl de not
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=1\textwidth]{../image/yourkitXmlElement.png}
-	\caption{Trace des appels au XmlElement}
+	\caption{Trace des appels au XMLElement}
 	\label{fig:yourkitXmlElement}
 \end{figure}
 
