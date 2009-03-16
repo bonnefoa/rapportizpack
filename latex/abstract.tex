@@ -1,42 +1,36 @@
 IzPack est un logiciel libre java dédié à la création d'installateur personnalisé pour applications.
 Il permet de décharger le développement en automatisant ce processus.
-Cependant, IzPack est sujet au même problèmes que tous les logiciels et nécessitent des phases de refactoring.
+Cependant, IzPack est sujet aux mêmes problèmes que tous les logiciels et nécessitent des phases de refactoring.
 Ces phases permettent d'améliorer la qualité du code et de le rendre plus maintenable dans l'avenir.
 
 Le changement d'une librairie fait partie des actions possibles pour le refactoring.
-Plusieurs raisons peuvent motiver ce changement; une librairie utilisée peut ne plus être maintenue et une autre, plus robuste existe.
-C'est le cas de la librairie de gestion de XML de IzPack, NanoXML, dont le développement à été arrété. 
+Plusieurs raisons peuvent motiver ce changement: une librairie utilisée peut ne plus être maintenue ou une autre plus robuste existe.
+C'est le cas de la librairie de gestion de XML de IzPack, NanoXML, dont le développement à été arrété.
 De plus, Java propose dans ses nouvelles versions une librairie native remplissant le même rôle, rendant NanoXML superflue.
 
-Cette opération représente l'objectif de notre projet. 
-Dans un premier temps, il nous a fallut étudier le fonctionnement d'IzPack et l'utilisation qui a été faite de NanoXml.
+Cette opération de refactoring représente l'objectif de notre projet.
+Dans un premier temps, il nous a fallut étudier le fonctionnement d'IzPack et l'utilisation qui a été faite de NanoXML.
 Après quoi, aidé du gestionnaire de version Git et de l'environnement de développement IntelliJ, nous avons élaboré une solution basée sur le patron de conception adaptateur.
-Cette solution a été implémenté dans IzPack et sera présente pour la prochaine version de IzPack.
+Cette solution a été implémentée dans IzPack et sera présente pour la prochaine version de IzPack.
 ~\\
 ~\\
 Mots-clés : Java, logiciel libre, XML, git, IntelliJ, Refactoring
 \vfill
 \begin{center}\large{\textbf{Abstract}}\end{center}
 
-% IzPack est un logiciel open source écrit en java générant des installeurs personnalisés pour tout type d'applications.
-% Il utilise massivement les fichiers XML et se base sur la librairie NanoXML, librairie qui n'est plus mise à jour.
-% Depuis la naissance d'IzPack et le choix de NanoXML, la gestion des fichiers XML a été ajouté à Java, rendant NanoXML superflue.
-% 
-% Durant notre projet, il a d'abord fallut découvrir le fonctionnement de IzPack, étudier le problème et chercher une solution pour permettre ce changement de librairie.
-% Pour nous aider dans cette tâche, nous avons utilisé plusieurs outils, git comme gestionnaire de version, IntelliJ comme IDE, etc.
-% Une solution a été trouvée et mise en \oe{}uvre grâce au patron de conception adaptateur.
-% Cette solution, largement testée, sera intégrée dans la prochaine version de IzPack.
+IzPack is a n open source software dedicated to custom installer creation pour applications.
+It allows the developpment phase to be discharged by automating this process.
+However, IzPack has the same issues à all softwares and need refactoring phases.
+Those phases enhance the code quality and its maintainability.
 
-% 
-% 
-% IzPack is an open source software written in java which generate custom installers based on any software.
-% It massively uses XML files and is based on the NanoXML library, a no more updated one.
-% Since the IzPack's birth and the choice of NanoXML, the handling of xml files has been added to Java, so NanoXML is now superfluous.
-% 
-% During our project, we had to understand how work IzPack and then to find a solution to use java standard librairies instead of NanoXML.
-% to help us in this task, we have used several tools : ``git'' as version control system, IntelliJ as IDE, etc.
-% A solution has been found and implemented thanks to the adapter design pattern.
-% this solution, heavily tested will be integrated in the next version of IzPack.
-% ~\\
-% ~\\
-% Keywords : Java, open source software, xml, git, IntelliJ, Refactoring
+The change of a library is a part of refactoring actions.
+Several reasons can spur this change : a used library which is no longer developped or a more efficient one exists.
+That is the case of the XML library used by IzPack, NanoXML, no longer developped.
+Moreover, Java now has such a library, so NanoXML is now superfluous.
+
+Our project's objective is this refactoring operation.
+First we had studied how IzPack works and how it uses NanoXML.
+Then, helped by the version control system Git and by the integrated developpment environnment IntelliJ, we developped a solution based on the design pattern adapter.
+This solution has been merged with IzPack and will be in the next version of IzPack.
+
+Keywords : Java, open source software, XML, git, IntelliJ, Refactoring
