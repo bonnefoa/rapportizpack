@@ -3,21 +3,23 @@ L'environnement avait pour but de permettre un développement agile.
 On peut distinguer 3 parties : la gestion du projet, la gestion des sources et les outils de développements.
 \section{Planification et gestion de projet}
 La méthode agile préconise des itérations courtes avec des objectifs clairs et concis à réaliser à chaque itération.
-A la fin d'une itération, un point était fait avec le client pour définir les objectifs pour la prochaine itération, le client ici étant notre tuteur, Julien Ponge.
+A la fin d'une itération, un point était fait avec le client pour définir les objectifs pour la prochaine itération, le ``client'' ici étant notre tuteur, Julien Ponge.
 Nous avons utilisé un outil pour gérer ces objectifs et ces itérations, il s'agit de LightHouse.
+
 \subsection{Lighthouse}
 Lighthouse est un gestionnaire de projet en ligne.
-Il se présente sous la forme d'une application web et propose toutes les fonctionnalités nécessaires à la gestions des objectifs.
+Il se présente sous la forme d'une application web et propose toutes les fonctionnalités nécessaires à la gestion des objectifs.
 On peut distinguer deux entités principales, les tickets et les sprints.
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.6\textwidth]{../image/lighthouse.png}
 	\caption{Page d'accueil de Lighthouse}
 \end{figure}
+
 \subsection{Ticket}
 Les Tickets représentent un objectif à réaliser.
-Ils peuvent être crées par n'importe quel participant au projet.
-Ce ticket peut ensuite être assigner à une personne et possède plusieurs états comme vu sur la figure~\ref{fig:workflow}.
+Ils peuvent être créés par n'importe quel participant au projet.
+Ce ticket peut ensuite être assigné à une personne et possède plusieurs états comme vu sur la figure~\ref{fig:workflow}.
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.2\textwidth]{../image/lighthouseWorkFlow.png}
@@ -25,11 +27,12 @@ Ce ticket peut ensuite être assigner à une personne et possède plusieurs éta
 \label{fig:workflow}
 \end{figure}
 Chacun de ces tickets peut être assigné à un sprint.
+
 \subsection{Sprint}
 Un sprint est un ensemble de tickets à résoudre pour une date donnée.
 Il correspond à une itération dans la méthodologie agile.
 Pour le projet, la durée d'un sprint était généralement de 1 ou 2 semaines.
-A chaque fin de sprint, une réunion était organisée pour discuter des résultats, des reports à effectuer ou des objectifs à réaliser pour le prochains sprint.
+A chaque fin de sprint, une réunion était organisée pour discuter des résultats, des reports à effectuer ou des objectifs à réaliser pour le prochain sprint.
 
 % ----------------------------------------------------
 \section{Gestionnaire des sources}
@@ -72,30 +75,22 @@ Julien Ponge entretient un dépôt Git synchronisé par rapport au dépôt offic
 Nous avons travaillé sur un fork de ce dépôt.
 Nous pouvions à tout moment synchroniser notre dépôt par rapport au dépôt d'origine et ainsi, appliquer toutes les modifications des contributeurs à notre dépôt.
 Cela permettait de préparer l'application de nos modifications de manière aisée. Tout ces dépôts sont hébergés sur GitHub.
+
 \subsection{GitHub}
 GitHub est une plateforme collaborative gratuite hébergeant des dépôts Git.
 Cette plateforme permet de créer, dupliquer, supprimer ou consulter des dépôts Git.
-Toutes les réalisations faites sont ouvertes et disponibles à tout le monde, c'est à dire que n'importe qui est libre de consulter, cloner ou de forker les projets présents sur GitHub cependant, 
-le droit de commit est restraint aux utilisateurs choisies.
-Il est également possible de créer des dépôts sous conditions de payer un abonnement
+Toutes les réalisations faites sont ouvertes et disponibles à tout le monde : n'importe qui est libre de consulter, cloner ou de forker les projets présents sur GitHub.
+Cependant, le droit de commit est restreint aux utilisateurs choisies.
+Il est également possible de créer des dépôts privés sous conditions de payer un abonnement.
 
-De nombreux projets utilisent GitHub comme plateforme, notamenent rails, Rspec, scriptaculous...
+De nombreux projets utilisent GitHub comme plateforme, notamment rails, Rspec, scriptaculous...
 
 Cette plateforme a été choisie par Julien Ponge pour héberger son dépôt Git.
 Nous avons donc créés des comptes sur GitHub et avons forké le projet.
 L'utilisation d'un dépôt public basé sur celui de Julien Ponge a permis non seulement de faciliter les mises à jour, mais également de lui permettre de suivre facilement notre travail.
-%- GitHub : Gestionnaire de dépôt Git
-%-> Duplicat (fork) du projet
-%-> Travail collaboratif et ouvert 
-%-> Consultation de l'historique
-%-> Visionnage des branches
+
 \section{Outils de développement}
 \subsection{IntelliJ Idea}
-%-> IDE spécialisée technologies Java
-%Nombreuses fonctionnalités présentes
-%-> Recherche implementation 
-%-> Preserve Case
-%-> Refactoring puissant
 IntelliJ est un environnement de développement intégré similaire à Eclipse.
 Il est propriétaire et nécessite une licence pour son fonctionnement.
 Cependant, JetBrain, l'éditeur de IntelliJ, a une politique d'ouverture pour les projets open-source.
@@ -106,6 +101,7 @@ Il possède une plus grande variété de fonctionnalités et l'intégration d'un
 On trouve ainsi l'intégration de frameworks récents comme GWT ou d'outils comme Git.
 L'intégration de Maven est également très complète.
 De plus, ses capacités de modification de code (refactoring) sont au dessus de celles des autres IDE : préservation de la casse lors d'un renommage, etc.
+
 \subsection{Yourkit}
 %Profiler Java
 %-> Temps, nombres d'appels des méthodes
