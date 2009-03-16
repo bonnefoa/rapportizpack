@@ -27,6 +27,7 @@ keywordstyle=\color{colKeys}, %
 stringstyle=\color{colString}, %
 commentstyle=\color{colComments},
 language=java,
+showstringspaces=false,
 backgroundcolor=\color{white},
 frame=single,                   % adds a frame around the code
 tabsize=2,                      % sets default tabsize to 2 spaces
@@ -112,30 +113,18 @@ pdfpagemode= UseOutlines,
 \chapter*{Glossaire \markboth{Glossaire}{}}
 \addcontentsline{toc}{chapter}{Glossaire}
 \input{glossaire}
+\pagebreak
 %---------------------------------------
-
 \bibliographystyle{alpha}
-
 \begin{btSect}{webographie}
 \section*{Webographie}
-\section*{Citées}
-\btPrintCited
-\section*{Non citées}
-\btPrintNotCited
-\end{btSect}
-
-\begin{btSect}{references}
-\section*{Références}
-\section*{Citées}
-\btPrintCited
-\section*{Non citées}
 \btPrintNotCited
 \end{btSect}
 %---------------------------------------
 \appendix
 \input{titlepage2}
 \pagenumbering{Roman}
-\chapter*{Annexes}
+\chapter*{Annexes \markboth{Annexes}{}}
 \setcounter{page}{1}
 \addcontentsline{toc}{chapter}{Annexe}
 \input{annexes}
