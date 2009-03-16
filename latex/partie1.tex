@@ -184,7 +184,7 @@ D'autres options existent, mais celles présentées ici suffisent à créer notr
 Les fichiers référencés doivent être présents dans le chemin indiqué par le XML lors de la compilation.
 \subsection{Génération du jar}
 Pour générer notre installateur, il suffit de lancer la commande suivante : (l'exécutable \verb|compile| provient de IzPack)
-\begin{lstlisting}[language=text]
+\begin{lstlisting}
 $ compile install.XML
 .::  IzPack - Version 4.1.0 ::.
 
@@ -217,7 +217,7 @@ Il suffit désormais de lancer le jar pour installer notre application.
 
 \subsection{Installation automatique}
 En lançant l'installateur avec un script d'installation automatisée en paramètre, l'installation est rejouée à l'identique automatiquement.
-\begin{lstlisting}[language=]
+\begin{lstlisting}
 $ java -jar install.jar automated.xml
 [ Starting automated installation ]
 [ Starting to unpack ]
