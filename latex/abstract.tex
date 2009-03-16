@@ -1,36 +1,36 @@
-IzPack est un logiciel libre java dédié à la création d'installateur personnalisé pour applications.
+\textbf{IzPack} est un \textbf{logiciel libre} Java dédié à la création d'\textbf{installateur} personnalisé pour applications.
 Il permet de décharger le développement en automatisant ce processus.
-Cependant, IzPack est sujet aux mêmes problèmes que tous les logiciels et nécessitent des phases de refactoring.
-Ces phases permettent d'améliorer la qualité du code et de le rendre plus maintenable dans l'avenir.
+Cependant, IzPack est sujet aux mêmes problèmes que tous les logiciels et nécessitent des phases de \textbf{refactoring}.
+Ces phases permettent d'améliorer la qualité du code et de le rendre plus maintenable.
 
 Le changement d'une librairie fait partie des actions possibles pour le refactoring.
 Plusieurs raisons peuvent motiver ce changement: une librairie utilisée peut ne plus être maintenue ou une autre plus robuste existe.
-C'est le cas de la librairie de gestion de XML de IzPack, NanoXML, dont le développement à été arrété.
+C'est le cas de la librairie de gestion de \textbf{XML} de IzPack, NanoXML, dont le développement à été arrété.
 De plus, Java propose dans ses nouvelles versions une librairie native remplissant le même rôle, rendant NanoXML superflue.
 
 Cette opération de refactoring représente l'objectif de notre projet.
 Dans un premier temps, il nous a fallut étudier le fonctionnement d'IzPack et l'utilisation qui a été faite de NanoXML.
-Après quoi, aidé du gestionnaire de version Git et de l'environnement de développement IntelliJ, nous avons élaboré une solution basée sur le patron de conception adaptateur.
+Après quoi, aidé du gestionnaire de version \textbf{Git} et de l'environnement de développement \textbf{IntelliJ}, nous avons élaboré une solution basée sur le patron de conception adaptateur.
 Cette solution a été implémentée dans IzPack et sera présente pour la prochaine version de IzPack.
 ~\\
 ~\\
-Mots-clés : Java, logiciel libre, XML, git, IntelliJ, Refactoring
+Mots-clés : IzPack, installateur, logiciel libre, XML, Git, IntelliJ, refactoring
 \vfill
 \begin{center}\large{\textbf{Abstract}}\end{center}
 
-IzPack is a n open source software dedicated to custom installer creation pour applications.
-It allows the developpment phase to be discharged by automating this process.
-However, IzPack has the same issues à all softwares and need refactoring phases.
+\textbf{IzPack} is an \textbf{open source software} dedicated to build custom \textbf{installer} for applications.
+Thus, it can reduce the developpment of applications by automating this process.
+However, IzPack has the same issues of all softwares and need \textbf{refactoring} phases.
 Those phases enhance the code quality and its maintainability.
 
-The change of a library is a part of refactoring actions.
+The replacement of a library is a part of refactoring actions.
 Several reasons can spur this change : a used library which is no longer developped or a more efficient one exists.
-That is the case of the XML library used by IzPack, NanoXML, no longer developped.
-Moreover, Java now has such a library, so NanoXML is now superfluous.
+This is the case of the \textbf{XML} library used by IzPack, NanoXML, which is no longer developped.
+Moreover, Java provides a XML library in its recent version, which make NanoXML superfluous.
 
 Our project's objective is this refactoring operation.
-First we had studied how IzPack works and how it uses NanoXML.
-Then, helped by the version control system Git and by the integrated developpment environnment IntelliJ, we developped a solution based on the design pattern adapter.
+First we have studied how IzPack works and how it uses NanoXML.
+Then, helped by the source control management \textbf{Git} and by the integrated developpment environnement \textbf{IntelliJ}, we developped a solution based on the design pattern adapter.
 This solution has been merged with IzPack and will be in the next version of IzPack.
 
-Keywords : Java, open source software, XML, git, IntelliJ, Refactoring
+Keywords : IzPack, installeur, open source software, XML, Git, IntelliJ, Refactoring
