@@ -55,12 +55,18 @@ C'est de cet aspect distribué que provient une grande partie de la puissance de
 Un utilisateur a accès à l'historique entier du dépôt une fois qu'il a cloné le dépôt.
 Il peut effectuer toutes les operations voulues sur son dépôt en étant déconnecté et chaque clone est une sauvegarde intégrale du dépôt.
 Ainsi, n'importe quel développeur a accès à toutes les fonctionnalités d'un gestionnaire de version même si il est totalement isolé.
-La communication entre dépôts Git se fait soit par le protocole ssh, https, ftp, rsync ou par le protocole git.
+La communication entre dépôts Git se faisant soit par le protocole ssh, https, ftp, rsync ou par le protocole git.
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.7\textwidth]{../image/git.png}
+	\caption{Gestion distribuée des sources avec Git}
+\label{fig:workflow}
+\end{figure}
+
 
 Git se démarque également sur des fonctionnalités évoluées.
 L'un de ses principaux points forts est la gestion des branches.
 La création, suppression et fusion des branches est remarquable de simplicité et d'efficacité.
-La taille d'un dépôt Git est faible comparée à celle d'autres gestionnaires comme subversion.
 
 Julien Ponge entretient un dépôt Git synchronisé par rapport au dépôt officiel subversion.
 Nous avons travaillé sur un fork de ce dépôt.
