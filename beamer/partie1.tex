@@ -1,29 +1,77 @@
-\subsection{Principe}
-\begin{frame}\frametitle{Principe du framework}
+%------------------------------------------------------------------------------
+\subsection{Installateur logiciel}
+\begin{frame}\frametitle{Déploiement d'une application}
+\begin{itemize}
+ \item Déploiement de l'application sur une machine
+ \item Procèdures d'installation parfois lourdes
+ \item Procèdures délicates
+\end{itemize}
 \end{frame}
+%------------------------------------------------------------------------------
+\begin{frame}\frametitle{Déploiement de Glassfishv2}
+	\begin{verbatim}
+	java -Xmx256m -jar filename.jar;
+	cd glassfish;
+	chmod -R +x lib/ant/bin;
+	lib/ant/bin/ant -f setup.xml;
+	bin/asadmin start-domain;
+	\end{verbatim}
+\end{frame}
+%------------------------------------------------------------------------------
+\begin{frame}\frametitle{Installateur logiciel}
+\begin{block}{But}
+ \begin{itemize}
+  \item Automatiser les procèdures d'installation
+  \item Assurer une intégration dans le système
+  \item Assister l'utilisateur
+ \end{itemize}
+\begin{block}{Inconvénients}
+ \begin{itemize}
+  \item Dépendant de l'OS
+  \item Création de l'interface graphique lourde
+ \end{itemize}
+\end{block}
+\end{frame}
+%------------------------------------------------------------------------------
+\subsection{IzPack}
+\begin{frame}\frametitle{IzPack}
+\begin{block}{Générateur d'installateur}
+	\begin{itemize}
+		\item Déporte la création l'installateur
+		\item Création basé sur descripteur XML
+	\end{itemize}
+\end{block}
+\end{frame}
+%------------------------------------------------------------------------------
+\begin{frame}\frametitle{Caractéristiques}
+	\begin{block}{Multiplateforme}
+	Windows, Mac, BSD, Linux
+	\end{block}
+	\begin{block}{Personnalisable}
+	Descripteur XML contrôlant l'aspect
+	\end{block}
+\end{frame}
+
 %------------------------------------------------------------------------------
 \subsection{Problèmes}
 \begin{frame}\frametitle{Problèmes}
-\begin{box}{NanoXML obsolète}
+	\begin{block}{NanoXML obsolète}
+		\begin{itemize}
+		\item Bugs connus
+		\item Foncionnalités manquantes
+		\item Développement arrété
+		\end{itemize}
+	\end{block}
+	\begin{itemize}
+		\item Invisible pour l'utilisateur
+		\item Génant pour le développeur	
+	\end{itemize}
+\end{frame}
+%------------------------------------------------------------------------------
+\begin{frame}\frametitle{Problèmes}
 \begin{itemize}
- \item 
+	\item Comment supprimer NanoXML?
+	\item Par quoi le remplacer?	
 \end{itemize}
-
-\end{box}
-
-\end{frame}
-%------------------------------------------------------------------------------
- \begin{frame}\frametitle{Les avantages}
-\end{frame}
-%------------------------------------------------------------------------------
-\subsection{Les inconvénients}
-\begin{frame}\frametitle{Les inconvénients}
-\end{frame}
-%------------------------------------------------------------------------------
-\subsection{Environnement de travail}
-\begin{frame}\frametitle{Environnement de travail}
-\end{frame}
-%------------------------------------------------------------------------------
-\begin{frame}\frametitle{Hosted browser}
 \end{frame}
 %------------------------------------------------------------------------------
