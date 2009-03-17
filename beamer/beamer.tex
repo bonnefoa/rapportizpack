@@ -1,0 +1,105 @@
+\documentclass[slidetop,11pt]{beamer}
+\usepackage{pslatex}
+\usepackage[T1]{fontenc} 
+\usepackage[utf-8]{inputenc}
+\usepackage[french]{babel}
+\usepackage{listings}
+
+\useoutertheme[hideothersubsections]{sidebar}
+\useinnertheme{rectangles}
+
+\definecolor{mathmodecolor}{RGB}{0,102,0}
+\definecolor{keywordcolor}{RGB}{0,51,151}
+\definecolor{sourcebackgroundcolor}{RGB}{255,247,223}
+\definecolor{unixagred}{RGB}{255,0,0}
+\definecolor{lightgray}{RGB}{191,191,191}
+
+\setbeamercolor{structure}{fg=unixagred}
+\setbeamercolor*{palette primary}{use=structure,fg=white,bg=structure.fg}
+\setbeamercolor*{palette secondary}{use=structure,fg=black,bg=lightgray}
+\setbeamercolor*{palette tertiary}{use=structure,fg=black,bg=lightgray!25!white}
+\setbeamercolor*{palette quaternary}{use=structure,fg=black,bg=lightgray!50!white}
+
+%-----------------
+% couleurs graou
+\definecolor{sertARien}{RGB}{255,0,0}
+\definecolor{orangePlanner}{RGB}{243,159,27} % orange moche planner
+\definecolor{bleuPlanner}{RGB}{44,68,94} % bleu planner, 2c445e
+\definecolor{marron}{rgb}{0.41,0.05,0.05} % marron
+\definecolor{blanc}{RGB}{255,225,225} % blanc (si si)
+
+\setbeamercolor*{separation line}{}
+\setbeamercolor*{fine separation line}{}
+
+\setbeamercolor*{titlelike}{fg=sertARien, bg=sertARien}
+\setbeamercolor*{frametitle}{fg=blanc, bg=bleuPlanner}
+\setbeamercolor*{title}{fg=sertARien, bg=sertARien}
+\setbeamercolor*{sidebar left}{fg=sertARien, bg=bleuPlanner}
+\setbeamercolor{structure}{fg=orangePlanner, bg=sertARien}
+\setbeamercolor{footline}{fg=orangePlanner, bg=sertARien}
+
+\setbeamercolor{section in toc}{fg=marron, bg=sertARien}
+\setbeamercolor{logo}{fg=sertARien, bg=bleuPlanner}
+
+\setbeamerfont{frametitle}{series=\bfseries,size=\large}
+
+\setbeamerfont{title in sidebar}{series=\bfseries}
+\setbeamerfont{section in sidebar}{size=\tiny,series=\bfseries}
+\setbeamerfont{section in sidebar shaded}{series=\bfseries}
+\setbeamerfont{subsection in sidebar}{series=\bfseries,size=\tiny}
+\setbeamerfont{subsection in sidebar shaded}{series=\bfseries}
+
+\setbeamerfont{block title}{size={}}
+
+\logo{\includegraphics[height=1.1cm]{../image/gwtLogoAlpha.png}}
+
+\defbeamertemplate*{footline}{infolines theme}
+{
+\leavevmode%
+\hbox{%
+\begin{beamercolorbox}[wd=1\paperwidth,ht=2.25ex,dp=1ex,right]{date in head/foot}%
+\centering
+{
+  \insertframenumber{} / \inserttotalframenumber\hspace*{2ex}
+}
+\end{beamercolorbox}}%
+\vskip0pt%
+}
+
+\setbeamertemplate{navigation symbols}{}
+
+\AtBeginSection[]
+{
+  \begin{frame}<beamer>\frametitle{Plan}
+    \frametitle{}
+    \tableofcontents[hideothersubsections,currentsection]
+  \end{frame}
+}
+
+\title{Refactoring IzPack}
+\date{\oldstylenums{\today}}
+
+\begin{document}
+%------------------------------------------------------------
+\input{titlepage}
+%------------------------------------------------------------
+\section*{Introduction}
+\input{introduction}
+%------------------------------------------------------------
+\begin{frame}\frametitle{Plan}
+\tableofcontents
+\end{frame}
+%------------------------------------------------------------
+\section{titre partie 1}
+\input{partie1}
+%------------------------------------------------------------
+\section{titre partie 2}
+\input{partie2}
+%------------------------------------------------------------
+\section{titre partie 3}
+\input{partie3}
+%------------------------------------------------------------
+\section*{Conclusion}
+\input{conclusion}
+%------------------------------------------------------------
+\end{document}
