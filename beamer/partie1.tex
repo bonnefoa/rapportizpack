@@ -3,72 +3,81 @@
 \begin{frame}\frametitle{Déploiement d'une application}
 \begin{itemize}
  \item Déploiement de l'application sur une machine
- \item Procèdures d'installation parfois lourdes
- \item Procèdures délicates
+ \item Procédures d'installation parfois lourdes
+ \item Procédures délicates
 \end{itemize}
 \end{frame}
 %------------------------------------------------------------------------------
 \begin{frame}[fragile]\frametitle{Installation de Glassfish}
-\begin{block}{Procédure d'installation de Glassfish-v2}
+\begin{beamerboxesrounded}{Proc\'edure d'installation de Glassfish-v2}
 	\begin{verbatim}
-	java -Xmx256m -jar glassfish-installer-v2.1-b60e-linux.jar;
+	java -Xmx256m -jar glassfish-installer-v2.1.jar;
 	cd glassfish;
 	chmod -R +x lib/ant/bin;
 	lib/ant/bin/ant -f setup.xml;
 	bin/asadmin start-domain;
 	\end{verbatim}
-\end{block}
+\end{beamerboxesrounded}
 \end{frame}
 %------------------------------------------------------------------------------
 \begin{frame}\frametitle{Installateur logiciel}
-\begin{block}{But}
+\begin{beamerboxesrounded}{But}
  \begin{itemize}
   \item Automatiser les procèdures d'installation
   \item Assurer une intégration dans le système
   \item Assister l'utilisateur
  \end{itemize}
-\end{block}
-\begin{block}{Inconvénients}
+\end{beamerboxesrounded}
+\begin{beamerboxesrounded}{Inconvénients}
  \begin{itemize}
   \item Dépendant de l'OS
   \item Création de l'interface graphique lourde
  \end{itemize}
-\end{block}
+\end{beamerboxesrounded}
 \end{frame}
 %------------------------------------------------------------------------------
 \subsection{IzPack}
 \begin{frame}\frametitle{IzPack}
-\begin{block}{Générateur d'installateur}
-	\begin{itemize}
-		\item Déporte la création l'installateur
-		\item Création basé sur descripteur XML
-	\end{itemize}
-\end{block}
+\begin{beamerboxesrounded}{Language}
+	Java
+\end{beamerboxesrounded}
+\begin{beamerboxesrounded}{But}
+	Déporter la création l'installateur
+\end{beamerboxesrounded}
+\begin{beamerboxesrounded}{Moyen}
+Descripteur XML
+\end{beamerboxesrounded}
+% \begin{beamerboxesrounded}{Générateur d'installateur}
+% 	\begin{itemize}
+% 		\item Ecrit en Java
+% 		\item Déporte la création l'installateur
+% 		\item Création basé sur descripteur XML
+% 	\end{itemize}
+% \end{beamerboxesrounded}
 \end{frame}
 %------------------------------------------------------------------------------
 \begin{frame}\frametitle{Caractéristiques}
-	\begin{block}{Multiplateforme}
+	\begin{beamerboxesrounded}{Multiplateforme}
 	Windows, Mac, BSD, Linux
-	\end{block}
-	\begin{block}{Personnalisable}
+	\end{beamerboxesrounded}
+	\begin{beamerboxesrounded}{Personnalisable}
 	Descripteur XML contrôlant l'aspect
-	\end{block}
-	\begin{block}{Open-Source}
+	\end{beamerboxesrounded}
+	\begin{beamerboxesrounded}{Open-Source}
 	License business-friendly Apache 2
-	\end{block}
-
+	\end{beamerboxesrounded}
 \end{frame}
 
 %------------------------------------------------------------------------------
 \subsection{Problèmes}
 \begin{frame}\frametitle{Problèmes}
-	\begin{block}{NanoXML obsolète}
+	\begin{beamerboxesrounded}{NanoXML obsolète}
 		\begin{itemize}
 		\item Bugs connus
 		\item Foncionnalités manquantes
 		\item Développement arrété
 		\end{itemize}
-	\end{block}
+	\end{beamerboxesrounded}
 	\begin{itemize}
 		\item Invisible pour l'utilisateur
 		\item Génant pour le développeur	
