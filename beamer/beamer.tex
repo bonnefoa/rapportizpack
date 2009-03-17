@@ -5,69 +5,40 @@
 \usepackage[french]{babel}
 \usepackage{listings}
 
-\useoutertheme[hideothersubsections]{sidebar}
+\useinnertheme{default}
+% izpack-logo-big.png PNG 438x150
+\useoutertheme[hideothersubsections,width=2.34cm,height=0.8cm]{sidebar}
+
 \useinnertheme{rectangles}
 
-\definecolor{mathmodecolor}{RGB}{0,102,0}
-\definecolor{keywordcolor}{RGB}{0,51,151}
-\definecolor{sourcebackgroundcolor}{RGB}{255,247,223}
-\definecolor{unixagred}{RGB}{255,0,0}
-\definecolor{lightgray}{RGB}{191,191,191}
+% \usecolortheme{seahorse}
+% \usecolortheme{orchid}
 
-\setbeamercolor{structure}{fg=unixagred}
-\setbeamercolor*{palette primary}{use=structure,fg=white,bg=structure.fg}
-\setbeamercolor*{palette secondary}{use=structure,fg=black,bg=lightgray}
-\setbeamercolor*{palette tertiary}{use=structure,fg=black,bg=lightgray!25!white}
-\setbeamercolor*{palette quaternary}{use=structure,fg=black,bg=lightgray!50!white}
+\usecolortheme{crane}
 
-%-----------------
-% couleurs graou
-\definecolor{sertARien}{RGB}{255,0,0}
-\definecolor{orangePlanner}{RGB}{243,159,27} % orange moche planner
-\definecolor{bleuPlanner}{RGB}{44,68,94} % bleu planner, 2c445e
-\definecolor{marron}{rgb}{0.41,0.05,0.05} % marron
-\definecolor{blanc}{RGB}{255,225,225} % blanc (si si)
+\setbeamercolor{structure}{fg=black} % tout ce qui structure le doc : titres, sous titres, TOC, ...
 
-\setbeamercolor*{separation line}{}
-\setbeamercolor*{fine separation line}{}
-
-\setbeamercolor*{titlelike}{fg=sertARien, bg=sertARien}
-\setbeamercolor*{frametitle}{fg=blanc, bg=bleuPlanner}
-\setbeamercolor*{title}{fg=sertARien, bg=sertARien}
-\setbeamercolor*{sidebar left}{fg=sertARien, bg=bleuPlanner}
-\setbeamercolor{structure}{fg=orangePlanner, bg=sertARien}
-\setbeamercolor{footline}{fg=orangePlanner, bg=sertARien}
-
-\setbeamercolor{section in toc}{fg=marron, bg=sertARien}
-\setbeamercolor{logo}{fg=sertARien, bg=bleuPlanner}
-
-\setbeamerfont{frametitle}{series=\bfseries,size=\large}
-
-\setbeamerfont{title in sidebar}{series=\bfseries}
-\setbeamerfont{section in sidebar}{size=\tiny,series=\bfseries}
-\setbeamerfont{section in sidebar shaded}{series=\bfseries}
-\setbeamerfont{subsection in sidebar}{series=\bfseries,size=\tiny}
-\setbeamerfont{subsection in sidebar shaded}{series=\bfseries}
-
+\setbeamercolor{itemize item}{fg=red}
 \setbeamerfont{block title}{size={}}
 
-\logo{\includegraphics[height=1.1cm]{../image/izpackLogoAlpha.png}}
+\logo{\includegraphics[height=0.8cm]{../image/izpack-logo-big.png}}
+% \logo{\includegraphics[height=1.1cm]{../image/izpackLogoAlpha.png}}
 
-\defbeamertemplate*{footline}{infolines theme}
-{
-\leavevmode%
-\hbox{%
-\begin{beamercolorbox}[wd=1\paperwidth,ht=2.25ex,dp=1ex,right]{date in head/foot}%
-\centering
-{
-  \insertframenumber{} / \inserttotalframenumber\hspace*{2ex}
-}
-\end{beamercolorbox}}%
-\vskip0pt%
-}
+% \definecolor{headerTop}{HTML}{666666}
+% \definecolor{headerBottom}{HTML}{3A3A3A}
 
-\setbeamertemplate{navigation symbols}{}
+\setbeamercolor{background}{bg=}
+\setbeamercolor{title}{bg=}
+\setbeamercolor*{titlelike}{fg=, bg=}
+\setbeamercolor*{frametitle}{fg=white, bg=}
+\setbeamercolor*{title}{fg=, bg=}
+\setbeamercolor*{logo}{fg=, bg=}
+\setbeamercolor*{sidebar}{fg=, bg=}
 
+% moche, mais tellement pratique...
+\setbeamertemplate{background canvas}{\includegraphics[width=\paperwidth,height=1.6cm]{../image/backgroundBeamer.png}}
+
+% rappel du plan à chaque partie
 \AtBeginSection[]
 {
   \begin{frame}<beamer>\frametitle{Plan}

@@ -102,3 +102,13 @@ Partie 3 Réalisation de la solution
  - Transition
 	- Creation d'un pattern adaptateur
 	- 
+
+Plan foireux 3 : 
+- environnement (IzPack, git, intelliJ, ...)
+- NanoXML
+  - ce qu'il fait
+	- ses limites
+	- nécessité d'aller au delà
+- Solutions possibles
+  - changer de librairie
+	- JAXP
