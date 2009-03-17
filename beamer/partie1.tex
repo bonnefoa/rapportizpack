@@ -8,14 +8,16 @@
 \end{itemize}
 \end{frame}
 %------------------------------------------------------------------------------
-\begin{frame}\frametitle{Déploiement de Glassfishv2}
+\begin{frame}[fragile]\frametitle{Installation de Glassfish}
+\begin{block}{Procédure d'installation de Glassfish-v2}
 	\begin{verbatim}
-	java -Xmx256m -jar filename.jar;
+	java -Xmx256m -jar glassfish-installer-v2.1-b60e-linux.jar;
 	cd glassfish;
 	chmod -R +x lib/ant/bin;
 	lib/ant/bin/ant -f setup.xml;
 	bin/asadmin start-domain;
 	\end{verbatim}
+\end{block}
 \end{frame}
 %------------------------------------------------------------------------------
 \begin{frame}\frametitle{Installateur logiciel}
@@ -25,6 +27,7 @@
   \item Assurer une intégration dans le système
   \item Assister l'utilisateur
  \end{itemize}
+\end{block}
 \begin{block}{Inconvénients}
  \begin{itemize}
   \item Dépendant de l'OS
@@ -50,6 +53,10 @@
 	\begin{block}{Personnalisable}
 	Descripteur XML contrôlant l'aspect
 	\end{block}
+	\begin{block}{Open-Source}
+	License business-friendly Apache 2
+	\end{block}
+
 \end{frame}
 
 %------------------------------------------------------------------------------
@@ -71,7 +78,7 @@
 \begin{frame}\frametitle{Problèmes}
 \begin{itemize}
 	\item Comment supprimer NanoXML?
-	\item Par quoi le remplacer?	
+	\item Par quoi le remplacer?
 \end{itemize}
 \end{frame}
 %------------------------------------------------------------------------------
