@@ -69,7 +69,7 @@ Trop similaire au plan du rapport
 
 Plan foireux 2 : Se concentrer sur l'étude et le choix de la solution
 
-Partie1 Description du problème
+Partie 1 Description du problème
  - Installation de GlassFish
    - A la main
    - Avec IzPack
