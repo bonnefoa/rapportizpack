@@ -105,8 +105,14 @@ Partie2 Réponse au problème
 
 Partie 3 Réalisation de la solution
  - Transition
-	- Creation d'un pattern adaptateur
-	- 
+   * Creation d'un pattern adaptateur
+   * extraction des méthodes utilisées
+ - tests
+   * unitaires
+	 * fonctionnels
+ - pts principaux
+   * xinclude
+	 * line number
 
 Plan foireux 3 : 
 - environnement (IzPack, git, intelliJ, ...)
