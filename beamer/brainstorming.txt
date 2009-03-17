@@ -86,4 +86,14 @@ Plan foireux 2 :
  - Solution appliquée
 
 Plan foireux 3 : 
- - 
+ -
+
+Plan foireux 4 : 
+- environnement (IzPack, git, intelliJ, ...)
+- NanoXML
+  - ce qu'il fait
+	- ses limites
+	- nécessité d'aller au delà
+- Solutions possibles
+  - changer de librairie
+	- JAXP
