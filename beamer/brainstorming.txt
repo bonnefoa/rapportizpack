@@ -46,7 +46,7 @@ XMLElement ->
  - Extraction interface 
  - Remplacement de la classe par notre méthode
  - Réimplémentation sans NanoXML
-~Node XMLElement encapsule org.w3c.dom.Element
+Node XMLElement encapsule org.w3c.dom.Element
 Suivie modification
 Synchronisation
 Merge branche SVN
@@ -68,6 +68,7 @@ Plan foireux 1 :
 Trop similaire au plan du rapport
 
 Plan foireux 2 : Se concentrer sur l'étude et le choix de la solution
+
 Partie1 Description du problème
  - Installation de GlassFish
    - A la main
@@ -81,7 +82,10 @@ Partie1 Description du problème
 		Développement arrété
 	Invisible pour l'utilisateur
 	Génant pour le développeur
-Partie2 Etude du problème
+
+Partie2 Réponse au problème
+ le sujet DIT CLAIREMENT API STANDARDS JAVA.
+ Ce choix est motivé et parfaitement compréhensible
  - Solutions possibles
 	Améliorer NanoXML (open-source)
 	Ne plus utiliser XML (protocol buffer?)
@@ -98,6 +102,7 @@ Partie2 Etude du problème
 	- Intégré à la JRE -> pas de surcharge
 	- Interface respectant la spécification DOM
 	- Evolution garantie, intégré à JRE
+
 Partie 3 Réalisation de la solution
  - Transition
 	- Creation d'un pattern adaptateur
