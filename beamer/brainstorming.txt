@@ -1,0 +1,56 @@
+Izpack generateur d'installateur
+Multiplateforme
+Personnalisable
+Descripteur XML
+License business-friendly
+Java
+Entreprises utilisent
+Sun, Xwiki, Glassfish
+
+
+Librairie NanoXML
+Développement arrêté
+Bugs
+footprint
+Non respect W3C
+miscontent
+108Ko
+Utilisation lourde (parse)
+
+JAXP
+Apparut avec Java 1.4
+Natif dans la JDK
+Respecte W3C
+SAX
+DOM
+
+Méthodologie
+Agile
+Git
+IntelliJ
+Test unitaires
+Fonctionnelles
+Performances
+Iterations
+Reunions
+Sprint
+
+Solution
+Patron de conception Adaptateur
+XMLElement ->
+ - Extraction interface 
+ - Remplacement de la classe par notre méthode
+ - Réimplémentation sans NanoXML
+~Node XMLElement encapsule org.w3c.dom.Element
+Suivie modification
+Synchronisation
+Merge branche SVN
+Version 4.3 le 21 avril
+
+Future
+Amélioration adaptateur 
+ - Suppression vectors
+ - Suppression enumerate
+Contributeur officiel
+ - Resolution Ticket Jira
+
