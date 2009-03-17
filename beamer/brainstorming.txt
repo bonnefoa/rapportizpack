@@ -1,3 +1,9 @@
+Probleme Installateur
+Dependant de l'os
+Etapes lourdes et necessaires
+besoin d'automatiser
+Creation GUI lourde
+
 Izpack generateur d'installateur
 Multiplateforme
 Personnalisable
@@ -6,7 +12,6 @@ License business-friendly
 Java
 Entreprises utilisent
 Sun, Xwiki, Glassfish
-
 
 Librairie NanoXML
 Développement arrêté
@@ -54,3 +59,31 @@ Amélioration adaptateur
 Contributeur officiel
  - Resolution Ticket Jira
 
+
+
+Plan foireux 1 :
+ - Presentation IzPack
+ - Problemes
+ - Objectifs
+ - Environnements de travail
+ - Travail réalisé
+Trop similaire au plan du rapport
+
+Plan foireux 2 : 
+ - Installation de GlassFish
+   - A la main
+   - Avec IzPack
+ - Problemes
+  NanoXML
+	Bugs
+	Fonctionnalité manquantes // specifications W3C
+ - Solutions possibles
+  Améliorer NanoXML
+  Ne plus utiliser XML (protocol buffer?)
+  Réecrire Parseur XML
+  Utiliser une bibliothèque externe
+  Utiliser la bibliothèque native
+ - Solution appliquée
+
+Plan foireux 3 : 
+ - 
