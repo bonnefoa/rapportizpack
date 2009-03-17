@@ -59,8 +59,6 @@ Amélioration adaptateur
 Contributeur officiel
  - Resolution Ticket Jira
 
-
-
 Plan foireux 1 :
  - Presentation IzPack
  - Problemes
@@ -69,21 +67,33 @@ Plan foireux 1 :
  - Travail réalisé
 Trop similaire au plan du rapport
 
-Plan foireux 2 : 
+Plan foireux 2 : Se concentrer sur l'étude et le choix de la solution
  - Installation de GlassFish
    - A la main
    - Avec IzPack
- - Problemes
+ - Description IzPack
+ - Problèmes
   NanoXML
 	Bugs
-	Fonctionnalité manquantes // specifications W3C
+	Fonctionnalité manquantes -> support DTD, namespace// specifications W3C
+	Certaines ont ete rajoutées : XInxlude
+	Développement arrété
  - Solutions possibles
-  Améliorer NanoXML
-  Ne plus utiliser XML (protocol buffer?)
-  Réecrire Parseur XML
-  Utiliser une bibliothèque externe
-  Utiliser la bibliothèque native
- - Solution appliquée
-
-Plan foireux 3 : 
- - 
+	Améliorer NanoXML (open-source)
+	Ne plus utiliser XML (protocol buffer?)
+	Réecrire Parseur XML
+	Utiliser une bibliothèque externe
+	Utiliser la bibliothèque native
+ - Critères de selection
+	Taille de la bibliothèque
+	Facilité d'utilisation
+	Transition vers cette bibliothèque
+	Evolution
+ - Solution choisie
+	JAXP, bibliothèque native
+	- Intégré à la JRE -> pas de surcharge
+	- Interface respectant la spécification DOM
+	- Evolution garantie, intégré à JRE
+ - Transition
+	- Creation d'un pattern adaptateur
+	- 
