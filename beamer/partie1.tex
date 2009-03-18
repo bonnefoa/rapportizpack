@@ -3,8 +3,8 @@
 \begin{frame}\frametitle{Déploiement d'une application}
 \begin{itemize}
  \item Déploiement de l'application sur une machine
- \item Procédures d'installation parfois lourdes
- \item Procédures délicates
+ \item Procédure parfois lourde...
+ \item ...et délicate
 \end{itemize}
 \end{frame}
 %------------------------------------------------------------------------------
@@ -26,20 +26,12 @@
 \end{frame}
 %------------------------------------------------------------------------------
 \begin{frame}\frametitle{Installateur logiciel}
-\begin{beamerboxesrounded}[shadow=true]{But}
- \begin{itemize}
-  \item Automatiser les procédures d'installation
-  \item Assurer une intégration dans le système
-  \item Assister l'utilisateur
- \end{itemize}
-\end{beamerboxesrounded}
-\vfill
-\begin{beamerboxesrounded}[shadow=true]{Inconvénients}
- \begin{itemize}
-  \item Dépendant de l'OS
-  \item Création de l'interface graphique lourde
- \end{itemize}
-\end{beamerboxesrounded}
+But :
+\begin{itemize}
+	\item Automatiser les procédures d'installation
+	\item Assurer une intégration dans le système
+	\item Aider l'utilisateur
+\end{itemize}
 \end{frame}
 %------------------------------------------------------------------------------
 \subsection{IzPack}
@@ -81,7 +73,17 @@
 \end{frame}
 %------------------------------------------------------------------------------
 \begin{frame}\frametitle{Principe d'IzPack}
-\includegraphics[height=1\textheight]{../image/izpackInstall.png}
+\begin{minipage}[c]{\linewidth}
+\centering
+\includegraphics[height=0.8\textheight]{../image/izpackInstall.png}
+\end{minipage}
+\end{frame}
+%------------------------------------------------------------------------------
+\begin{frame}\frametitle{IzPack en action}
+\begin{minipage}[c]{\linewidth}
+\centering
+\includegraphics[height=0.5\textheight]{../dia/included/install/06.png}
+\end{minipage}
 \end{frame}
 %------------------------------------------------------------------------------
 \subsection{Problèmes}
@@ -106,6 +108,7 @@
 \begin{itemize}
 	\item Comment supprimer NanoXML?
 	\item Par quoi le remplacer?
+	\item JAXP est-il adapté ?
 \end{itemize}
 \end{frame}
 %------------------------------------------------------------------------------
