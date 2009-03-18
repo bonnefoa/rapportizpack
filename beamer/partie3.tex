@@ -30,28 +30,42 @@
 \end{frame}
 %------------------------------------------------------------------------------
 \subsection{Transition}
-% premier jet, A REVOIR !
-\begin{frame}\frametitle{Patron de conception adaptateur}
-\begin{minipage}[c]{.46\linewidth}
-\begin{beamerboxesrounded}[shadow=true]{Cas initial}
+\begin{frame}
+\frametitle{Patron de conception adaptateur}
+
+% \begin{minipage}[c]{.4\linewidth}
+% \begin{beamerboxesrounded}[shadow=true]{Cas initial}
+% 	\centering
+% 	\includegraphics[width=.8\linewidth]{../image/sansAdaptateur.png}
+% \end{beamerboxesrounded}
+% \end{minipage}
+% \hfill
+\begin{minipage}[c]{.3\linewidth}
+\begin{beamerboxesrounded}[shadow=true]{Représentation}
 	\centering
-	\includegraphics[height=.46\linewidth]{../image/sol_casInitialAlpha.png}
+	\includegraphics[width=.8\linewidth]{../image/avecAdaptateur.png}
 \end{beamerboxesrounded}
 \end{minipage}
 \hfill
-\begin{minipage}[c]{.46\linewidth}
-\begin{beamerboxesrounded}[shadow=true]{Extraction de l'interface}
-	\centering
-	\includegraphics[height=.46\linewidth]{../image/sol_extractionInterfaceAlpha.png}
+\begin{minipage}[c]{.6\linewidth}
+\begin{minipage}[c]{\linewidth}
+\begin{beamerboxesrounded}[shadow=true]{Grandes étapes}
+\begin{itemize}
+	\item Extraction de l'interface
+	\item Implémentation
+\end{itemize}
 \end{beamerboxesrounded}
 \end{minipage}
-\vfill
-\hfil
-\begin{minipage}[c]{.80\linewidth}
-\begin{beamerboxesrounded}[shadow=true]{Implémentation}
-	\centering
-	\includegraphics[height=.46\linewidth]{../image/sol_implementationAlpha.png}
+~\\
+~\\
+\begin{minipage}[c]{\linewidth}
+\begin{beamerboxesrounded}[shadow=true]{Avantages}
+\begin{itemize}
+	\item conservation de l'interface de NanoXML
+	\item disparation de NanoXML
+\end{itemize}
 \end{beamerboxesrounded}
+\end{minipage}
 \end{minipage}
 \end{frame}
 %------------------------------------------------------------------------------
