@@ -40,10 +40,11 @@
 \subsection{Transition}
 \begin{frame}
 \frametitle{Patron de conception adaptateur}
-
+Modification writer et parser
 \begin{minipage}[c]{.3\linewidth}
 \begin{beamerboxesrounded}[shadow=true]{Représentation}
 	\centering
+	Ajout schema avec nano
 	\includegraphics[width=.8\linewidth]{../image/avecAdaptateur.png}
 \end{beamerboxesrounded}
 \end{minipage}
@@ -62,9 +63,9 @@
 \begin{minipage}[c]{\linewidth}
 \begin{beamerboxesrounded}[shadow=true]{Avantages}
 \begin{itemize}
-	\item Changements minime
-	\item Conservation de l'interface de NanoXML
-	\item 
+	\item Changements minimes
+	\item Intégration rapide
+	\item Logique centralisée
 \end{itemize}
 \end{beamerboxesrounded}
 \end{minipage}
@@ -74,10 +75,10 @@
 \subsection{Tests}
 \begin{frame}\frametitle{Tests effectués}
 \begin{minipage}[c]{.9\linewidth}
-Tests unitaires :
+Tests unitaires compartatifs :
 \begin{itemize}
+	\item Adaptateur <-> NanoXML
 	\item Assurent un comportement identique
-	\item Testent de nombreux cas
 \end{itemize}
 \end{minipage}
 \end{frame}
