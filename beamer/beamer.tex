@@ -11,31 +11,13 @@
 
 \useinnertheme{rectangles}
 
-% \usecolortheme{seahorse}
-% \usecolortheme{orchid}
-
 \usecolortheme{seagull}
-
-% \definecolor{craneorange}{RGB}{252,187,6}
-% \definecolor{craneblue}{RGB}{4,6,76}
-% 
-% \setbeamercolor{block title}{fg=craneblue,bg=craneorange}
-% \setbeamercolor{block title alerted}{use=alerted text,fg=craneblue,bg=alerted text.fg!75!bg}
-% \setbeamercolor{block title example}{use=example text,fg=craneblue,bg=example text.fg!75!bg}
-% 
-% \setbeamercolor{block body}{parent=normal text,use=block title,bg=block title.bg!25!bg}
-% \setbeamercolor{block body alerted}{parent=normal text,use=block title alerted,bg=block title alerted.bg!25!bg}
-% \setbeamercolor{block body example}{parent=normal text,use=block title example,bg=block title example.bg!25!bg}
 
 % \setbeamercolor{structure}{fg=black} % tout ce qui structure le doc : titres, sous titres, TOC, ...
 
 \setbeamerfont{block title}{size={}}
 
 \logo{\includegraphics[height=0.8cm]{../image/izpack-logo-big.png}}
-% \logo{\includegraphics[height=1.1cm]{../image/izpackLogoAlpha.png}}
-
-% \definecolor{headerTop}{HTML}{666666}
-% \definecolor{headerBottom}{HTML}{3A3A3A}
 
 \setbeamercolor{background}{bg=}
 \setbeamercolor{title}{bg=}
@@ -56,6 +38,22 @@
     \tableofcontents[hideothersubsections,currentsection]
   \end{frame}
 }
+
+% n° de ligne en bas
+\defbeamertemplate*{footline}{infolines theme}
+{
+\leavevmode%
+\hbox{%
+\begin{beamercolorbox}[wd=1\paperwidth,ht=2.25ex,dp=1ex,right]{date in head/foot}%
+\centering
+{
+  \insertframenumber{} / \inserttotalframenumber\hspace*{2ex}
+}
+\end{beamercolorbox}}%
+\vskip0pt%
+}
+
+
 
 \title{Refactoring IzPack}
 \date{\oldstylenums{\today}}
