@@ -153,12 +153,33 @@
 \end{frame}
 %------------------------------------------------------------------------------
 \subsection{Principaux problèmes rencontrés}
-\begin{frame}\frametitle{Synchronisation des sources}
+\begin{frame}\frametitle{Problème : Synchronisation des sources}
 \includegraphics[width=\linewidth]{../image/gitHubBranche.png}
 \end{frame}
 %------------------------------------------------------------------------------
-\begin{frame}\frametitle{Différences DOM, NanoXML}
-Différence DOM et NanoXML
+\begin{frame}[containsverbatim]\frametitle{Différences DOM, NanoXML}
+\begin{centering}
+\begin{minipage}[c]{.5\linewidth}
+\begin{verbatim}
+<root>
+  <child/>
+</root>
+\end{verbatim}
+\end{minipage}
+\vfill
+\begin{minipage}[c]{.4\linewidth}
+	\begin{beamerboxesrounded}[shadow=true]{NanoXML}
+		1  enfant
+	\end{beamerboxesrounded}
+\end{minipage}
+\hfill
+\begin{minipage}[c]{.4\linewidth}
+	\begin{beamerboxesrounded}[shadow=true]{DOM}
+		3  enfant
+	\end{beamerboxesrounded}
+\end{minipage}
+\vfill
+\end{centering}
 \end{frame}
 %------------------------------------------------------------------------------
 \begin{frame}\frametitle{XInclude}
