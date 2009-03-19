@@ -3,7 +3,7 @@ img_extIsRegExp=false
 img_extensions=.eps .jpg .jpeg .png .pdf .ps .fig .gif
 kileprversion=2
 kileversion=2.0
-lastDocument=titlepage.tex
+lastDocument=conclusion.tex
 masterDocument=
 name=IzPackSlides
 pkg_extIsRegExp=false
@@ -20,13 +20,13 @@ archive=true
 column=0
 encoding=UTF-8
 highlight=LaTeX
-line=29
-open=true
+line=82
+open=false
 order=0
 
 [item:conclusion.tex]
 archive=true
-column=26
+column=1
 encoding=UTF-8
 highlight=LaTeX
 line=1
@@ -35,11 +35,11 @@ order=1
 
 [item:introduction.tex]
 archive=true
-column=25
+column=0
 encoding=UTF-8
 highlight=LaTeX
-line=1
-open=true
+line=0
+open=false
 order=2
 
 [item:izpackslides.kilepr]
@@ -53,36 +53,36 @@ order=-1
 
 [item:partie1.tex]
 archive=true
-column=40
+column=36
 encoding=UTF-8
 highlight=LaTeX
-line=19
-open=true
+line=83
+open=false
 order=3
 
 [item:partie2.tex]
 archive=true
-column=0
+column=11
 encoding=UTF-8
 highlight=LaTeX
-line=0
-open=true
-order=4
+line=49
+open=false
+order=2
 
 [item:partie3.tex]
 archive=true
-column=0
+column=3
 encoding=UTF-8
 highlight=LaTeX
-line=0
+line=60
 open=true
-order=5
+order=0
 
 [item:titlepage.tex]
 archive=true
-column=40
+column=14
 encoding=UTF-8
 highlight=LaTeX
-line=10
-open=true
-order=6
+line=2
+open=false
+order=4
