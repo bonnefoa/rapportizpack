@@ -30,6 +30,24 @@
 \end{centering}
 \end{frame}
 %------------------------------------------------------------------------------
+\begin{frame}\frametitle{Fonctionnement}
+\begin{centering}
+\begin{minipage}[c]{.5\linewidth}
+	\begin{beamerboxesrounded}[shadow=true,center]{Subversion}
+		\centering
+		\includegraphics[width=\linewidth]{../image/svn.png}
+	\end{beamerboxesrounded}
+\end{minipage}
+\vfill
+\begin{minipage}[c]{.5\linewidth}
+ 	\begin{beamerboxesrounded}[shadow=true,center]{Git}
+	\includegraphics[width=\linewidth]{../image/gitSimplifie.png}
+ 	\end{beamerboxesrounded}
+\end{minipage}
+\vfill
+\end{centering}
+\end{frame}
+%------------------------------------------------------------------------------
 \begin{frame}\frametitle{Outil de travail}
 \begin{centering}
 	\begin{minipage}[c]{.6\linewidth}
@@ -75,6 +93,7 @@
 %------------------------------------------------------------------------------
 \begin{frame}
 \frametitle{Patron de conception adaptateur}
+\hfil
 \begin{minipage}[c]{.3\linewidth}
 	\begin{beamerboxesrounded}[shadow=true]{Sans adaptateur}
 		\centering
@@ -83,7 +102,7 @@
 \end{minipage}
 \hfil
 \begin{minipage}[c]{.3\linewidth}
-	\begin{beamerboxesrounded}[shadow=true]{Représentation}
+	\begin{beamerboxesrounded}[shadow=true]{Avec adaptateur}
 		\centering
 		\includegraphics[width=.8\linewidth]{../image/avecAdaptateur.png}
 	\end{beamerboxesrounded}
@@ -99,16 +118,27 @@
 	\end{itemize}
 	\end{beamerboxesrounded}
 \end{minipage}
+\vfill
 \end{frame}
 %------------------------------------------------------------------------------
 \subsection{Tests}
 \begin{frame}\frametitle{Tests effectués}
 \begin{minipage}[c]{.9\linewidth}
-Tests unitaires comparatifs :
-\begin{itemize}
-	\item Adaptateur <-> NanoXML
-	\item Assurent un comportement identique
-\end{itemize}
+	\begin{beamerboxesrounded}[shadow=true]{Tests unitaires comparatifs}
+		\begin{itemize}
+			\item Adaptateur <-> NanoXML
+			\item Assurent un comportement identique
+		\end{itemize}
+	\end{beamerboxesrounded}
+\end{minipage}
+\vfill
+\begin{minipage}[c]{.9\linewidth}
+	\begin{beamerboxesrounded}[shadow=true]{Tests fonctionnels}
+		\begin{itemize}
+			\item Intégration de la solution
+			\item Génération d'installateur
+		\end{itemize}
+	\end{beamerboxesrounded}
 \end{minipage}
 \end{frame}
 %------------------------------------------------------------------------------
