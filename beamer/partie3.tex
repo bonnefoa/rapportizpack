@@ -39,36 +39,54 @@
 %------------------------------------------------------------------------------
 \subsection{Transition}
 \begin{frame}
+\frametitle{Transition vers JAXP}
+\begin{minipage}[c]{\linewidth}
+	\begin{beamerboxesrounded}[shadow=true]{XMLWriter et XMLParser}
+		\begin{itemize}
+			\item Traité au cas par cas
+			\item Création de XMLWriter et XMLParser
+		\end{itemize}
+	\end{beamerboxesrounded}
+\end{minipage}
+\vfil
+\begin{minipage}[c]{\linewidth}
+	\begin{beamerboxesrounded}[shadow=true]{XMLElement}
+		\begin{itemize}
+			\item Extraction de l'interface
+			\item Nouvelle implémentation
+		\end{itemize}
+	\end{beamerboxesrounded}
+\end{minipage}
+
+\vfil
+\end{frame}
+%------------------------------------------------------------------------------
+\begin{frame}
 \frametitle{Patron de conception adaptateur}
-Modification writer et parser
 \begin{minipage}[c]{.3\linewidth}
-\begin{beamerboxesrounded}[shadow=true]{Représentation}
-	\centering
-	Ajout schema avec nano
-	\includegraphics[width=.8\linewidth]{../image/avecAdaptateur.png}
-\end{beamerboxesrounded}
+	\begin{beamerboxesrounded}[shadow=true]{Sans adaptateur}
+		\centering
+		\includegraphics[width=.8\linewidth]{../image/sansAdaptateur.png}
+	\end{beamerboxesrounded}
 \end{minipage}
-\hfill
-\begin{minipage}[c]{.6\linewidth}
+\hfil
+\begin{minipage}[c]{.3\linewidth}
+	\begin{beamerboxesrounded}[shadow=true]{Représentation}
+		\centering
+		% TODO Ajout schema avec nano
+		\includegraphics[width=.8\linewidth]{../image/avecAdaptateur.png}
+	\end{beamerboxesrounded}
+\end{minipage}
+\hfil
+\vfill
 \begin{minipage}[c]{\linewidth}
-\begin{beamerboxesrounded}[shadow=true]{Grandes étapes}
-\begin{itemize}
-	\item Extraction de l'interface
-	\item Implémentation
-\end{itemize}
-\end{beamerboxesrounded}
-\end{minipage}
-~\\
-~\\
-\begin{minipage}[c]{\linewidth}
-\begin{beamerboxesrounded}[shadow=true]{Avantages}
-\begin{itemize}
-	\item Changements minimes
-	\item Intégration rapide
-	\item Logique centralisée
-\end{itemize}
-\end{beamerboxesrounded}
-\end{minipage}
+	\begin{beamerboxesrounded}[shadow=true]{Avantages}
+	\begin{itemize}
+		\item Changements minimes
+		\item Intégration rapide
+		\item Logique centralisée
+	\end{itemize}
+	\end{beamerboxesrounded}
 \end{minipage}
 \end{frame}
 %------------------------------------------------------------------------------
