@@ -30,7 +30,7 @@
 \end{centering}
 \end{frame}
 %------------------------------------------------------------------------------
-\begin{frame}\frametitle{Fonctionnement}
+\begin{frame}\frametitle{Fonctionnement de git}
 \begin{centering}
 \begin{minipage}[c]{.5\linewidth}
 	\begin{beamerboxesrounded}[shadow=true,center]{Subversion}
@@ -48,7 +48,7 @@
 \end{centering}
 \end{frame}
 %------------------------------------------------------------------------------
-\begin{frame}\frametitle{Outil de travail}
+\begin{frame}\frametitle{Outil de développement}
 \begin{centering}
 	\begin{minipage}[c]{.6\linewidth}
 		\begin{beamerboxesrounded}[shadow=true,center]{Environnement de développement}
@@ -75,7 +75,7 @@
 	\begin{beamerboxesrounded}[shadow=true]{XMLWriter et XMLParser}
 		\begin{itemize}
 			\item Traitées au cas par cas
-			\item Création de nouveau XMLWriter et XMLParser
+			\item Création de nouveaux XMLWriter et XMLParser
 		\end{itemize}
 	\end{beamerboxesrounded}
 \end{minipage}
@@ -125,10 +125,31 @@
 \subsection{Tests}
 \begin{frame}\frametitle{Tests effectués}
 \begin{minipage}[c]{.9\linewidth}
-	\begin{beamerboxesrounded}[shadow=true]{Tests unitaires comparatifs}
+	\begin{beamerboxesrounded}[shadow=true]{XMLWriter, XMLParser : Tests unitaires}
 		\begin{itemize}
-			\item Adaptateur <-> NanoXML
+			\item Lecture d'un XML
+			\item Ecriture d'un XML
+		\end{itemize}
+	\end{beamerboxesrounded}
+\end{minipage}
+\vfill
+\begin{minipage}[c]{.9\linewidth}
+	\begin{beamerboxesrounded}[shadow=true]{XMLElement : Tests unitaires comparatifs}
+		\begin{itemize}
+			\item Opération parallèle XMLElement <-> Adaptateur
 			\item Assurent un comportement identique
+		\end{itemize}
+	\end{beamerboxesrounded}
+\end{minipage}
+\end{frame}
+%------------------------------------------------------------------------------
+\begin{frame}\frametitle{Intégration de la solution}
+\begin{minipage}[c]{.9\linewidth}
+	\begin{beamerboxesrounded}[shadow=true]{Intégration à IzPack}
+		\begin{itemize}
+			\item Remplacer XMLWriter et XMLParser
+			\item Utilisation de l'adaptateur
+			\item Suppression de NanoXML
 		\end{itemize}
 	\end{beamerboxesrounded}
 \end{minipage}
@@ -154,38 +175,40 @@
 \end{frame}
 %------------------------------------------------------------------------------
 \subsection{Principaux problèmes rencontrés}
-\begin{frame}\frametitle{Problème : Synchronisation des sources}
-\includegraphics[width=\linewidth]{../image/gitHubBranche.png}
-\end{frame}
 %------------------------------------------------------------------------------
-\begin{frame}[containsverbatim]\frametitle{Différences DOM, NanoXML}
-\begin{centering}
-\begin{minipage}[c]{.5\linewidth}
-\begin{verbatim}
-<root>
-  <child/>
-</root>
-\end{verbatim}
-\end{minipage}
-\vfill
-\begin{minipage}[c]{.4\linewidth}
-	\begin{beamerboxesrounded}[shadow=true]{NanoXML}
-		1  enfant
-	\end{beamerboxesrounded}
-\end{minipage}
-\hfill
-\begin{minipage}[c]{.4\linewidth}
-	\begin{beamerboxesrounded}[shadow=true]{DOM}
-		3  enfants
-	\end{beamerboxesrounded}
-\end{minipage}
-\vfill
-\end{centering}
-\end{frame}
+% \begin{frame}[containsverbatim]\frametitle{Différences DOM, NanoXML}
+% \begin{centering}
+% \begin{minipage}[c]{.5\linewidth}
+% \begin{verbatim}
+% <root>
+%   <child/>
+% </root>
+% \end{verbatim}
+% \end{minipage}
+% \vfill
+% \begin{minipage}[c]{.4\linewidth}
+% 	\begin{beamerboxesrounded}[shadow=true]{NanoXML}
+% 		\centering
+% 		1  enfant
+% 	\end{beamerboxesrounded}
+% \end{minipage}
+% \hfill
+% \begin{minipage}[c]{.4\linewidth}
+% 	\begin{beamerboxesrounded}[shadow=true]{DOM}
+% 		\centering
+% 		3  enfants
+% 	\end{beamerboxesrounded}
+% \end{minipage}
+% \vfill
+% \end{centering}
+% \end{frame}
 %------------------------------------------------------------------------------
-\begin{frame}\frametitle{Autres problèmes}
+\begin{frame}\frametitle{Problèmes}
 \begin{itemize}
  \item XInclude
- \item Numéros de ligne
+ \item Numéros de ligne\\ Absent de DOM
 \end{itemize}
+\end{frame}
+\begin{frame}\frametitle{Synchronisation des sources}
+\includegraphics[width=\linewidth]{../image/gitHubBranche.png}
 \end{frame}
